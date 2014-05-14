@@ -1,0 +1,32 @@
+\section{Introduction}
+\label{intro}
+The ultimate goal of robotics is to enable robots to be a part of human life, to provide assistance in a wide range of tasks including surgery operation, house keeping, education and personal care. Most of these tasks require the ability to do complex object manipulation, which remains a open challenge in the robotics community. %It is impractical to pre-program all such object manipulation tasks manually. Therefore, we use a more practical alternative: teaching the robots by human demonstrations of the tasks.
+
+Object manipulation is a large category of tasks in which the robots make physical contact with the environment. %Typical contact tasks include robot grasping and object manipulation.
+The complicated physics in the interactions between objects makes it difficult.
+In manipulation tasks, the ability to predict and react to the uncertainty and unforeseen changes of the environment is vital. The changes of the environment can be abrupt due to the multi-body interaction and the effect of friction. To handle these situations, robots have to be equipped with a nonlinear and non-stationary control strategy.
+
+%TODO Human are experts in daily object manipulation tasks and reacting to a nonlinear and non-stationary changing environment. In this work, we adopt a program by demonstration(PbD)~\cite{schaal2003computational} approach to learn human control strategies of object manipulation.
+
+%One of the classical adaptive control methods for a non-stationary system is fitting open parameters of a pre-defined parametric model. Fitting open parameters is not an easy task, it assumes the parameters change gradually. Hence this method is inadequate for control in manipulation tasks.
+
+
+
+%In an object manipulation task the robot end effectors interact with the outside environment and hence causes changes of the environmental kinematic and dynamic configurations. Usually involving the effects of the friction between objects, these changes are abrupt (e.g. switching from static friction to kinematic friction) and highly nonlinear (e.g. interaction between multi-body). 
+%Hence classic adaptive control methods, that assume gradual environment changes and allow large error during the period of adaptation, are inadequate for object manipulation.
+%To handle these abrupt changes in the environment dynamics, a modular approach is more suitable as it allows rapid changes of strategies. %The multiple models approach is not new in adaptive control~\cite{narendra1997adaptive}. In a multiple models approach, we can evaluate the responsibility of each model according to the current status of the system dynamics to produce a mixing result.
+%
+
+%Human are experts in daily object manipulation tasks and reacting to a nonlinear and non-stationary changing environment.  In this work, we adopt a program by demonstration(PbD)~\cite{schaal2003computational} approach to learn human control strategies of object manipulation.
+
+%Neuroscientists propose that animal have a modularized central nervous system~\cite{??}.
+%Previous studies have provided evidence which shows that the human central nervous system uses a number of internal models of the system dynamics to control the motors of the body in different environments~\cite{wolpert1998multiple}. This hypothesis has been used to explain human predictive control and size illusion~\cite{??}. % We propose a methodology of doing so in this paper. %Robots learning human internal models from task demonstration is rarely discussed in literature.
+
+The excellent manipulation skill of human is long desired by roboticists. Without using theoretical knowledge of the dynamics of the complex environment, human can manipulate objects easily. The fact that human have no difficulties in controlling their limbs under changes of the environment suggests that the brain use more than one models~\cite{haruno2001mosaic}. This inspires us to learn the internal models that human use for manipulation.
+
+In this work, we introduce a modular approach to learn human internal models for manipulation. Modular approach has been shown to be an effective way of building intelligent systems~\cite{bryson2004modular,BrysonMcG12}. Our approach identifies a set of control strategies from human demonstration, each adapted to different task contexts. When a robot executes a task, it carries out an automatic estimation of the task context based on the sensory data and calculates a best combination of the modules to provide a motor command of the current operating region. The approach does not require any prior knowledge of the kinematics nor dynamics of the operation system, nor is it restricted to a specific robot platform. %The control strategy is learnt on the object level and hence can be transfer from human to robot directly.
+
+We verify this approach experimentally by learning a specific task: opening bottle caps. This is a complex manipulation task as the friction between the contact surfaces has multiple phases of which the physics behind is not completely understood. Without detail knowledge of tribology, human is able to open many different bottle caps using adaptive control strategy. We learn this strategy by our modular approach. The robustness of the learnt control strategy is confirmed by applying it to open different bottles including unseen bottles. We show that our method simplifies the learning of a control strategy and can benefit a wide range of tasks.
+
+
+The rest of the paper is organized as follows: Section~\ref{sec:related} provides an overview of the related work in literatures that motivate this work; Section~\ref{sec:method} introduces our approach of learning a multiple module model of human manipulation strategy; an experiment of a opening bottle cap task and its result is shown in Section~\ref{sec:exp}, along with details of the hardware specifications and the experimental setup; Section~\ref{sec:diss} concludes and discusses the contribution of this work, as well as proposes directions for future study.
