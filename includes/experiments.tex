@@ -1,8 +1,8 @@
 \section{Robot Experiment}
 \label{sec:exp}
 % Why others only in simulation? what can't be simulated? [sethu2005]
-The proposed multiple model approach is implemented on a real robot system (the KUKA robot arm and the Barrett Hand) for a particular manipulation task: opening bottle caps. The target of this task is to unscrew a tighten cap. 
-This task is chosen as it is a common task in human daily life and at the same time a complex one from the control point of view. 
+The proposed multiple model approach is implemented on a real robot system (the KUKA robot arm and the Barrett Hand) for a particular manipulation task: opening bottle caps. The target of this task is to unscrew a tighten cap.
+This task is chosen as it is a common task in human daily life and at the same time a complex one from the control point of view.
 Before the task begins, human does not possess any information about the tightness of the cap. During the task, human constantly update the motor commands, i.e. how much torque to apply to the cap and how much force to grip the cap, according to the sensory feedback of the status of the context. This plan can not be make in advance as the dynamic configuration of each bottle is different and it changes throughout the duration of the task. Human have to cope with these uncertainties and adapt to the changes. In the later sections, we will explain the experiment details and show that the multiple module approach is able to acquire human adaptive control policy and enable the robot to master this manipulation task.
 %For an object manipulation task, it is hard to simulate as it involve friction between objects. Therefore we implemented this system on a real robot, the KUKA robot arm mounted with the Barrett hand. The task we are looking at is opening bottle caps.
 
@@ -115,26 +115,12 @@ We track the displacement of the cap by a motion tracking system OptiTrack. The 
 During the task, human also apply grip force on the cap in order to grasp it firmly for turning. This force can not be sensed by the force torque sensor. Therefore, we used a pressure sensor (Tekscan Grip System) for measuring the human grip force. The Tekscan Grip System is a flexible tactile pressure sensor that can be built into a glove. It has 18 patches of sensors to covert the human hand front surface. For manipulation human use not only the front surface, but also the side surface of our fingers. In order to measure the force applied by those surfaces, we mount two sets of Tekscan Grip System sensors onto a glove to cover also the side surfaces (Fig.~\ref{ftsensor}). The method of mounting the sensors to the glove is detailed in~\cite{deSouza2014}. With different sizes of the caps or in different stages of the task, the way human grasp the cap varies, e.g. using 2 fingers to grip the smallest cap c1 and using 4 fingers to grab the biggest cap c4. The used patches in each grasps are recorded. In the computation of the total grip force, only the used patches are taken into account. All patches are calibrated to read in the unit of $N{\cdot}m$.
 
 
-
-%We then use a ATI force-torque sensor to record the force/torque that drive the cap movements. For recording the exert torque, the force-torque sensor is mounted on the bottle, on the top of the cap. On the top of the sensor we mount another bottle cap.  The bottle is fixed on the table and the teach is only allowed to apply force on the cap. Figure~/ref{setup} shows the experimental setup.
-
-%
-%\begin{figure}
-%  \centering
-%  \subfloat[\scriptsize{}]  {\includegraphics[width=5cm]{./fig/texscan1.jpg}}
-%  \hspace{1cm}
-%  \subfloat[\scriptsize{}]  {\includegraphics[width=5cm]{./fig/texscan2.jpg}}
-%  \caption{ \scriptsize{Grip force sensor Tekscan. (a) A Tekscan pressure sensor and a data glove (unmounted). (b) Two pairs of Tekscan pressure sensors mounted on a glove.}
-%}
-%\label{fig:tekscan}
-%\end{figure}
-
 \subsection{Data Analysis}
 \label{dataanalysis}
 % Data: how to compute the cap displacement. Hand position. compute contact force. Figure of tekscan!!
 In this section we explain how we manage the raw data and extra training data.
 The raw data from the three sensors stream in three separated channels. They have different formats and hence are handled differently.
-%During the turning cycles, force and torque are applied to the cap in order to break it's contact with the the bottle and the dynamics of the system changes diametrically.
+
 
 \subsubsection{Optitrack}
 \label{sec:optiktrack}
@@ -153,11 +139,6 @@ With 3 markers attached with the object, OptiTrack is able to track both the obj
 \subsubsection{Force-Torque Sensor}
 \label{ftsensor}
 As the movement of the cap is restricted to the rotation along the z-axis, we concern only the torque applied in this direction  (Fig.~\ref{fig:ftsensor}). Other concerned dimension is the force applied in the z direction. The three taps on the cap before each demonstration will create three pulses in the z direction and hence is used for synchronization.
-
-%\begin{itemize}
-%  \item Torque in z axis is used as training data \ldots
-%  \item Data segmented by torque in z axis \ldots
-%\end{itemize}
 
 
 \begin{figure}
@@ -186,15 +167,7 @@ As mentioned in previous section, we use two set of Tekscan to cover the front a
 
 Data from these three channels is synchronized by aligning the synchronization pulses. The time of the last detected pulse is set to the zero reference point. After synchronization we re-sample all the temporal sequences to 100Hz. Hence each single data point is synchronized. Finally, we filtered the noise by a low pass filter. Fig.~\ref{fig:3channels} shows an example of the data from three different channels.
 
-%\begin{figure}
-%  \centering
-%  \includegraphics[width=12cm]{./fig/pressure.jpg}
-%  \caption{ \scriptsize{Pressure applied by different parts of the fingers.}
-%  \label{fig:patch}
-%}
-%\end{figure}
 
-% filter and resample
 
 
 \begin{figure*}
@@ -323,26 +296,6 @@ We encode the data in each of the module by GMM. As explained in Section~\ref{se
 \label{sec:command}
 Our approach is independent of robot system and can potentially be applied to any robot. We choose to implement this work with a Barrett hand mounted on a KUKA lightweight robot as they are available in our lab. We implement the multiple module system on this platform to enable the robot opening bottle caps.
 
-In this experiment, we control the wrist joint (last joint of KUKA) for producing torque to turn the bottle cap. A force torque sensor is fixed under the bottle to provide torque feedback. Each finger of the Barrett hand is mounted with a $Syntouch$\footnote{http://www.syntouchllc.com/} tactile sensor, which is calibrated to provide contact force information, for the grip force feedback. The cap displacement is measured by the wrist joint displacement, assuming that there is no slip between the fingers and the cap.
-
-The target bottle is fixed on the top of a table with it's cap tighten. The robot is placed above it on a distance that allows a proper grasp on the cap. The Barrett hand then close the fingers until the bottle cap is touched. This position is recorded as the initial position, where the cap displacement is marked as zero. In the experiment we focus on the turning cycle. The releasing and reaching cycles are programmed by opening the fingers and restoring to the initial position.
-
-We first test the model with the trained bottles and then test with two new bottles. With each bottle, the turning-releasing-restoring cycles are repeated four times. Data stream from the sensors are filtered to $100Hz$. Once the turning cycle starts, the forward models take the torque and displacement at the last time step as input, compute the expected displacement of the current time step. These expected displacements are compared with the actual displacement measured at the sensor to evaluate the reliability, expressed as a normalized responsibility factor, of each module. The inverse models take the current displacement, desired next displacement and the previous force and torque as input to compute the a proper action (force and torque) to take on the cap. Each of the three outputs is multiplied with its responsibility factor, and the final output is the sum of the factorized three outputs.
-
-In implementation on a real robot, we found that without putting any restriction of the responsibility factor, it can change rapidly. This is caused by the environmental noise in the sensory input and this result in instability of the control system. We apply a low pass filter on the responsibility factor to reduce the fluctuation. This filtering implies that the real dynamics does not switch from module to another with high frequency, which makes sensor for our task (Fig.~\ref{fig:rf}).
-
-
-\begin{figure}
-  \centering
-  \includegraphics[width=2cm]{./fig/void.jpg}
-  \caption{ \scriptsize{Filtered responsibility factor. (TODO)}
-}
-\label{fig:rf}
-\end{figure}
-
-Before apply the final output on the robot, a compensational torque is added to it in order to compensate the slag causing by the distortion of the robot hand during turning. The whole control algorithm is shown in algorithm~\ref{code:control}. A set of snapshots of the implementations are shown in Fig.~\ref{fig:demo_train} and~\ref{fig:demo_new}.
-Fig.~\ref{fig:demo_result} shows the sensory data from these demonstrations.
-
 \begin{algorithm}
   \caption{Control Algorithm}
   \begin{algorithmic}[1]
@@ -378,7 +331,76 @@ Fig.~\ref{fig:demo_result} shows the sensory data from these demonstrations.
 \end{algorithm}
 
 
+In this experiment, we control the wrist joint (last joint of KUKA) for producing torque to turn the bottle cap. A force torque sensor is fixed under the bottle to provide torque feedback. Each finger of the Barrett hand is mounted with a $Syntouch$\footnote{http://www.syntouchllc.com/} tactile sensor, which is calibrated to provide contact force information, for the grip force feedback. The cap displacement is measured by the wrist joint displacement, assuming that there is no slip between the fingers and the cap.
 
+The target bottle is fixed on the top of a table with it's cap tighten. The robot is placed above it on a distance that allows a proper grasp on the cap. The Barrett hand then close the fingers until the bottle cap is touched. This position is recorded as the initial position, where the cap displacement is marked as zero. In the experiment we focus on the turning cycle. The releasing and reaching cycles are programmed by opening the fingers and restoring to the initial position.
+
+We first test the model with the trained bottles and then test with two new bottles. With each bottle, the turning-releasing-restoring cycles are repeated four times. Data stream from the sensors are filtered to $100Hz$. Once the turning cycle starts, the forward models take the torque and displacement at the last time step as input, compute the expected displacement of the current time step. These expected displacements are compared with the actual displacement measured at the sensor to evaluate the reliability, expressed as a normalized responsibility factor, of each module. The inverse models take the current displacement, desired next displacement and the previous force and torque as input to compute the a proper action (force and torque) to take on the cap. Each of the three outputs is multiplied with its responsibility factor, and the final output is the sum of the factorized three outputs.
+
+In implementation on a real robot, we found that without putting any restriction of the responsibility factor, it can change rapidly. This is caused by the environmental noise in the sensory input and results in instability of the control system. We apply a low pass filter on the responsibility factor to reduce the fluctuation. This filtering implies that the real dynamics does not switch from module to another with high frequency, which consists with the character of our task. %(Fig.~\ref{fig:rf}).
+
+%\begin{figure}
+%  \centering
+%  \includegraphics[width=2cm]{./fig/void.jpg}
+%  \caption{ \scriptsize{Filtered responsibility factor. (TODO)}
+%}
+%\label{fig:rf}
+%\end{figure}
+
+Before apply the final output on the robot, a compensational torque is added to it in order to compensate the slag causing by the distortion of the robot hand during turning. The control algorithm described above is shown in algorithm~\ref{code:control}.
+
+
+
+\subsection{Experiment results}
+
+We implemented this algorithm with two bottles (b1 and b4) in the training set and then two bottles have not been used for training. The experimental results and demonstration snapshots are shown in figure~\ref{fig:demo_b1}~\ref{fig:demo_b4}~\ref{fig:demo_b5}~\ref{fig:demo_b6}. The experiments show that our multiple modular approach is indeed effective in learning manipulation tasks.
+
+\begin{figure}
+  \centering
+  \includegraphics[width=15cm]{./fig/demo_b1.jpg}
+  \includegraphics[width=15cm]{./fig/demo_b1_s.eps}
+  \includegraphics[width=15cm]{./fig/demo_b1_T.eps}
+  \includegraphics[width=15cm]{./fig/demo_b1_rf.eps}
+  \caption{ \scriptsize{Robot demonstration on opening b1.}
+}
+\label{fig:demo_train}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \includegraphics[width=15cm]{./fig/demo_b4.jpg}
+  \includegraphics[width=15cm]{./fig/demo_b4_s.eps}
+  \includegraphics[width=15cm]{./fig/demo_b4_T.eps}
+  \includegraphics[width=15cm]{./fig/demo_b4_rf.eps}
+  \caption{ \scriptsize{Robot demonstration on opening b4.}
+}
+\label{fig:demo_train}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \includegraphics[width=15cm]{./fig/demo_b5.jpg}
+  \includegraphics[width=15cm]{./fig/demo_b5_s.eps}
+  \includegraphics[width=15cm]{./fig/demo_b5_T.eps}
+  \includegraphics[width=15cm]{./fig/demo_b5_rf.eps}
+  \caption{ \scriptsize{Robot demonstration on opening a new bottle (b5).}
+}
+\label{fig:demo_train}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \includegraphics[width=15cm]{./fig/demo_b6.jpg}
+  \includegraphics[width=15cm]{./fig/demo_b6_s.eps}
+  \includegraphics[width=15cm]{./fig/demo_b6_T.eps}
+  \includegraphics[width=15cm]{./fig/demo_b6_rf.eps}
+  \caption{ \scriptsize{Robot demonstration on opening a new bottle (b6).}
+}
+\label{fig:demo_train}
+\end{figure}
+
+
+%A set of snapshots of the implementations are shown in Fig.~\ref{fig:demo_train} and~\ref{fig:demo_new}. Fig.~\ref{fig:demo_result} shows the sensory data from these demonstrations.
 
 %\begin{itemize}
 %  \item Demonstration on the learnt bottles \ldots
@@ -409,4 +431,4 @@ Fig.~\ref{fig:demo_result} shows the sensory data from these demonstrations.
   \caption{ \scriptsize{Robot demonstration data. (TODO)}
 }
 \label{fig:demo_result}
-\end{figure}
+\end{figure} 
