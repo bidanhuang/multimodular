@@ -19,11 +19,20 @@ Before the task begins, human does not possess any information about the tightne
 %\item adhesive tape
 %\end{itemize}
 
-Opening bottle cap is a common task for human however a difficult one for robot. The friction coefficient between the bottle and the cap, and the way they change from screwed to unscrewed, vary among different bottles. This requires different controlling strategies to open different bottles. Hence a multiple module approach is suitable for this task, which includes at lease two different control strategies for the system governed under static friction and kinetic friction.
+Opening bottle cap is a common task for human however a difficult one for robot. The friction between the bottle and the cap, and the way they change from screwed to unscrewed, vary among different bottles. This requires multiple controlling strategies to open them. Hence a multiple modular approach is suitable for this task, which includes at lease two different control strategies for handling static friction and kinetic friction. Figure~\ref{fig:bottlepatterns} shows three different patterns of human control strategies for three different contexts.
 
 The task involves the control of the turning torque, griping force according to the displacement of the cap. As the changes of the friction coefficient is nonlinear during the unscrewing process, it is hard to build an analytical model for it. Human can easily open most of the bottles in daily life. Learning from human demonstration will allow us to gain a controlling strategy without writing the analytical expression of the dynamics of the whole system.
 
 In each demonstration, data from first time the finger touch the cap to the cap is finally open and lifted was recorded. Opening bottle cap is a cyclic task. Each cycle includes three stages: reaching, turning and releasing. In our experiments, four to six cycles need to be completed to open the bottles. During the reaching and releasing stages, no torque nor griping force is applied to the cap and the cap remains still. During the turning stages, human continuously apply torque to the cap and it starts moving once the friction is overcome.
+
+\begin{figure}
+  \centering
+  \includegraphics[width=8cm]{./fig/b1b3b4_time_T_2.pdf}
+  \caption{ \scriptsize{Exert torque for opening three different bottles.}
+}
+\label{fig:bottlepatterns}
+\end{figure}
+
 
 \subsubsection{Demonstration in different task contexts}
 \label{sec:exp_context}
@@ -57,9 +66,10 @@ We chose to vary the setups in friction coefficient and cap size as these are th
 
 \begin{table}
 \center
-\begin{tabular}{l |l l l l}
+\begin{tabular}{p{1.5cm}|l l l l}
 
-\backslashbox{Bottle}{Cap}      & \parbox[c]{1em}{ \includegraphics[width=1cm]{./fig/c1.jpg}}
+%\backslashbox{}{}
+                                & \parbox[c]{1em}{ \includegraphics[width=1cm]{./fig/c1.jpg}}
                                 & \parbox[c]{1em}{ \includegraphics[width=1cm]{./fig/c2.jpg}}
                                 & \parbox[c]{1em}{ \includegraphics[width=1cm]{./fig/c3.jpg}}
                                 & \parbox[c]{1em}{ \includegraphics[width=1cm]{./fig/c4.jpg}}  \\
@@ -110,7 +120,7 @@ Data from these three sensors stream from three different channels. Due to the h
 
 In this task, the turning torque is the essential variable. This is measured and recorded by a ATI force torque sensor (Fig~\ref{fig:ftsensor}). It is mounted between the bottle and the cap (Fig.~\ref{fig:setup}). During the task, the teacher grab the cap on the top of the force-torque sensor and apply torque to open the bottle mounted below the sensor. As the bottle is fixed on the table, the movement of the cap is restricted on the rotation along the bottle's axis. Under the approximation of zero angular momentum, the reading of the sensor shows the force and torque applied on the cap. Besides the torque, force applied to the z-axis direction is also recorded for the purpose of synchronization (Section~\ref{dataanalysis}).
 
-We track the displacement of the cap by a motion tracking system OptiTrack. The OptiTrack system track movement by the infrared reflecting markers attached on the object (Fig.~\ref{fig:optitrack}(a)). In order to avoid obstacle of the demonstration, we attach markers to a stick, which is fixed to the cap from one end and the other end coming out from the bottom of the bottle (Fig.~\ref{fig:setup}). We also recorded the human hand movement, by tracking the markers attached to the human hand. The movement of human hand is used later for synchronization (Section~\ref{dataanalysis}).
+We track the displacement of the cap by a motion tracking system OptiTrack. The OptiTrack system track movement by the infrared reflecting markers attached on the object. In order to avoid obstacle of the demonstration, we attach markers to a stick, which is fixed to the cap from one end and the other end coming out from the bottom of the bottle (Fig.~\ref{fig:setup}). We also recorded the human hand movement, by tracking the markers attached to the human hand. The movement of human hand is used later for synchronization (Section~\ref{dataanalysis}).
 
 During the task, human also apply grip force on the cap in order to grasp it firmly for turning. This force can not be sensed by the force torque sensor. Therefore, we used a pressure sensor (Tekscan Grip System) for measuring the human grip force. The Tekscan Grip System is a flexible tactile pressure sensor that can be built into a glove. It has 18 patches of sensors to covert the human hand front surface. For manipulation human use not only the front surface, but also the side surface of our fingers. In order to measure the force applied by those surfaces, we mount two sets of Tekscan Grip System sensors onto a glove to cover also the side surfaces (Fig.~\ref{ftsensor}). The method of mounting the sensors to the glove is detailed in~\cite{deSouza2014}. With different sizes of the caps or in different stages of the task, the way human grasp the cap varies, e.g. using 2 fingers to grip the smallest cap c1 and using 4 fingers to grab the biggest cap c4. The used patches in each grasps are recorded. In the computation of the total grip force, only the used patches are taken into account. All patches are calibrated to read in the unit of $N{\cdot}m$.
 
@@ -124,46 +134,49 @@ The raw data from the three sensors stream in three separated channels. They hav
 
 \subsubsection{Optitrack}
 \label{sec:optiktrack}
-With 3 markers attached with the object, OptiTrack is able to track both the object's translation and rotation. This is expressed in the position vector and the rotation matrix. To compute the angular displacement of the cap by the ration matrix of the cap, and compute the hand movement by the position vector of the hand. The accumulated angular displacement is used to learn the model and the hand movement is used to synchronize the data (Fig.~\ref{fig:optitrack}).
-
-\begin{figure}
-  \centering
-  \subfloat[\scriptsize{}]  {\includegraphics[width=4cm]{./fig/marker.jpg}}
-  \hspace{0.5cm}
-  \subfloat[\scriptsize{}]  {\includegraphics[width=13cm]{./fig/b3c2_5_s.eps}}
-  \caption{ \scriptsize{Tracking cap displacement. (a) OptiTrack markers. (b) Cap angular displacement during one demonstration. }
-  \label{fig:optitrack}
-}
-\end{figure}
+With 3 markers attached with the object, OptiTrack is able to track both the object's translation and rotation. This is expressed in the position vector and the rotation matrix. To compute the angular displacement of the cap by the ration matrix of the cap, and compute the hand movement by the position vector of the hand. The accumulated angular displacement is used to learn the model and the hand movement is used to synchronize the data. % (Fig.~\ref{fig:optitrack}).
+%
+%\begin{figure}
+%  \centering
+%  %\subfloat[\scriptsize{}]  {\includegraphics[width=4cm]{./fig/marker.jpg}}
+%  %\hspace{0.5cm}
+%  %\subfloat[\scriptsize{}]  {\includegraphics[width=13cm]{./fig/b3c2_5_s.eps}}
+%  %\caption{ \scriptsize{Tracking cap displacement. (a) OptiTrack markers. (b) }}
+%  \includegraphics[width=8cm]{./fig/b3c2_5_s.eps}
+%  \caption{\scriptsize{Cap angular displacement during one demonstration (of b3c2). }}
+%\label{fig:optitrack}
+%\end{figure}
 
 \subsubsection{Force-Torque Sensor}
 \label{ftsensor}
-As the movement of the cap is restricted to the rotation along the z-axis, we concern only the torque applied in this direction  (Fig.~\ref{fig:ftsensor}). Other concerned dimension is the force applied in the z direction. The three taps on the cap before each demonstration will create three pulses in the z direction and hence is used for synchronization.
+As the movement of the cap is restricted to the rotation along the z-axis, we concern only the torque applied in this direction.  %(Fig.~\ref{fig:ftsensor}).
+Other concerned dimension is the force applied in the z direction. The three taps on the cap before each demonstration will create three pulses in the z direction and hence is used for synchronization.
 
 
-\begin{figure}
-  \centering
-  \includegraphics[width=4cm]{./fig/Nano25-E.jpg}
-  \vspace{0.2cm}
-  \subfloat[\scriptsize{}]  {\includegraphics[width=13cm]{./fig/b3c2_5_T.eps}}
-  \caption{ \scriptsize{Force torque sensor. (a) Nano25-E force torque sensor. (b) Exert torque during one demonstration (of b3c2). }
-}
-\label{fig:ftsensor}
-\end{figure}
+%\begin{figure}
+%  \centering
+%  %\includegraphics[width=4cm]{./fig/Nano25-E.jpg}
+%  %\vspace{0.2cm}
+%  %\subfloat[\scriptsize{}]  {\includegraphics[width=13cm]{./fig/b3c2_5_T.eps}}
+%  \includegraphics[width=8cm]{./fig/b3c2_5_T.eps}
+%  %\caption{ \scriptsize{Force torque sensor. (a) Nano25-E force torque sensor. (b) Exert torque during one demonstration (of b3c2). }}
+%  \caption{ \scriptsize{Exert torque during one demonstration (of b3c2). }}
+%\label{fig:ftsensor}
+%\end{figure}
 
 \subsubsection{Tekscan}
 \label{tekscan}
-As mentioned in previous section, we use two set of Tekscan to cover the front and the size of the human hand. This enable the demonstrator to use any grasp they like for the task, not restricted to using the first three fingers as most of the other grasp experiment. In each type of grasp, the reading from the patches contacting with the cap are summed and multiplied by their surface area to compute the total grip force (Fig.~\ref{fig:ftsensor}).
+As mentioned in previous section, we use two set of Tekscan to cover the front and the size of the human hand. This enable the demonstrator to use any grasp they like for the task, not restricted to using the first three fingers as most of the other grasp experiment. In each type of grasp, the reading from the patches contacting with the cap are summed and multiplied by their surface area to compute the total grip force.% (Fig.~\ref{fig:ftsensor}).
 
-\begin{figure}
-  \centering
-  \includegraphics[width=5cm]{./fig/texscan2.jpg}
-  \hspace{0.2cm}
-  \subfloat[\scriptsize{}]  {\includegraphics[width=13cm]{./fig/b3c2_5_F.eps}}
-  \caption{ \scriptsize{Tracking cap displacement. (a) Tekscan mounted on a glove. (b) Total grib force applied by different parts of the fingers in on demonstration. }
-}
-\label{fig:ftsensor}
-\end{figure}
+%\begin{figure}
+%  \centering
+%  %\includegraphics[width=5cm]{./fig/texscan2.jpg}
+%  %\hspace{0.2cm}
+%  \includegraphics[width=8cm]{./fig/b3c2_5_F.eps}
+%  %\caption{ \scriptsize{Tracking cap displacement. (a) Tekscan mounted on a glove. (b) Total grib force applied by different parts of the fingers in on demonstration. }}
+%  \caption{ \scriptsize{Total grib force applied by different parts of the fingers in one demonstration  (of b3c2). }}
+%\label{fig:ftsensor}
+%\end{figure}
 
 Data from these three channels is synchronized by aligning the synchronization pulses. The time of the last detected pulse is set to the zero reference point. After synchronization we re-sample all the temporal sequences to 100Hz. Hence each single data point is synchronized. Finally, we filtered the noise by a low pass filter. Fig.~\ref{fig:3channels} shows an example of the data from three different channels.
 
@@ -209,48 +222,72 @@ In this section, we explain how do we encode the training data into a few differ
 \subsubsection{Data clustering}
 To cluster the 84 time series $Q\{s,\tau,F\}$ obtained from human demonstration, we first computed the distance between each pair of them by the DTW technique. As this task is time independent, ``warping'' of the data in the dimension of time does not effect the control policy encoded in the time series. The distances between each pair of the time series is shown in the heatmap (Fig.~\ref{fig:heatmap}).
 
-\begin{figure}
+\begin{figure*}
 \label{heatmap}
   \centering
-  \includegraphics[width=17cm]{./fig/heatmap_all4.eps}
-  \caption{ \scriptsize{A heatmap representation of the distances between each pair of time series.}
+  \includegraphics[width=18cm,height=18cm]{./fig/heatmap_bottleorder.pdf}
+  \caption{ \scriptsize{A heatmap representation of the distances between each pair of time series. Demonstrations are done with each setup for three times. The first four cycles are used for training. In total 84 time series are used as training data.}
 }
 \label{fig:heatmap}
-\end{figure}
+\end{figure*}
 
 As mentioned before, the demonstration of each setup is repeated three times and the data from the same setup and same cycle are presumed to belong to the same cluster. To set a threshold for clustering, we check the distances between the time series come from the same setup and the same phase. The largest distance found is 0.04 (normalized) from the $b3c2$ phase 4. We add a $10\%$ margin on this (resulting to 0.044) and use it as the threshold of clustering. The time series distance less than the threshold are grouped into the same cluster. We use the hierarchical agglomerative clustering (Section~\ref{sec:cluster}) to merge the data into different clusters. After 5 times of merging, the clusters are not mergeable and 3 clusters remains.
 
 These three clusters contain the data from:
 
 \begin{enumerate}
-\item phase I of $b4c2$ (most difficult bottle), 3 time series;
-\item phase I of $b2c2, b3c2, b2c1, b2c3, b2c4$ and phase II of $b4c2$, 24 time series;
-\item phase I of $b1c2$ (easiest bottle) and phase II of the other setups, 57 time series.
+\item phase I of $b4c3$ (most difficult bottle), 3 time series;
+\item phase I of $b2c3, b3c3, b2c1, b2c2, b2c4$ and phase II of $b4c3$, 24 time series;
+\item phase I of $b1c3$ (easiest bottle) and phase II of the other setups, 57 time series.
 \end{enumerate}
 
 The result of clustering is shown in Table~\ref{tab:cluster}. This result suggests that human use three different strategies for opening bottles: one for handling the phase I of the most difficult bottle with adhesive materials on the bottle and cap surfaces; one for handling the phase I of most bottles and the phase II of the most difficult bottle; and one for handling the phase I of the lubricated bottle and the phase II of the other bottles. The size of the cap turn out to be playing a less important role in the control strategies. According to this result, we encode these three clusters separately.
 
 
-\begin{table}
-\centering
-\renewcommand{\arraystretch}{1.5}
-    \begin{tabular}
-    %{|>{\centering\arraybackslash}p{2cm}|>{\centering\arraybackslash}p{1.2cm}|>{\centering\arraybackslash}p{1.7cm}|>{\centering\arraybackslash}p{1.2cm}|>{\centering\arraybackslash}p{1.5cm}|>{\centering\arraybackslash}p{1.5cm}|>{\centering\arraybackslash}p{1.7cm}|>{\centering\arraybackslash}p{1.7cm}|>{\centering\arraybackslash}p{0.9cm}|}
-    { | c |>{\centering\arraybackslash}p{10cm}|}
-    \hline
-    Cluster & Member time series \\ \hline
-    1       & $b4c2_1$  \\ \hline
-    2       & $b2c2_1,b3c2_1,b4c2_2,b4c2_3,b4c2_4,b2c3_1,b2c4_1$  \\ \hline
-    3       & $b1c2_1,b1c2_2,b1c2_3,b1c2_4,$
-             $  b2c2_2,b2c2_3,b2c2_4, $ \\
-    &         $  b3c2_2,b3c2_3,b3c2_4, $
-            $  b2c1_2,b2c1_3,b2c1_4, $ \\
-    &         $  b2c3_2,b2c3_3,b2c3_4, $
-             $  b2c4_2,b2c4_3,b2c4_4$  \\ \hline
-    \end{tabular}
+%\begin{table}
+%\centering
+%\renewcommand{\arraystretch}{1.5}
+%    \begin{tabular}
+%    %{|>{\centering\arraybackslash}p{2cm}|>{\centering\arraybackslash}p{1.2cm}|>{\centering\arraybackslash}p{1.7cm}|>{\centering\arraybackslash}p{1.2cm}|>{\centering\arraybackslash}p{1.5cm}|>{\centering\arraybackslash}p{1.5cm}|>{\centering\arraybackslash}p{1.7cm}|>{\centering\arraybackslash}p{1.7cm}|>{\centering\arraybackslash}p{0.9cm}|}
+%    { | c |>{\centering\arraybackslash}p{10cm}|}
+%    \hline
+%    Cluster & Member time series \\ \hline
+%    1       & $b4c2_1$  \\ \hline
+%    2       & $b2c2_1,b3c2_1,b4c2_2,b4c2_3,b4c2_4,b2c3_1,b2c4_1$  \\ \hline
+%    3       & $b1c2_1,b1c2_2,b1c2_3,b1c2_4,$
+%             $  b2c2_2,b2c2_3,b2c2_4, $ \\
+%    &         $  b3c2_2,b3c2_3,b3c2_4, $
+%            $  b2c1_2,b2c1_3,b2c1_4, $ \\
+%    &         $  b2c3_2,b2c3_3,b2c3_4, $
+%             $  b2c4_2,b2c4_3,b2c4_4$  \\ \hline
+%    \end{tabular}
+%\caption{Clustering result}
+%\label{tab:cluster}
+%\end{table}
+
+
+\begin{table*}
+\begin{tabular}{p{1.6cm} p{1.6cm}|p{2cm} p{2cm} p{2cm}  p{2cm} }
+& & \parbox[c]{1em}{\includegraphics[width=1.5cm]{./fig/c1.jpg}}\newline Cap 1
+& \parbox[c]{1em}{\includegraphics[width=1.5cm]{./fig/c2.jpg}}\newline Cap 2
+& \parbox[c]{1em}{\includegraphics[width=1.5cm]{./fig/c3.jpg}}\newline Cap 3
+& \parbox[c]{1em}{\includegraphics[width=1.5cm]{./fig/c4.jpg}}\newline Cap 4      \\ \hline
+{\parbox[c]{1em}{\includegraphics[width=1.5cm]{./fig/b1.jpg}}}
+         & Phase I  &           &           & {\vspace{-0.8cm}}(b1c3) Cluster 2 &           \\
+Bottle 1 & Phase II &           &           &        Cluster 3 &           \\ \hline
+{\parbox[c]{1em}{\includegraphics[width=1.5cm]{./fig/b2.jpg}}}
+         & Phase I  &{\vspace{-0.8cm}}(b2c1) Cluster 2 &{\vspace{-0.8cm}}(b2c2) Cluster 2 &{\vspace{-0.8cm}}(b2c3) Cluster 2 &{\vspace{-0.8cm}}(b2c4) Cluster 2 \\
+Bottle 2 & Phase II &       Cluster 3 &       Cluster 3 &       Cluster 3 &       Cluster 3 \\ \hline
+{\parbox[c]{1em}{\includegraphics[width=1.5cm]{./fig/b3.jpg}} }
+         & Phase I  &           &           &{\vspace{-0.8cm}}(b3c3) Cluster 2 &           \\
+Bottle 3 & Phase II &           &           &       Cluster 3 &           \\ \hline
+{\parbox[c]{1em}{\includegraphics[width=1.5cm]{./fig/b4.jpg}}\newline }
+         & Phase I  &           &           &{\vspace{-0.8cm}}(b4c3) Cluster 1 &           \\
+Bootle 4 & Phase II &           &           &       Cluster 2 &           \\ \hline
+\end{tabular}
 \caption{Clustering result}
 \label{tab:cluster}
-\end{table}
+\end{table*}
 
 %\begin{figure}
 %\label{forcecluster}
@@ -335,7 +372,7 @@ In this experiment, we control the wrist joint (last joint of KUKA) for producin
 
 The target bottle is fixed on the top of a table with it's cap tighten. The robot is placed above it on a distance that allows a proper grasp on the cap. The Barrett hand then close the fingers until the bottle cap is touched. This position is recorded as the initial position, where the cap displacement is marked as zero. In the experiment we focus on the turning cycle. The releasing and reaching cycles are programmed by opening the fingers and restoring to the initial position.
 
-We first test the model with the trained bottles and then test with two new bottles. With each bottle, the turning-releasing-restoring cycles are repeated four times. Data stream from the sensors are filtered to $100Hz$. Once the turning cycle starts, the forward models take the torque and displacement at the last time step as input, compute the expected displacement of the current time step. These expected displacements are compared with the actual displacement measured at the sensor to evaluate the reliability, expressed as a normalized responsibility factor, of each module. The inverse models take the current displacement, desired next displacement and the previous force and torque as input to compute the a proper action (force and torque) to take on the cap. Each of the three outputs is multiplied with its responsibility factor, and the final output is the sum of the factorized three outputs.
+We first test the model with the trained bottles and then test with two new bottles. With each bottle, the turning-releasing-restoring cycles are repeated four times. Data stream from the sensors are filtered to $100Hz$. Once the turning cycle starts, the forward models take the torque and displacement at the last time step as input, compute the expected displacement of the current time step. These expected displacements are compared with the actual displacement measured at the sensor to evaluate the reliability, expressed as a normalized responsibility factor, of each module. The inverse models take the current displacement, desired next displacement and the previous force and torque as input to compute the a proper action (force and torque) to take on the cap. Each of the three outputs is multiplied with its responsibility factor, and the final output is the sum of the factorized three outputs (Algorithm~\ref{code:control}).
 
 In implementation on a real robot, we found that without putting any restriction of the responsibility factor, it can change rapidly. This is caused by the environmental noise in the sensory input and results in instability of the control system. We apply a low pass filter on the responsibility factor to reduce the fluctuation. This filtering implies that the real dynamics does not switch from module to another with high frequency, which consists with the character of our task. %(Fig.~\ref{fig:rf}).
 
@@ -353,7 +390,7 @@ Before apply the final output on the robot, a compensational torque is added to 
 
 \subsection{Experiment results}
 
-We implemented this algorithm with two bottles (b1 and b4) in the training set and then two bottles have not been used for training. The experimental results and demonstration snapshots are shown in figure~\ref{fig:demo_b1}~\ref{fig:demo_b4}~\ref{fig:demo_b5}~\ref{fig:demo_b6}. The experiments show that our multiple modular approach is indeed effective in learning manipulation tasks.
+We implemented this algorithm with two bottles (b1 and b4) in the training set and then two bottles have not been used for training. The experimental results and demonstration snapshots are shown in figures~\ref{fig:demo_b1}-~\ref{fig:demo_b6}. The experiments show that our multiple modular approach is indeed effective in learning manipulation tasks.
 
 \begin{figure}
   \centering
@@ -363,7 +400,7 @@ We implemented this algorithm with two bottles (b1 and b4) in the training set a
   \includegraphics[width=15cm]{./fig/demo_b1_rf.eps}
   \caption{ \scriptsize{Robot demonstration on opening b1.}
 }
-\label{fig:demo_train}
+\label{fig:demo_b1}
 \end{figure}
 
 \begin{figure}
@@ -374,7 +411,7 @@ We implemented this algorithm with two bottles (b1 and b4) in the training set a
   \includegraphics[width=15cm]{./fig/demo_b4_rf.eps}
   \caption{ \scriptsize{Robot demonstration on opening b4.}
 }
-\label{fig:demo_train}
+\label{fig:demo_b4}
 \end{figure}
 
 \begin{figure}
@@ -385,7 +422,7 @@ We implemented this algorithm with two bottles (b1 and b4) in the training set a
   \includegraphics[width=15cm]{./fig/demo_b5_rf.eps}
   \caption{ \scriptsize{Robot demonstration on opening a new bottle (b5).}
 }
-\label{fig:demo_train}
+\label{fig:demo_b5}
 \end{figure}
 
 \begin{figure}
@@ -396,7 +433,7 @@ We implemented this algorithm with two bottles (b1 and b4) in the training set a
   \includegraphics[width=15cm]{./fig/demo_b6_rf.eps}
   \caption{ \scriptsize{Robot demonstration on opening a new bottle (b6).}
 }
-\label{fig:demo_train}
+\label{fig:demo_b6}
 \end{figure}
 
 
@@ -409,26 +446,26 @@ We implemented this algorithm with two bottles (b1 and b4) in the training set a
 %  \item different module's rf
 %\end{itemize}
 
-\begin{figure}
-  \centering
-  \includegraphics[width=15cm]{./fig/demo_train.jpg}
-  \caption{ \scriptsize{Robot demonstration on opening a trained bottle cap. (TODO)}
-}
-\label{fig:demo_train}
-\end{figure}
-
-\begin{figure}
-  \centering
-  \includegraphics[width=15cm]{./fig/demo_new.jpg}
-  \caption{ \scriptsize{Robot demonstration on opening a new bottle cap. (TODO)}
-}
-\label{fig:demo_new}
-\end{figure}
-
-\begin{figure}
-  \centering
-  \includegraphics[width=2cm]{./fig/void.jpg}
-  \caption{ \scriptsize{Robot demonstration data. (TODO)}
-}
-\label{fig:demo_result}
-\end{figure} 
+%\begin{figure}
+%  \centering
+%  \includegraphics[width=15cm]{./fig/demo_train.jpg}
+%  \caption{ \scriptsize{Robot demonstration on opening a trained bottle cap. (TODO)}
+%}
+%\label{fig:demo_train}
+%\end{figure}
+%
+%\begin{figure}
+%  \centering
+%  \includegraphics[width=15cm]{./fig/demo_new.jpg}
+%  \caption{ \scriptsize{Robot demonstration on opening a new bottle cap. (TODO)}
+%}
+%\label{fig:demo_new}
+%\end{figure}
+%
+%\begin{figure}
+%  \centering
+%  \includegraphics[width=2cm]{./fig/void.jpg}
+%  \caption{ \scriptsize{Robot demonstration data. (TODO)}
+%}
+%\label{fig:demo_result}
+%\end{figure} 

@@ -19,7 +19,7 @@
 %% with numbered style bibliographic references
 %% SP 2008/03/01
 
-\documentclass[preprint,12pt]{elsarticle}
+\documentclass[preprint,12pt, twocolumn]{elsarticle}
 
 %% Use the option review to obtain double line spacing
 %% \documentclass[authoryear,preprint,review,12pt]{elsarticle}
@@ -49,7 +49,7 @@
 \usepackage{amsmath} % assumes amsmath package installed
 \usepackage{array}
 \usepackage{bm}
-
+\usepackage{multirow}
 %\usepackage[noend]{algpseudocode}
 %\usepackage{fancybox}
 %\usepackage{alg}
@@ -70,43 +70,49 @@
 
 \journal{Journal of Robotics}
 
+
+
+
+%\title{Learning Human Manipulation Strategy by A Modular Approach}
+%
+%%% use optional labels to link authors explicitly to addresses:
+%%% \author[label1,label2]{}
+%%% \address[label1]{}
+%%% \address[label2]{}
+%
+%%\maketitle
+%
+%\author{}
+%\address{}
+%\thispagestyle{empty}
+%\pagestyle{empty}
+%
+%\begin{document}
+%\maketitle
+%
+%%\begin{frontmatter}
+%\begin{abstract}
+%Object manipulation is a challenging task for robot as the complicated physics involves in object interaction is hard to be expressed analytically. In this work we introduce a modular approach to learn the human manipulation strategy by demonstration. The human demonstrator demonstrated the task in different contexts and we group these demonstrates according to their control strategies. Forward and inverse model pairs are learnt from each group to encode the motor control policy. We validate our approach on a robot platform with a opening bottle cap task. We show that our approach can correctly identify the number of modules of a given task and generate proper motor commands for the robot to accomplish the task.
+%\end{abstract}
+%%\end{frontmatter}
+
+
 \begin{document}
+\twocolumn[
+  \begin{@twocolumnfalse}
+    \title{Learning Human Manipulation Strategy by A Modular Approach}
+    \author{}
+    \address{}
+    \begin{frontmatter}
+    \begin{abstract}
+     Object manipulation is a challenging task for robot as the complicated physics involves in object interaction is hard to be expressed analytically. In this work we introduce a modular approach to learn the human manipulation strategy by demonstration. The human demonstrator demonstrated the task in different contexts and we group these demonstrates according to their control strategies. Forward and inverse model pairs are learnt from each group to encode the motor control policy. We validate our approach on a robot platform with a opening bottle cap task. We show that our approach can correctly identify the number of modules of a given task and generate proper motor commands for the robot to accomplish the task.
+    \end{abstract}
+    \end{frontmatter}
+  \end{@twocolumnfalse}
+]
 
-%\begin{frontmatter}
-
-%% Title, authors and addresses
-
-%% use the tnoteref command within \title for footnotes;
-%% use the tnotetext command for theassociated footnote;
-%% use the fnref command within \author or \address for footnotes;
-%% use the fntext command for theassociated footnote;
-%% use the corref command within \author for corresponding author footnotes;
-%% use the cortext command for theassociated footnote;
-%% use the ead command for the email address,
-%% and the form \ead[url] for the home page:
-%% \title{Title\tnoteref{label1}}
-%% \tnotetext[label1]{}
-%% \author{Name\corref{cor1}\fnref{label2}}
-%% \ead{email address}
-%% \ead[url]{home page}
-%% \fntext[label2]{}
-%% \cortext[cor1]{}
-%% \address{Address\fnref{label3}}
-%% \fntext[label3]{}
-
-\title{Learning Human Manipulation Strategy by A Modular Approach}
-
-%% use optional labels to link authors explicitly to addresses:
-%% \author[label1,label2]{}
-%% \address[label1]{}
-%% \address[label2]{}
-
-\author{}
-
-\address{}
-
-\maketitle
-\input{includes/abstract}
+%\maketitle
+%\input{includes/abstract}
 \input{includes/introduction}
 \input{includes/relatedwork}
 \input{includes/methodology}
@@ -115,4 +121,4 @@
 
 \bibliographystyle{elsarticle-num}
 \bibliography{multimodel}
-\end{document}
+\end{document} 
