@@ -28,7 +28,7 @@ Our goal is to acquire a modular based control policy for an object manipulation
     \subfloat[\scriptsize{Force torque sensor}] {\includegraphics[height=2cm]{./fig/Nano25-E.jpg}}
     \subfloat[\scriptsize{Texscan tactile sensors mounting to a glove}] {\includegraphics[height=2cm]{./fig/texscan2.jpg}}
     \caption{\scriptsize{Sensors used in the human demonstration of opening a bottle cap task.}}
-  \label{fig:devices}    
+  \label{fig:devices}
 \end{figure}
 
 The first step is recording human demonstration of a task. Based on the object centric principle, we collect the object trajectory and its driven force. These data can be accessed by motion capture system, force-torque sensor and wearable haptic device(Fig.~\ref{fig:demo}). Fig.~\ref{fig:devices} shows a few sensors we used in the opening bottle caps task. Details will be explained in section~\ref{sec:exp_demo}.
@@ -134,10 +134,10 @@ During demonstrations, we constantly acquire the object displacements and the fo
 However the impedance is usually hard to specified in a given task, especially for task involving varying impedance. Most of the time it is roughly approximated by a linear model. As a result, impedance control are usually effective in slow changing and linear tasks. Specification of the impedance of a nonlinear task remains a open problem.
 
 %GMM
-In our approach, we model the correlation of the force and the displacement rather than estimating the impedance. To this end, we use the Gaussian Mixture Model (GMM)~\cite{cohn1996active}. The task dynamics is encoded as a joint distribution of the object status displacement $s$ and the action $a$ taken by human $p(s,a,{\mid}{\Omega})$.
-Modeling the distribution by GMM allows us to capture the nonlinearity in the data. Further more, as a generative model it also allows us to compute the likelihood of a query data point in the model. This provides an good estimation of the reliability of the module in the current task context, which is crucial in choosing the correct modules for control (discussed in Section~\ref{sec:rf}).
+In our approach, we model the correlation of the force and the displacement rather than estimating the impedance. To this end, we use the Gaussian Mixture Model (GMM)~\cite{cohn1996active}. The task dynamics is encoded as a joint distribution of the object status displacement $s$ and the action $a$ taken by human $p(s,a,{\mid}{\Omega})$. In our task, $s$ is the one dimensional cap angular displacment and $a$ is the one dimensional exert torque and grip force (section~\ref{sec:exp}). 
+Modeling the distribution by GMM allows us to capture the nonlinearity in the data, as well as to compute the likelihood of a query data point in the model. This provides an good estimation of the reliability of the module in the current task context, which is crucial in choosing the correct modules for control (discussed in Section~\ref{sec:rf}). At the other hand, as a generative model GMM is able to generate new data from the model, i.e. generate motor commands.
 
-With a GMM, the joint distribution of the variables is expressed as a sum of N Gaussian components,
+With a GMM, the joint distribution of the variables is expressed as a sum of $N$ Gaussian components,
 \begin{equation}
 {
 p(s,a\mid\Omega)

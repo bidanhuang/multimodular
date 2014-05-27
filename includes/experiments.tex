@@ -183,13 +183,15 @@ Data from these three channels is synchronized by aligning the synchronization p
 
 
 
-\begin{figure*}
+\begin{figure}
   \centering
-  \includegraphics[height=6cm]{./fig/b3c2_5_sTF.eps}
-  \caption{ \scriptsize{Aligned data of all three channels.}
+  \hspace{-1cm}
+  \includegraphics[width=9cm]{./fig/b3c2_1_sTF.pdf}
+  \vspace{-0.5cm}
+  \caption{ \scriptsize{Aligned data of all three channels. Highlighted parts mark the turning process: blue blocks denote the first cycle, i.e. the phase I, and green blocks denote the later cycles, i.e the phase II. Phase I is significantly different from the phase II.}
 }
 \label{fig:3channels}
-\end{figure*}
+\end{figure}
 
 % Only turning cycle
 In this task we focus on the turning stage of each cycle. More specifically, we focus on the data starts from the moment that the fingers contact the cap and end at the moment that the turning is finished and the cap is released. The reaching and releasing cycles do not involve contact with the environment and hence are not concerned here.
@@ -392,7 +394,7 @@ Before apply the final output on the robot, a compensational torque is added to 
 
 We implemented this algorithm with two bottles (b1 and b4) in the training set and then two bottles have not been used for training. The experimental results and demonstration snapshots are shown in figures~\ref{fig:demo_b1}-~\ref{fig:demo_b6}. The experiments show that our multiple modular approach is indeed effective in learning manipulation tasks.
 
-\begin{figure}
+\begin{figure*}
   \centering
   \includegraphics[width=15cm]{./fig/demo_b1.jpg}
   \includegraphics[width=15cm]{./fig/demo_b1_s.eps}
@@ -401,9 +403,9 @@ We implemented this algorithm with two bottles (b1 and b4) in the training set a
   \caption{ \scriptsize{Robot demonstration on opening b1.}
 }
 \label{fig:demo_b1}
-\end{figure}
+\end{figure*}
 
-\begin{figure}
+\begin{figure*}
   \centering
   \includegraphics[width=15cm]{./fig/demo_b4.jpg}
   \includegraphics[width=15cm]{./fig/demo_b4_s.eps}
@@ -412,9 +414,9 @@ We implemented this algorithm with two bottles (b1 and b4) in the training set a
   \caption{ \scriptsize{Robot demonstration on opening b4.}
 }
 \label{fig:demo_b4}
-\end{figure}
+\end{figure*}
 
-\begin{figure}
+\begin{figure*}
   \centering
   \includegraphics[width=15cm]{./fig/demo_b5.jpg}
   \includegraphics[width=15cm]{./fig/demo_b5_s.eps}
@@ -423,9 +425,9 @@ We implemented this algorithm with two bottles (b1 and b4) in the training set a
   \caption{ \scriptsize{Robot demonstration on opening a new bottle (b5).}
 }
 \label{fig:demo_b5}
-\end{figure}
+\end{figure*}
 
-\begin{figure}
+\begin{figure*}
   \centering
   \includegraphics[width=15cm]{./fig/demo_b6.jpg}
   \includegraphics[width=15cm]{./fig/demo_b6_s.eps}
@@ -434,7 +436,7 @@ We implemented this algorithm with two bottles (b1 and b4) in the training set a
   \caption{ \scriptsize{Robot demonstration on opening a new bottle (b6).}
 }
 \label{fig:demo_b6}
-\end{figure}
+\end{figure*}
 
 
 %A set of snapshots of the implementations are shown in Fig.~\ref{fig:demo_train} and~\ref{fig:demo_new}. Fig.~\ref{fig:demo_result} shows the sensory data from these demonstrations.
