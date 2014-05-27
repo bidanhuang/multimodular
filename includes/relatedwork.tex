@@ -1,28 +1,36 @@
 \section{Related Work}
 \label{sec:related}
-In this section, we review related literature in the area of robot learning and human motor control.
+%In this section, we review related literature in the area of robot learning and human motor control.
 
 
-\subsection{Robot learning}
-\label{sec:imitation}
-Demonstration based has been an active topic of research in the last decade. It speeds up robot learning with the demonstrator showing the constraints of the tasks.
+%\subsection{Robot learning}
+%\label{sec:imitation}
+Demonstration based learning has been an active topic of research in the last decade. While manually programming is time consuming especially for non-industrial environment, program by demonstration (PbD) automatically extract key features and task constraints and hence speeds up the process. This approach has been extensively studied in many literatures as a promising way to build robot intelligence~\cite{calinon2007learning,dillmann2004teaching,kulic2012incremental}.
+
+
+The approach of PbD usually goes through three stages: perceive (demonstration), recognise (skill modeling) and reproduction (task implementation)~\cite{demiris2002f}. The advantages of PbD largely come from the demonstration and skill modeling steps. In the later part of this section, we provide an overview on these two stages.
+
+\subsection{Demonstration}
+
 %This approach has been studied in many different tasks~\cite{calinon2007learning,huang2013learning,hsiao2005imitation,Hueser06,kulic2012incremental,Ekvall07,wu2010hierarchical.}
-Different from the classical manually programming approach, that relies on human insights of the dynamics of the tasks, this approach automatically generate models to encode the information extrated from demonstrations. Demonstrations provide the key features and constraints of the tasks, that can not be easily deduced analytically. This method has been extensively used in the tasks of body gesture reproduction~\cite{hsiao2005imitation,calinon2010learning,kulic2012incremental} and reaching motion planning~\cite{Ekvall07,shukla2012coupled,mohammad2014learning}, of which the large searching space is greatly reduced by using the demonstrations to suggest possible solutions. Besides this, demonstration based learning is also used in manipulation tasks~\cite{petkos2006learning,sauser2011iterative,Miao2014}, in order to transfer human knowledge in interacting with the environment to robot.
-
-In order to capture information from demonstrations, different sensors are used for different tasks. Motion capture systems and data gloves are used to provide demonstrators' end effectors and joints' position information~\cite{calinon2007incremental,asfour2008imitation,kulic2012incremental,bidan2013robio}. Force torque sensors and tactile sensing systems are used to provide information about demonstrators' exerting force on the environment~\cite{sauser2011iterative,Miao2014}. 
-
-The task information captured from sensors is needed to be transferred to robots. The differences in the sensory and motor system of human and robot causes the correspondence problem.
-%these task knowledge from human to robot, the correspondence problem caused by the embodiment difference between human and robots has to be solved. 
-To solve this problem, different mapping methods are proposed in many literatures~\cite{asfour2008imitation,koenemann2012whole,kulic2012incremental}, while human correction~\cite{calinon2007incremental,sauser2011iterative,romano2011human} and self-correction~\cite{bidan2013robio} via learning are proposed as alternative solutions. Kinesthetic teaching~\cite{korkinof2013online,pais2014encoding} and tele-operation~\cite{Fischer98} are used to directly demonstrate a task on a robot and hence avoid the correspondence problem.
-
+%This method has been extensively used in the tasks of body gesture reproduction~\cite{hsiao2005imitation,calinon2010learning,kulic2012incremental} and reaching motion planning~\cite{Ekvall07,shukla2012coupled,mohammad2014learning}, of which the large searching space is greatly reduced by using the demonstrations to suggest possible solutions. Besides this, demonstration based learning is also used in manipulation tasks~\cite{petkos2006learning,sauser2011iterative,Miao2014}, in order to transfer human knowledge in interacting with the environment to robot.
+In learning manipulation tasks, kinematics teaching and tele-operation are two most commonly used way of demonstration. In a kinesthetic teaching demonstration, human directly contact with the robot and guide their movements to accomplish a task~\cite{korkinof2013online,pais2014encoding,pastor2011skill,Miao2014}. The trajectory of movements and contact force are recorded by the robot sensors.
 % ===== Why not kinematics approach? =====
-For manipulation task, kinematics teaching on robot is difficult. While a manipulation task usually involves multifinger movement, a human can kinematically operate one finger with each hand and hence two fingers simultaneously for the most extend. Tele-operation of the robot hand solves this problem but it does not provide a direct force feedback. In our approach, human perform the task with direct interaction with the object. With direct interaction with the object the teacher is able to perform the task most naturally and perform a more delicate control strategy. %In an object centric manner there is no difference between collecting data from the teacher or from the learner -- they are expressed from the objects' perspective. Once the control policy is encoded, it can be directly applied to the robots.
+This method is simple and effective but limited in the number of controllable end effectors. While a manipulation task usually involves multifinger movement, a human can kinematically operate one finger with each hand and hence two fingers simultaneously for the most extend. To control multi-finger hands, some researchers use tele-operation~\cite{bernardino2013precision,kondo2008recognition,Fischer98}. This usually relies on data gloves and motion capture system to sense human hand-arm motions. The human motion is mapped to robots to generate motions and interact with the environment. In fine manipulation tasks, the robot platforms are usually restricted to anthropomorphic hands for better mapping. All of these methods provide no direct force feedback during manipulation to the human demonstrator.
 
+In some studies, the human demonstrate manipulation tasks with their own bodies~\cite{asfour2008imitation}. With direct interaction with the object the human demonstrator is able to perform the task most naturally and with a more delicate control strategy. The task information captured from these human demonstrations is needed to be transferred to robots. The differences in the sensory and motor system of human and robot causes the correspondence problem. To solve this problem, different mapping methods are proposed in many literatures~\cite{do2011towards,asfour2008imitation,hueser2006learning}, while human correction~\cite{calinon2007incremental,sauser2011iterative,romano2011human} and self-correction via learning~\cite{bidan2013robio} are proposed as alternative solutions.
 
-In object manipulation tasks, the object centric viewpoint~\cite{okamura2000overview} considers a manipulation task only from the object's perspective, which suggests the goal of learning a task is to reproduce the same object behaviour. Taking this principle, an object level approach is proposed in~\cite{Miao2014} to learn object impedance in grasping and manipulation tasks. Our approach takes the same principle and learns the human strategy to operate the objects that will produce the same object behaviour.
+In our approach, human perform the task with direct interaction with the object to allow they perform a natural feedback control strategy. We solve the correspondence problem by taking an object centric approach. The object centric viewpoint~\cite{okamura2000overview} considers a manipulation task from the object's perspective, which suggests the goal of learning a task is to reproduce the same object behaviour. Taking this principle, an object level approach is proposed in~\cite{Miao2014} to learn object impedance in grasping and manipulation tasks. Our approach takes the same principle and learns the control strategy to operate the objects that will produce the same object behaviour. This strategy expressed from the object perspective can be transfer to any robot platform. 
 
-All the these approaches obtain task information from human demonstrations. To make the best use of human knowledge, the information should be encoded in a similar way that human encode it. Human tactile sensation scheme is implemented to robot for grasping control and result in a good performance~\cite{romano2011human}. However this approach of using human motor control mechanism to build models of tasks is rarely discussed in literature.
+The aim of an object centric approach is to learn the correlation between the exert force of the system and the desire system behaviour. A classic way to describe this correlation is impedance~\cite{howard2010transferring}. Giving a desired impedance of a task, we can compute a proper motor command for the robot to accomplish the task. However the impedance is usually hard to specified in a given task, especially for task involving varying impedance. Most of the time it is roughly approximated by a linear model. As a result, impedance control are usually effective in slow changing and linear tasks. For nonlinear and non-stationary context, an adaptive approach is required.
 
+%In an object centric manner there is no difference between collecting data from the teacher or from the learner -- they are expressed from the objects' perspective. Once the control policy is encoded, it can be directly applied to the robots.
+
+%In order to capture information from demonstrations, different sensors are used for different tasks. Motion capture systems and data gloves are used to provide demonstrators' end effectors and joints' position information~\cite{calinon2007incremental,asfour2008imitation}. Force torque sensors and tactile sensing systems are used to provide information about demonstrators' exerting force on the environment~\cite{sauser2011iterative,Miao2014}.
+%
+%The task information captured from sensors is needed to be transferred to robots. The differences in the sensory and motor system of human and robot causes the correspondence problem.
+%%these task knowledge from human to robot, the correspondence problem caused by the embodiment difference between human and robots has to be solved.
+%%To solve this problem, different mapping methods are proposed in many literatures~\cite{asfour2008imitation,koenemann2012whole,kulic2012incremental}, while human correction~\cite{calinon2007incremental,sauser2011iterative,romano2011human} and self-correction~\cite{bidan2013robio} via learning are proposed as alternative solutions. Kinesthetic teaching~\cite{korkinof2013online,pais2014encoding} and tele-operation~\cite{Fischer98} are used to directly demonstrate a task on a robot and hence avoid the correspondence problem.
 
 %Physical interaction between the robot and the environment is one important characteristics of manipulation tasks, the problems rise from the complicated physics in the interactions between objects is hard to solve analytically. Without using detail knowledge of multi-body dynamics nor tribology, however, human can manipulate objects without difficulties. To learn human manipulation strategies
 
@@ -32,16 +40,22 @@ All the these approaches obtain task information from human demonstrations. To m
 %\subsection{Manipulation task}
 %\label{sec:manipulationtask}
 
-\subsection{Human motor control}
+\subsection{Skill Modeling}
+% Some manipulation modelling method. drawback. You must survey other approaches to model multiple sensori-motor loops (also called motor program, motor primitives, behaviors, etc) and switching across these models, and then justify the use of Mosaic
+TODO: survey other approaches to model multiple sensori-motor loops. Justify MOSAIC.
 
-In the study of human motor control, internal model is one of the most evidently supported hypothesis. It postulates a neuron process that simulates output of the motor system and the environment~\cite{kawato1999internal}. It's applications in robot control have been explored by many researchers. Various types of internal models are built for different tasks~\cite{sciavicco2000modelling,jordan1992forward}.
+% Introduce human control model 
+All the these approaches obtain task information from human demonstrations. To make the best use of human knowledge, the information should be encoded in a similar way that human encode it. Human tactile sensation scheme is implemented to robot for grasping control and result in a good performance~\cite{romano2011human}. However this approach of using human motor control mechanism to build models of tasks is rarely discussed in literature.
+
+%% Internal model
+%In the study of human motor control, internal model is one of the most evidently supported hypothesis. It postulates a neuron process that simulates output of the motor system and the environment~\cite{kawato1999internal}. It's applications in robot control have been explored by many researchers. Various types of internal models are built for different tasks~\cite{sciavicco2000modelling,jordan1992forward}.
 
 The excellent ability of human to manipulate different objects in different contexts and quickly adapt to change of contexts suggested that our central nervous system (CNS) maintains multiple internal models of outside environments, rather than a single internal model that adapts to new environment~\cite{neilson1985acquisition}. Based on the concept of modularity, the Modular selection and identification for control (MOSAIC) architecture was proposed to explain the motor control strategy of the CNS~\cite{wolpert1998multiple}. According to this hypothesis, during the motor control process, the brain quickly select the most appropriate modules according to the current environment context and use them to generate an appropriate motor command to react to the environment~\cite{haruno2001mosaic}.
 
 The benefit of this multiple model approach has been long discussed in the control community~\cite{jacobs1991adaptive,narendra1995adaptation,narendra1997adaptive}. Some recent works~\cite{fekri2007robust,kuipers2010multiple} present promising modular based approaches. Multiple model approach also has a wide range application in robot control. It is particular useful for tasks in nonlinear and non-stationary environment~\cite{petkos2006learning,sugimoto2012emosaic}
 
 
-
+% Our approach
 The approach we take is a modular approach inspired from MOSAIC~\cite{haruno2001mosaic}. In our approach, the human control strategy is encoded by multiple pairs of forward and inverse models. The final motor command is the linear combination of the commands generated from each inverse models factored by their weights estimated by the forward models. The linear combination, rather than switch, of the models requires less number of modules to approximate the system dynamics. Indeed, neuroscience evidence suggests that animal brain sum modular stimulates of muscles to generate different motions~\cite{mussa1994linear}. To the best of our knowledge, this is the first realization of the multiple module model in an object manipulation task with a real robot, learnt from human demonstration.
 
 %It is particularly useful to use learning to approximate internal models for motor control when the analytical model of the system dynamics is not easy to deduce.
@@ -63,4 +77,4 @@ The approach we take is a modular approach inspired from MOSAIC~\cite{haruno2001
 %Scientist has long been fascinated by human adaptive motor control ability and wondering the mechanism of it. One of the most evidently supported hypothesis is the multiple model~\cite{neilson1985acquisition}. %~\cite{haruno2001mosaic}
 
 
-(TODO: Joanna thinks this part can be extended. Please feel free to add any literatures that you think should be included. )
+%(TODO: Joanna thinks this part can be extended. Please feel free to add any literatures that you think should be included. )

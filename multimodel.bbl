@@ -24,14 +24,14 @@ J.~J. Bryson, Structuring intelligence: {T}he role of hierarchy, modularity and
   M.~McGonigle (Eds.), The Complex Mind: An Interdisciplinary Approach,
   Palgrave-Macmillan, Basingstoke, 2012, pp. 126--143.
 
-\bibitem{hsiao2005imitation}
-K.~Hsiao, Imitation learning of whole-body grasps, Ph.D. thesis, Massachusetts
-  Institute of Technology (2005).
+\bibitem{calinon2007learning}
+S.~Calinon, F.~Guenter, A.~Billard, On learning, representing, and generalizing
+  a task in a humanoid robot, Systems, Man, and Cybernetics, Part B:
+  Cybernetics, IEEE Transactions on 37~(2) (2007) 286--298.
 
-\bibitem{calinon2010learning}
-S.~Calinon, F.~D'halluin, E.~L. Sauser, D.~G. Caldwell, A.~G. Billard, Learning
-  and reproduction of gestures by imitation, Robotics \& Automation Magazine,
-  IEEE 17~(2) (2010) 44--54.
+\bibitem{dillmann2004teaching}
+R.~Dillmann, Teaching and learning of robot tasks via observation of human
+  performance, Robotics and Autonomous Systems 47~(2) (2004) 109--116.
 
 \bibitem{kulic2012incremental}
 D.~Kuli{\'c}, C.~Ott, D.~Lee, J.~Ishikawa, Y.~Nakamura, Incremental learning of
@@ -39,60 +39,10 @@ D.~Kuli{\'c}, C.~Ott, D.~Lee, J.~Ishikawa, Y.~Nakamura, Incremental learning of
   observation, The International Journal of Robotics Research 31~(3) (2012)
   330--345.
 
-\bibitem{Ekvall07}
-S.~Ekvall, D.~Kragic, Learning and evaluation of the approach vector for
-  automatic grasp generation and planning, in: Robotics and Automation, 2007
-  IEEE International Conference on, IEEE, 2007, pp. 4715--4720.
-
-\bibitem{shukla2012coupled}
-A.~Shukla, A.~Billard, Coupled dynamical system based arm--hand grasping model
-  for learning fast adaptation strategies, Robotics and Autonomous Systems
-  60~(3) (2012) 424--440.
-
-\bibitem{mohammad2014learning}
-S.~Mohammad Khansari-Zadeh, A.~Billard, Learning control lyapunov function to
-  ensure stability of dynamical system-based robot reaching motions, Robotics
-  and Autonomous Systems.
-
-\bibitem{petkos2006learning}
-G.~Petkos, M.~Toussaint, S.~Vijayakumar, Learning multiple models of non-linear
-  dynamics for control under varying contexts, in: Artificial Neural
-  Networks--ICANN 2006, Springer, 2006, pp. 898--907.
-
-\bibitem{sauser2011iterative}
-E.~Sauser, B.~Argall, G.~Metta, A.~Billard, Iterative learning of grasp
-  adaptation through human corrections, Robotics and Autonomous Systems.
-
-\bibitem{Miao2014}
-M.~Li, H.~Yin, K.~Tahara, A.~Billard, Learning object-level impedance control
-  for robust grasping and dexterous manipulation, in: Proceedings of
-  International Conference on Robotics and Automation (ICRA), 2014.,
-  (accepted).
-
-\bibitem{calinon2007incremental}
-S.~Calinon, A.~Billard, Incremental learning of gestures by imitation in a
-  humanoid robot, in: Proceedings of the ACM/IEEE international conference on
-  Human-robot interaction, ACM, 2007, pp. 255--262.
-
-\bibitem{asfour2008imitation}
-T.~Asfour, P.~Azad, F.~Gyarfas, R.~Dillmann, Imitation learning of dual-arm
-  manipulation tasks in humanoid robots, International Journal of Humanoid
-  Robotics 5~(02) (2008) 183--202.
-
-\bibitem{bidan2013robio}
-B.~Huang, J.~Bryson, T.~Inamura, {Learning Motion Primitives of Object
-  Manipulation Using Mimesis Model}, in: Proceedings of 2013 IEEE International
-  Conference on Robotics and Biomimetics. ROBIO, 2013.
-
-\bibitem{koenemann2012whole}
-J.~Koenemann, M.~Bennewitz, Whole-body imitation of human motions with a nao
-  humanoid, in: Human-Robot Interaction (HRI), 2012 7th ACM/IEEE International
-  Conference on, IEEE, 2012, pp. 425--425.
-
-\bibitem{romano2011human}
-J.~M. Romano, K.~Hsiao, G.~Niemeyer, S.~Chitta, K.~J. Kuchenbecker,
-  Human-inspired robotic grasp control with tactile sensing, Robotics, IEEE
-  Transactions on 27~(6) (2011) 1067--1079.
+\bibitem{demiris2002f}
+J.~Demiris, G.~Hayes, f 3 imitation as a dual-route process featuring
+  predictive and learning components; 4 biologically plausible computational
+  model, Imitation in animals and artifacts (2002) 327.
 
 \bibitem{korkinof2013online}
 D.~Korkinof, Y.~Demiris, Online quantum mixture regression for trajectory
@@ -104,28 +54,62 @@ A.~L. Pais, A.~Billard, Encoding bi-manual coordination patterns from human
   demonstrations, in: Proceedings of the 2014 ACM/IEEE international conference
   on Human-robot interaction, ACM, 2014, pp. 264--265.
 
+\bibitem{Miao2014}
+M.~Li, H.~Yin, K.~Tahara, A.~Billard, Learning object-level impedance control
+  for robust grasping and dexterous manipulation, in: Proceedings of
+  International Conference on Robotics and Automation (ICRA), 2014.,
+  (accepted).
+
+\bibitem{bernardino2013precision}
+A.~Bernardino, M.~Henriques, N.~Hendrich, J.~Zhang, Precision grasp synergies
+  for dexterous robotic hands, in: Robotics and Biomimetics (ROBIO), 2013 IEEE
+  International Conference on, IEEE, 2013, pp. 62--67.
+
+\bibitem{kondo2008recognition}
+M.~Kondo, J.~Ueda, T.~Ogasawara, Recognition of in-hand manipulation using
+  contact state transition for multifingered robot hand control, Robotics and
+  Autonomous Systems 56~(1) (2008) 66--81.
+
 \bibitem{Fischer98}
 M.~Fischer, P.~van~der Smagt, G.~Hirzinger, Learning techniques in a dataglove
   based telemanipulation system for the dlr hand, in: Robotics and Automation,
   1998. Proceedings. 1998 IEEE International Conference on, Vol.~2, IEEE, 1998,
   pp. 1603--1608.
 
+\bibitem{asfour2008imitation}
+T.~Asfour, P.~Azad, F.~Gyarfas, R.~Dillmann, Imitation learning of dual-arm
+  manipulation tasks in humanoid robots, International Journal of Humanoid
+  Robotics 5~(02) (2008) 183--202.
+
+\bibitem{calinon2007incremental}
+S.~Calinon, A.~Billard, Incremental learning of gestures by imitation in a
+  humanoid robot, in: Proceedings of the ACM/IEEE international conference on
+  Human-robot interaction, ACM, 2007, pp. 255--262.
+
+\bibitem{sauser2011iterative}
+E.~Sauser, B.~Argall, G.~Metta, A.~Billard, Iterative learning of grasp
+  adaptation through human corrections, Robotics and Autonomous Systems.
+
+\bibitem{romano2011human}
+J.~M. Romano, K.~Hsiao, G.~Niemeyer, S.~Chitta, K.~J. Kuchenbecker,
+  Human-inspired robotic grasp control with tactile sensing, Robotics, IEEE
+  Transactions on 27~(6) (2011) 1067--1079.
+
+\bibitem{bidan2013robio}
+B.~Huang, J.~Bryson, T.~Inamura, {Learning Motion Primitives of Object
+  Manipulation Using Mimesis Model}, in: Proceedings of 2013 IEEE International
+  Conference on Robotics and Biomimetics. ROBIO, 2013.
+
 \bibitem{okamura2000overview}
 A.~M. Okamura, N.~Smaby, M.~R. Cutkosky, An overview of dexterous manipulation,
   in: Robotics and Automation, 2000. Proceedings. ICRA'00. IEEE International
   Conference on, Vol.~1, IEEE, 2000, pp. 255--262.
 
-\bibitem{kawato1999internal}
-M.~Kawato, Internal models for motor control and trajectory planning, Current
-  opinion in neurobiology 9~(6) (1999) 718--727.
-
-\bibitem{sciavicco2000modelling}
-L.~Sciavicco, B.~Siciliano, Modelling and control of robot manipulators,
-  Springer, 2000.
-
-\bibitem{jordan1992forward}
-M.~I. Jordan, D.~E. Rumelhart, Forward models: Supervised learning with a
-  distal teacher, Cognitive science 16~(3) (1992) 307--354.
+\bibitem{howard2010transferring}
+M.~Howard, D.~Mitrovic, S.~Vijayakumar, Transferring impedance control
+  strategies between heterogeneous systems via apprenticeship learning, in:
+  Humanoid Robots (Humanoids), 2010 10th IEEE-RAS International Conference on,
+  IEEE, 2010, pp. 98--105.
 
 \bibitem{neilson1985acquisition}
 P.~Neilson, M.~Neilson, N.~O'Dwyer, Acquisition of motor skills in tracking
@@ -158,6 +142,11 @@ S.~Fekri, M.~Athans, A.~Pascoal, Robust multiple model adaptive control
 M.~Kuipers, P.~Ioannou, Multiple model adaptive control with mixing, Automatic
   Control, IEEE Transactions on 55~(8) (2010) 1822--1836.
 
+\bibitem{petkos2006learning}
+G.~Petkos, M.~Toussaint, S.~Vijayakumar, Learning multiple models of non-linear
+  dynamics for control under varying contexts, in: Artificial Neural
+  Networks--ICANN 2006, Springer, 2006, pp. 898--907.
+
 \bibitem{sugimoto2012emosaic}
 N.~Sugimoto, J.~Morimoto, S.-H. Hyon, M.~Kawato, The emosaic model for humanoid
   robot control, Neural Networks 29 (2012) 8--19.
@@ -174,12 +163,6 @@ D.~J. Berndt, J.~Clifford, Using dynamic time warping to find patterns in time
 \bibitem{willett1988recent}
 P.~Willett, Recent trends in hierarchic document clustering: a critical review,
   Information Processing \& Management 24~(5) (1988) 577--597.
-
-\bibitem{howard2010transferring}
-M.~Howard, D.~Mitrovic, S.~Vijayakumar, Transferring impedance control
-  strategies between heterogeneous systems via apprenticeship learning, in:
-  Humanoid Robots (Humanoids), 2010 10th IEEE-RAS International Conference on,
-  IEEE, 2010, pp. 98--105.
 
 \bibitem{cohn1996active}
 D.~A. Cohn, Z.~Ghahramani, M.~I. Jordan, Active learning with statistical
