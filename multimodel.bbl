@@ -5,6 +5,10 @@
 \expandafter\ifx\csname href\endcsname\relax
   \def\href#1#2{#2} \def\path#1{#1}\fi
 
+\bibitem{flanagan2006control}
+J.~R. Flanagan, M.~C. Bowman, R.~S. Johansson, Control strategies in object
+  manipulation tasks, Current opinion in neurobiology 16~(6) (2006) 650--659.
+
 \bibitem{haruno2001mosaic}
 M.~Haruno, D.~M. Wolpert, M.~Kawato, Mosaic model for sensorimotor learning and
   control, Neural computation 13~(10) (2001) 2201--2220.
@@ -162,6 +166,20 @@ N.~Sugimoto, J.~Morimoto, S.-H. Hyon, M.~Kawato, The emosaic model for humanoid
 F.~A. Mussa-Ivaldi, S.~F. Giszter, E.~Bizzi, Linear combinations of primitives
   in vertebrate motor control, Proceedings of the National Academy of Sciences
   91~(16) (1994) 7534--7538.
+
+\bibitem{berndt1994using}
+D.~J. Berndt, J.~Clifford, Using dynamic time warping to find patterns in time
+  series., in: KDD workshop, Vol.~10, Seattle, WA, 1994, pp. 359--370.
+
+\bibitem{willett1988recent}
+P.~Willett, Recent trends in hierarchic document clustering: a critical review,
+  Information Processing \& Management 24~(5) (1988) 577--597.
+
+\bibitem{howard2010transferring}
+M.~Howard, D.~Mitrovic, S.~Vijayakumar, Transferring impedance control
+  strategies between heterogeneous systems via apprenticeship learning, in:
+  Humanoid Robots (Humanoids), 2010 10th IEEE-RAS International Conference on,
+  IEEE, 2010, pp. 98--105.
 
 \bibitem{cohn1996active}
 D.~A. Cohn, Z.~Ghahramani, M.~I. Jordan, Active learning with statistical
