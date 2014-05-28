@@ -13,17 +13,6 @@ J.~R. Flanagan, M.~C. Bowman, R.~S. Johansson, Control strategies in object
 M.~Haruno, D.~M. Wolpert, M.~Kawato, Mosaic model for sensorimotor learning and
   control, Neural computation 13~(10) (2001) 2201--2220.
 
-\bibitem{bryson2004modular}
-J.~J. Bryson, Modular representations of cognitive phenomena in ai, psychology
-  and neuroscience, in: IN AI, PSYCHOLOGY AND NEUROSCIENCE, VISIONS OF MIND,
-  Citeseer, 2004.
-
-\bibitem{BrysonMcG12}
-J.~J. Bryson, Structuring intelligence: {T}he role of hierarchy, modularity and
-  learning in generating intelligent behaviour, in: D.~McFarland, K.~Stenning,
-  M.~McGonigle (Eds.), The Complex Mind: An Interdisciplinary Approach,
-  Palgrave-Macmillan, Basingstoke, 2012, pp. 126--143.
-
 \bibitem{calinon2007learning}
 S.~Calinon, F.~Guenter, A.~Billard, On learning, representing, and generalizing
   a task in a humanoid robot, Systems, Man, and Cybernetics, Part B:
@@ -111,14 +100,14 @@ M.~Howard, D.~Mitrovic, S.~Vijayakumar, Transferring impedance control
   Humanoid Robots (Humanoids), 2010 10th IEEE-RAS International Conference on,
   IEEE, 2010, pp. 98--105.
 
-\bibitem{neilson1985acquisition}
-P.~Neilson, M.~Neilson, N.~O'Dwyer, Acquisition of motor skills in tracking
-  tasks: Learning internal models, Motor memory and control. Human Performance
-  Associates, Dunedin (1985) 25--36.
+\bibitem{cohn1996active}
+D.~A. Cohn, Z.~Ghahramani, M.~I. Jordan, Active learning with statistical
+  models, arXiv preprint cs/9603104.
 
-\bibitem{wolpert1998multiple}
-D.~M. Wolpert, M.~Kawato, Multiple paired forward and inverse models for motor
-  control, Neural Networks 11~(7) (1998) 1317--1329.
+\bibitem{huang2013learning}
+B.~Huang, S.~El-Khoury, M.~Li, J.~J. Bryson, A.~Billard, Learning a real time
+  grasping strategy, in: Robotics and Automation (ICRA), 2013 IEEE
+  International Conference on, IEEE, 2013, pp. 593--600.
 
 \bibitem{jacobs1991adaptive}
 R.~A. Jacobs, M.~I. Jordan, S.~J. Nowlan, G.~E. Hinton, Adaptive mixtures of
@@ -151,10 +140,9 @@ G.~Petkos, M.~Toussaint, S.~Vijayakumar, Learning multiple models of non-linear
 N.~Sugimoto, J.~Morimoto, S.-H. Hyon, M.~Kawato, The emosaic model for humanoid
   robot control, Neural Networks 29 (2012) 8--19.
 
-\bibitem{mussa1994linear}
-F.~A. Mussa-Ivaldi, S.~F. Giszter, E.~Bizzi, Linear combinations of primitives
-  in vertebrate motor control, Proceedings of the National Academy of Sciences
-  91~(16) (1994) 7534--7538.
+\bibitem{wolpert1998multiple}
+D.~M. Wolpert, M.~Kawato, Multiple paired forward and inverse models for motor
+  control, Neural Networks 11~(7) (1998) 1317--1329.
 
 \bibitem{berndt1994using}
 D.~J. Berndt, J.~Clifford, Using dynamic time warping to find patterns in time
@@ -163,10 +151,6 @@ D.~J. Berndt, J.~Clifford, Using dynamic time warping to find patterns in time
 \bibitem{willett1988recent}
 P.~Willett, Recent trends in hierarchic document clustering: a critical review,
   Information Processing \& Management 24~(5) (1988) 577--597.
-
-\bibitem{cohn1996active}
-D.~A. Cohn, Z.~Ghahramani, M.~I. Jordan, Active learning with statistical
-  models, arXiv preprint cs/9603104.
 
 \bibitem{deSouza2014}
 R.~de~Souza, S.~El~Khoury, J.~Santos-Victor, A.~Billard, Towards comprehensive
