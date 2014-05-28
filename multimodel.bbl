@@ -140,9 +140,16 @@ G.~Petkos, M.~Toussaint, S.~Vijayakumar, Learning multiple models of non-linear
 N.~Sugimoto, J.~Morimoto, S.-H. Hyon, M.~Kawato, The emosaic model for humanoid
   robot control, Neural Networks 29 (2012) 8--19.
 
-\bibitem{wolpert1998multiple}
-D.~M. Wolpert, M.~Kawato, Multiple paired forward and inverse models for motor
-  control, Neural Networks 11~(7) (1998) 1317--1329.
+\bibitem{bryson2004modular}
+J.~J. Bryson, Modular representations of cognitive phenomena in ai, psychology
+  and neuroscience, in: IN AI, PSYCHOLOGY AND NEUROSCIENCE, VISIONS OF MIND,
+  Citeseer, 2004.
+
+\bibitem{BrysonMcG12}
+J.~J. Bryson, Structuring intelligence: {T}he role of hierarchy, modularity and
+  learning in generating intelligent behaviour, in: D.~McFarland, K.~Stenning,
+  M.~McGonigle (Eds.), The Complex Mind: An Interdisciplinary Approach,
+  Palgrave-Macmillan, Basingstoke, 2012, pp. 126--143.
 
 \bibitem{berndt1994using}
 D.~J. Berndt, J.~Clifford, Using dynamic time warping to find patterns in time
