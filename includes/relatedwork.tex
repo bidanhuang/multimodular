@@ -9,10 +9,10 @@ In this section, we review related literature in the area of robot learning mani
 %The approach of PbD usually goes through three stages: perceive (demonstration), recognise (skill modeling) and reproduction (task implementation)~\cite{demiris2002f}. The advantages of PbD largely come from the demonstration and skill modeling steps. In the later part of this section, we provide an overview on these two stages.
 
 \subsection{Learning Manipulation Tasks}
-Demonstration based learning has been extensively studied in literatures~\cite{calinon2007learning,dillmann2004teaching,kulic2012incremental} as a promising approach to build robot intelligence.
-Learning manipulation skill from human demonstration is one of the main application of this approach.  
+Demonstration based learning has been extensively studied in literatures~\cite{calinon2007learning,dillmann2004teaching,kulic2012incremental} as a promising approach to build robot intelligence. It is essential for the tasks that analytical expression of the system is hard to derive.
+Learning manipulation tasks is one of the main application of this approach.
 
-In learning manipulation tasks, kinematics teaching and tele-operation are two most commonly used way of demonstration. In a kinesthetic teaching demonstration, human directly contact with the robot and guide their movements to accomplish a task~\cite{korkinof2013online,pais2014encoding,pastor2011skill,Miao2014}. The trajectory of movements and contact force are recorded by the robot sensors.
+In learning manipulation tasks, kinematics teaching and tele-operation are two major forms of demonstration. In kinesthetic teaching, human directly contact with the robot and guide their movements to accomplish a task~\cite{korkinof2013online,pais2014encoding,pastor2011skill,Miao2014}. The trajectory of movements and contact force are recorded by the robot sensors.
 % ===== Why not kinematics approach? =====
 This method is simple and effective but limited in the number of controllable end effectors. While a manipulation task usually involves multifinger movement, a human can kinematically operate one finger with each hand and hence two fingers simultaneously for the most extend. To control multi-finger hands, some researchers use tele-operation~\cite{bernardino2013precision,kondo2008recognition,Fischer98}. This usually relies on data gloves and motion capture system to sense human hand-arm motions. The human motion is mapped to robots to generate motions and interact with the environment. In fine manipulation tasks, the robot platforms are usually restricted to anthropomorphic hands for better mapping. All of these methods provide no direct force feedback during manipulation to the human demonstrator.
 
@@ -24,51 +24,32 @@ The aim of an object centric approach is to learn the correlation between the ex
 
 % GMM
 To capture the nonlinearity in the control strategy, we use the Gaussian Mixture Model (GMM)~\cite{cohn1996active} in our approach to encode the demonstration. GMM has been shown to be an efficient model in a variety of tasks~\cite{huang2013learning,sauser2011iterative,calinon2007incremental} and demonstrated to be effective.
-\textcolor{red}{TODO:compare with ANN}
+\textcolor{red}{TODO:compare with ANN(Note)}
 
-
-%In an object centric manner there is no difference between collecting data from the teacher or from the learner -- they are expressed from the objects' perspective. Once the control policy is encoded, it can be directly applied to the robots.
-
-%In order to capture information from demonstrations, different sensors are used for different tasks. Motion capture systems and data gloves are used to provide demonstrators' end effectors and joints' position information~\cite{calinon2007incremental,asfour2008imitation}. Force torque sensors and tactile sensing systems are used to provide information about demonstrators' exerting force on the environment~\cite{sauser2011iterative,Miao2014}.
-%
-%The task information captured from sensors is needed to be transferred to robots. The differences in the sensory and motor system of human and robot causes the correspondence problem.
-%%these task knowledge from human to robot, the correspondence problem caused by the embodiment difference between human and robots has to be solved.
-%%To solve this problem, different mapping methods are proposed in many literatures~\cite{asfour2008imitation,koenemann2012whole,kulic2012incremental}, while human correction~\cite{calinon2007incremental,sauser2011iterative,romano2011human} and self-correction~\cite{bidan2013robio} via learning are proposed as alternative solutions. Kinesthetic teaching~\cite{korkinof2013online,pais2014encoding} and tele-operation~\cite{Fischer98} are used to directly demonstrate a task on a robot and hence avoid the correspondence problem.
-
-%Physical interaction between the robot and the environment is one important characteristics of manipulation tasks, the problems rise from the complicated physics in the interactions between objects is hard to solve analytically. Without using detail knowledge of multi-body dynamics nor tribology, however, human can manipulate objects without difficulties. To learn human manipulation strategies
-
-% While learning body gestures and reaching target strategies mainly use motion tracking systems to read the demonstrators'
-%While learning in position control~\cite{calinon2010learning,kulic2012incremental} has been extensively studied, learning in force/impedence control is less discussed in literatures~\cite{sauser2011iterative,petkos2006learning}. In manipulation tasks, force control is an important method as force produce direct impact to the environment.
-
-%\subsection{Manipulation task}
-%\label{sec:manipulationtask}
 
 \subsection{Modular Approach}
 % Some manipulation modelling method. drawback. You must survey other approaches to model multiple sensori-motor loops (also called motor program, motor primitives, behaviors, etc) and switching across these models, and then justify the use of Mosaic
-
-
-
-%% Introduce manipulation impedance control model
-%All the these approaches obtain task information from human demonstrations. To make the best use of human knowledge, the information should be encoded in a similar way that human encode it. Human tactile sensation scheme is implemented to robot for grasping control and result in a good performance~\cite{romano2011human}. However this approach of using human motor control mechanism to build models of tasks is rarely discussed in literature.
 
 %% Internal model
 %In the study of human motor control, internal model is one of the most evidently supported hypothesis. It postulates a neuron process that simulates output of the motor system and the environment~\cite{kawato1999internal}. It's applications in robot control have been explored by many researchers. Various types of internal models are built for different tasks~\cite{sciavicco2000modelling,jordan1992forward}.
 
 
 % Adaptive
-Robots operating in human centric environment need to be equipped with adaptive control strategy to cope with the changing environment. Classic adaptive control approaches relying on model identification~\cite{khalil2004modeling} is not effective in non-stationary context, as they require a certain amount of time to search for optimal model parameter values. For the fast adaption purpose, multiple model approach is a good alternative. The benefit of this approach has been long discussed in the control community~\cite{jacobs1991adaptive,narendra1995adaptation,narendra1997adaptive}. Some recent works~\cite{fekri2007robust,kuipers2010multiple} present promising modular based approaches. Multiple model approach also has a wide range application in robot control. It is particular useful for tasks in nonlinear and non-stationary environment~\cite{petkos2006learning,sugimoto2012emosaic}. Modular approach has also been shown to be an effective architecture of building intelligent systems~\cite{bryson2004modular,BrysonMcG12}.
+Robots operating in human centric environment need to handle tasks with changing contexts. These changes are often rapid or discontinuous. Classic adaptive control approaches such as model identification~\cite{khalil2004modeling} are inadequate for these tasks, as instability or error may caused during the period of searching new optimal model variable values. A solution to fast adaption is the multiple model approach. In this approach, multiple controllers are designed, and each of which is appropriate for a certain task context. During control, the task context is estimated online and the corresponding controllers are activated. The benefit of this approach has been long discussed in the control community~\cite{jacobs1991adaptive,narendra1995adaptation,narendra1997adaptive}. Some recent works~\cite{fekri2007robust,kuipers2010multiple} present promising modular based approaches. Multiple model approach also has a wide range application in robot control. It has also been shown to be an effective architecture of building intelligent systems~\cite{bryson2004modular,BrysonMcG12}. It is particular useful for tasks in nonlinear and non-stationary environment~\cite{petkos2006learning,sugimoto2012emosaic}.
 
 % Modular - human MOSAIC
-\textcolor{red}{TODO:survey other approaches to model multiple sensori-motor loops. Justify MOSAIC.}
+
 %%The excellent ability of human to manipulate different objects in different contexts and to quickly adapt to change of contexts suggested that our central nervous system (CNS) maintains multiple internal models of outside environments, rather than a single internal model that adapts to new environment~\cite{neilson1985acquisition}.
 %Based on the concept of modularity, the Modular selection and identification for control (MOSAIC) architecture was proposed to explain the motor control strategy of the CNS~\cite{wolpert1998multiple}. According to this hypothesis, during the motor control process, the brain quickly select the most appropriate modules according to the current environment context and use them to generate an appropriate motor command to react to the environment~\cite{haruno2001mosaic}.
 
 % Our approach
-The approach we take is a modular approach inspired from MOSAIC~\cite{haruno2001mosaic}. MOSCAIC (Modular selection and identification for control) is a human motor control mechanism hypothesis model, that is supported by neuroscience evidences. According to this hypothesis, during the motor control process, the brain quickly select the most appropriate modules according to the current environment context and use them to generate an appropriate motor command to react to the environment. However this model does not provide a method to find out number of models needed in tasks.
+The approach we take is a modular approach inspired from MOSAIC~\cite{haruno2001mosaic}. MOSCAIC (MOdular SeleCtion and Identification for Control) is a bio-inspired paradigm of multiple module control. Fig.~\ref{fig:control} illustrates the workflow. Each module is a pair of forward and inverse model. At each time step, the forward models estimate the current context and compare it with the actually context. The accuracy of the estimation decided the weight of the corresponding inverse models.
+The final motor command is the linear combination of the commands generated from each inverse models factored by their weights. Compare to the switching modular method, i.e. only one module will be activated and used to generate motor command~\cite{narendra1997adaptive}, the linear combination of the modules requires less number of modules to approximate the system dynamics. In the case that forward model and inverse model encode the same set of task variables, i.e. the task state and motor command, they can be united to a single full joint distribution model~\cite{petkos2006learning}. However in many cases, the inverse model requires extra information, for example the motor command history, in order to compute a proper control command for the task context. In our approach we build a pair of forward and inverse model for each module.
+%However this model does not provide a method to find out number of models needed in tasks.
 
 
-
-In our approach, we first find out the number of models required in the task from the demonstration data. The human control strategy is then encoded by multiple pairs of forward and inverse models. The final motor command is the linear combination of the commands generated from each inverse models factored by their weights estimated by the forward models. The linear combination, rather than switch, of the models requires less number of modules to approximate the system dynamics. %Indeed, neuroscience evidence suggests that animal brain sum modular stimulates of muscles to generate different motions~\cite{mussa1994linear}.
+None of the mentioned approaches above provide a method to identify number of models needed in a certain task.
+In our approach, we first find out the number of models required in the task from the demonstration data. The human control strategy is then encoded by multiple pairs of forward and inverse models.  %Indeed, neuroscience evidence suggests that animal brain sum modular stimulates of muscles to generate different motions~\cite{mussa1994linear}.
 To the best of our knowledge, this is the first realization of the multiple model in an object manipulation task with a real robot, learnt from human demonstration.
 
 %It is particularly useful to use learning to approximate internal models for motor control when the analytical model of the system dynamics is not easy to deduce.

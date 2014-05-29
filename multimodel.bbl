@@ -28,11 +28,6 @@ D.~Kuli{\'c}, C.~Ott, D.~Lee, J.~Ishikawa, Y.~Nakamura, Incremental learning of
   observation, The International Journal of Robotics Research 31~(3) (2012)
   330--345.
 
-\bibitem{demiris2002f}
-J.~Demiris, G.~Hayes, f 3 imitation as a dual-route process featuring
-  predictive and learning components; 4 biologically plausible computational
-  model, Imitation in animals and artifacts (2002) 327.
-
 \bibitem{korkinof2013online}
 D.~Korkinof, Y.~Demiris, Online quantum mixture regression for trajectory
   learning by demonstration, in: Intelligent Robots and Systems (IROS), 2013
@@ -42,6 +37,11 @@ D.~Korkinof, Y.~Demiris, Online quantum mixture regression for trajectory
 A.~L. Pais, A.~Billard, Encoding bi-manual coordination patterns from human
   demonstrations, in: Proceedings of the 2014 ACM/IEEE international conference
   on Human-robot interaction, ACM, 2014, pp. 264--265.
+
+\bibitem{pastor2011skill}
+P.~Pastor, M.~Kalakrishnan, S.~Chitta, E.~Theodorou, S.~Schaal, Skill learning
+  and task outcome prediction for manipulation, in: Robotics and Automation
+  (ICRA), 2011 IEEE International Conference on, IEEE, 2011, pp. 3828--3834.
 
 \bibitem{Miao2014}
 M.~Li, H.~Yin, K.~Tahara, A.~Billard, Learning object-level impedance control
@@ -69,6 +69,17 @@ M.~Fischer, P.~van~der Smagt, G.~Hirzinger, Learning techniques in a dataglove
 T.~Asfour, P.~Azad, F.~Gyarfas, R.~Dillmann, Imitation learning of dual-arm
   manipulation tasks in humanoid robots, International Journal of Humanoid
   Robotics 5~(02) (2008) 183--202.
+
+\bibitem{do2011towards}
+M.~Do, T.~Asfour, R.~Dillmann, Towards a unifying grasp representation for
+  imitation learning on humanoid robots, in: Robotics and Automation (ICRA),
+  2011 IEEE International Conference on, IEEE, 2011, pp. 482--488.
+
+\bibitem{hueser2006learning}
+M.~Hueser, T.~Baier, J.~Zhang, Learning of demonstrated grasping skills by
+  stereoscopic tracking of human head configuration, in: Robotics and
+  Automation, 2006. ICRA 2006. Proceedings 2006 IEEE International Conference
+  on, IEEE, 2006, pp. 2795--2800.
 
 \bibitem{calinon2007incremental}
 S.~Calinon, A.~Billard, Incremental learning of gestures by imitation in a
@@ -100,6 +111,11 @@ M.~Howard, D.~Mitrovic, S.~Vijayakumar, Transferring impedance control
   Humanoid Robots (Humanoids), 2010 10th IEEE-RAS International Conference on,
   IEEE, 2010, pp. 98--105.
 
+\bibitem{wimbock2012comparison}
+T.~Wimb{\"o}ck, C.~Ott, A.~Albu-Sch{\"a}ffer, G.~Hirzinger, Comparison of
+  object-level grasp controllers for dynamic dexterous manipulation, The
+  International Journal of Robotics Research 31~(1) (2012) 3--23.
+
 \bibitem{cohn1996active}
 D.~A. Cohn, Z.~Ghahramani, M.~I. Jordan, Active learning with statistical
   models, arXiv preprint cs/9603104.
@@ -108,6 +124,10 @@ D.~A. Cohn, Z.~Ghahramani, M.~I. Jordan, Active learning with statistical
 B.~Huang, S.~El-Khoury, M.~Li, J.~J. Bryson, A.~Billard, Learning a real time
   grasping strategy, in: Robotics and Automation (ICRA), 2013 IEEE
   International Conference on, IEEE, 2013, pp. 593--600.
+
+\bibitem{khalil2004modeling}
+W.~Khalil, E.~Dombre, Modeling, identification and control of robots,
+  Butterworth-Heinemann, 2004.
 
 \bibitem{jacobs1991adaptive}
 R.~A. Jacobs, M.~I. Jordan, S.~J. Nowlan, G.~E. Hinton, Adaptive mixtures of
@@ -131,15 +151,6 @@ S.~Fekri, M.~Athans, A.~Pascoal, Robust multiple model adaptive control
 M.~Kuipers, P.~Ioannou, Multiple model adaptive control with mixing, Automatic
   Control, IEEE Transactions on 55~(8) (2010) 1822--1836.
 
-\bibitem{petkos2006learning}
-G.~Petkos, M.~Toussaint, S.~Vijayakumar, Learning multiple models of non-linear
-  dynamics for control under varying contexts, in: Artificial Neural
-  Networks--ICANN 2006, Springer, 2006, pp. 898--907.
-
-\bibitem{sugimoto2012emosaic}
-N.~Sugimoto, J.~Morimoto, S.-H. Hyon, M.~Kawato, The emosaic model for humanoid
-  robot control, Neural Networks 29 (2012) 8--19.
-
 \bibitem{bryson2004modular}
 J.~J. Bryson, Modular representations of cognitive phenomena in ai, psychology
   and neuroscience, in: IN AI, PSYCHOLOGY AND NEUROSCIENCE, VISIONS OF MIND,
@@ -150,6 +161,15 @@ J.~J. Bryson, Structuring intelligence: {T}he role of hierarchy, modularity and
   learning in generating intelligent behaviour, in: D.~McFarland, K.~Stenning,
   M.~McGonigle (Eds.), The Complex Mind: An Interdisciplinary Approach,
   Palgrave-Macmillan, Basingstoke, 2012, pp. 126--143.
+
+\bibitem{petkos2006learning}
+G.~Petkos, M.~Toussaint, S.~Vijayakumar, Learning multiple models of non-linear
+  dynamics for control under varying contexts, in: Artificial Neural
+  Networks--ICANN 2006, Springer, 2006, pp. 898--907.
+
+\bibitem{sugimoto2012emosaic}
+N.~Sugimoto, J.~Morimoto, S.-H. Hyon, M.~Kawato, The emosaic model for humanoid
+  robot control, Neural Networks 29 (2012) 8--19.
 
 \bibitem{berndt1994using}
 D.~J. Berndt, J.~Clifford, Using dynamic time warping to find patterns in time
