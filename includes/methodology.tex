@@ -5,7 +5,7 @@ Our goal is to acquire a modular based control policy for an object manipulation
 \begin{enumerate}
 \item Human demonstrating a task in different contexts (Section~\ref{sec:demo}).
 %\item Clustering the data to find number of modules needed in the task (subsection ~\ref{sec:cluster}).
-\item Learning a multiple module model to encode human control strategies (Section~\ref{sec:learn}).
+\item Extracting human control strategies for different contexts(Section~\ref{sec:learn}).
 %\item Design a controller based on the learnt multiple model  (subsection ~\ref{controller}).
 \item Use the multiple module model to compute motor commands for a robot(Section~\ref{sec:command}).
 \end{enumerate}
@@ -130,11 +130,10 @@ When the clusters can not be merged further, we discover the number of modules r
 \label{sec:model}
 After identifying the number of modules, we build models for each of the module. In this section, we explain the way we encode human manipulation strategy.
 
-During demonstrations, we constantly acquire the object displacements and the force and torque applied by the teacher. The teacher is the only source of exert force and torque of the system. The relationship between the exert force and torque and their resulting object displacement shows the dynamic characteristic of the task. A classic way to describe the system behaviour is using impedance~\cite{howard2010transferring}. Giving a desired impedance of a task, we can compute a proper motor command for the robot to accomplish the task. %These two types of models have common drawbacks in modeling a manipulation task.
-However the impedance is usually hard to specified in a given task, especially for task involving varying impedance. Most of the time it is roughly approximated by a linear model. As a result, impedance control are usually effective in slow changing and linear tasks. Specification of the impedance of a nonlinear task remains a open problem.
+During demonstrations, we constantly acquire the object displacements and the force and torque applied by the teacher. The teacher is the only source of exert force and torque of the system. The relationship between the exert force and torque and their resulting object displacement shows the dynamic characteristic of the task.
 
 %GMM
-In our approach, we model the correlation of the force and the displacement rather than estimating the impedance. To this end, we use the Gaussian Mixture Model (GMM)~\cite{cohn1996active}. The task dynamics is encoded as a joint distribution of the object status displacement $s$ and the action $a$ taken by human $p(s,a,{\mid}{\Omega})$. In our task, $s$ is the one dimensional cap angular displacment and $a$ is the one dimensional exert torque and grip force (section~\ref{sec:exp}). 
+In our approach, we model the correlation of the force and the displacement with GMM. The task dynamics is hence encoded as a joint distribution of the object status displacement $s$ and the action $a$ taken by human $p(s,a,{\mid}{\Omega})$. In our task, $s$ is the one dimensional cap angular displacment and $a$ is the one dimensional exert torque and grip force (section~\ref{sec:exp}).
 Modeling the distribution by GMM allows us to capture the nonlinearity in the data, as well as to compute the likelihood of a query data point in the model. This provides an good estimation of the reliability of the module in the current task context, which is crucial in choosing the correct modules for control (discussed in Section~\ref{sec:rf}). At the other hand, as a generative model GMM is able to generate new data from the model, i.e. generate motor commands.
 
 With a GMM, the joint distribution of the variables is expressed as a sum of $N$ Gaussian components,
