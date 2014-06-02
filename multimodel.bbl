@@ -116,6 +116,11 @@ T.~Wimb{\"o}ck, C.~Ott, A.~Albu-Sch{\"a}ffer, G.~Hirzinger, Comparison of
   object-level grasp controllers for dynamic dexterous manipulation, The
   International Journal of Robotics Research 31~(1) (2012) 3--23.
 
+\bibitem{buchli2011learning}
+J.~Buchli, F.~Stulp, E.~Theodorou, S.~Schaal, Learning variable impedance
+  control, The International Journal of Robotics Research 30~(7) (2011)
+  820--833.
+
 \bibitem{cohn1996active}
 D.~A. Cohn, Z.~Ghahramani, M.~I. Jordan, Active learning with statistical
   models, arXiv preprint cs/9603104.
@@ -129,14 +134,14 @@ B.~Huang, S.~El-Khoury, M.~Li, J.~J. Bryson, A.~Billard, Learning a real time
 W.~Khalil, E.~Dombre, Modeling, identification and control of robots,
   Butterworth-Heinemann, 2004.
 
-\bibitem{jacobs1991adaptive}
-R.~A. Jacobs, M.~I. Jordan, S.~J. Nowlan, G.~E. Hinton, Adaptive mixtures of
-  local experts, Neural computation 3~(1) (1991) 79--87.
-
 \bibitem{narendra1995adaptation}
 K.~S. Narendra, J.~Balakrishnan, M.~K. Ciliz, Adaptation and learning using
   multiple models, switching, and tuning, Control Systems, IEEE 15~(3) (1995)
   37--51.
+
+\bibitem{jacobs1991adaptive}
+R.~A. Jacobs, M.~I. Jordan, S.~J. Nowlan, G.~E. Hinton, Adaptive mixtures of
+  local experts, Neural computation 3~(1) (1991) 79--87.
 
 \bibitem{narendra1997adaptive}
 K.~S. Narendra, J.~Balakrishnan, Adaptive control using multiple models,
@@ -162,14 +167,14 @@ J.~J. Bryson, Structuring intelligence: {T}he role of hierarchy, modularity and
   M.~McGonigle (Eds.), The Complex Mind: An Interdisciplinary Approach,
   Palgrave-Macmillan, Basingstoke, 2012, pp. 126--143.
 
+\bibitem{sugimoto2012emosaic}
+N.~Sugimoto, J.~Morimoto, S.-H. Hyon, M.~Kawato, The emosaic model for humanoid
+  robot control, Neural Networks 29 (2012) 8--19.
+
 \bibitem{petkos2006learning}
 G.~Petkos, M.~Toussaint, S.~Vijayakumar, Learning multiple models of non-linear
   dynamics for control under varying contexts, in: Artificial Neural
   Networks--ICANN 2006, Springer, 2006, pp. 898--907.
-
-\bibitem{sugimoto2012emosaic}
-N.~Sugimoto, J.~Morimoto, S.-H. Hyon, M.~Kawato, The emosaic model for humanoid
-  robot control, Neural Networks 29 (2012) 8--19.
 
 \bibitem{berndt1994using}
 D.~J. Berndt, J.~Clifford, Using dynamic time warping to find patterns in time
