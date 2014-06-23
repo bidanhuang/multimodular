@@ -107,7 +107,7 @@
     \address{}
     \begin{frontmatter}
     \begin{abstract}
-     Object manipulation is a challenging task for robot as the complicated physics involves in object interaction is hard to be expressed analytically. In this work we introduce a modular approach to learn the human manipulation strategy by demonstration. The human demonstrator demonstrated the task in different contexts and we group these demonstrates according to their control strategies. Forward and inverse model pairs are learnt from each group to encode the motor control policy. We validate our approach on a robot platform with a opening bottle cap task. We show that our approach can correctly identify the number of modules of a given task and generate proper motor commands for the robot to accomplish the task.
+     Object manipulation is a challenging task for robot as the complicated physics involves in object interaction is hard to be expressed analytically. In this work we introduce a modular approach to learn the human manipulation strategy. After human demonstrating a task in different contexts, we modularize the control strategies according to the contexts. Strategy in each module is encoded by a pair of forward and inverse model. All modules contribute to the final control policy, according to their estimation error of current task context. We validate our approach on a robot platform with a opening bottle cap task. We show that our approach can modularize the adaptive control strategy generate to appropriate motor commands for the robot to accomplish the task.
     \end{abstract}
     \end{frontmatter}
   \end{@twocolumnfalse}

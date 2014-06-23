@@ -5,22 +5,32 @@ Our goal is to acquire a modular based control policy for an object manipulation
 \begin{enumerate}
 \item Human demonstrating a task in different contexts (Section~\ref{sec:demo}).
 %\item Clustering the data to find number of modules needed in the task (subsection ~\ref{sec:cluster}).
-\item Extracting human control strategies for different contexts(Section~\ref{sec:learn}).
+\item Extracting human control strategies for different contexts and build multiple internal models(Section~\ref{sec:learn}).
 %\item Design a controller based on the learnt multiple model  (subsection ~\ref{controller}).
-\item Use the multiple module model to compute motor commands for a robot(Section~\ref{sec:command}).
+\item Use the multiple models to compute motor commands for a robot(Section~\ref{sec:control}).
 \end{enumerate}
 
+Figure~\ref{fig:overview} shows an overview of our framework.
+
+\begin{figure}
+  \centering
+   \includegraphics[width=8cm]{./fig/overview3.pdf}
+  \caption{ \scriptsize{System overview.}
+  \label{fig:overview}
+}
+\label{fig:demo}
+\end{figure}
 
 \subsection{Human demonstration}
 \label{sec:demo}
 
-\begin{figure}
-  \centering
-   \includegraphics[width=5cm]{./fig/ravin.jpg}
-  \caption{ \scriptsize{Human demonstration of opening a bottle cap.}
-}
-\label{fig:demo}
-\end{figure}
+%\begin{figure}
+%  \centering
+%   \includegraphics[width=5cm]{./fig/ravin.jpg}
+%  \caption{ \scriptsize{Human demonstration of opening a bottle cap.}
+%}
+%\label{fig:demo}
+%\end{figure}
 
 \begin{figure}
   \centering
@@ -31,14 +41,14 @@ Our goal is to acquire a modular based control policy for an object manipulation
   \label{fig:devices}
 \end{figure}
 
-The first step is recording human demonstration of a task. Based on the object centric principle, we collect the object trajectory and its driven force. These data can be accessed by motion capture system, force-torque sensor and wearable haptic device(Fig.~\ref{fig:demo}). Fig.~\ref{fig:devices} shows a few sensors we used in the opening bottle caps task. Details will be explained in section~\ref{sec:exp_demo}.
+The first step is recording human demonstration of a task. Based on the object centric principle, we collect the object trajectory and its driven force. These data can be accessed by motion capture system, force-torque sensor and wearable haptic device. Fig.~\ref{fig:devices} shows a few sensors we used in the opening bottle caps task. Details will be explained in section~\ref{sec:exp_demo}.
 
 % ===== Why not kinematics approach? =====
 %For manipulation task, kinematics teaching on robot is difficult. While a manipulation task usually involves multifinger movement, a human can kinematically operate one finger with each hand and hence two fingers simultaneously for the most extend. Tele-operation of the robot hand solves this problem but it does not provide a direct force feedback. In our approach, human perform the task with direct interaction with the object. With direct interaction with the object the teacher is able to perform the task most naturally and perform a more delicate control strategy. %In an object centric manner there is no difference between collecting data from the teacher or from the learner -- they are expressed from the objects' perspective. Once the control policy is encoded, it can be directly applied to the robots.
 
 %Kinematics teaching of the learner is not necessary here for three reasons. Firstly in an object centric manner there is no difference between collecting data from the teacher or from the learner -- they are expressed from the object point of view. Secondly with direct interaction with the object the teacher is able to perform the task most naturally and hence provide a more naturally control policy. Thirdly manipulation with multifinger is difficult to demonstration kinematically, as a human can manipulate one finger of a robot with each hand and hence two fingers simultaneously for its most extend.
 
-% ======= demonstrate in different context =======
+% ======= demonstrate in different context   =======
 In the demonstration, the teacher perform a task a number of times to generate enough data for capturing the key features of it. Further, the teacher perform the task under different system kinematics and dynamics configurations, e.g. friction conditions, in order to explore how human adaptive to different task contexts. These different configurations are chosen to cover a wide range of different contexts. For example, in a opening bottle cap task the demonstration of opening the tightest bottle, within the capability of the learner, is included. Details will be explained in Section~\ref{sec:exp_demo}.
 %How to cover ??????
 
@@ -72,8 +82,8 @@ Due to the involvement of object interaction, a manipulation task frequently enc
 %In this multiple model approach, each model is trained for a particular dynamics context. During the control process the model can compute appropriate control commands for the corresponding dynamics according to the sensory inputs. If the model is chosen properly (see Section~\ref{rf} for mixing model), this approach will be able to adapt to changing environmental context.
 
 % ---------- Cluster to find number of modules -----------
-Different tasks may need different number of modules. In human demonstration the same task is demonstrated with a few different setups to explore how human adapt to them. However, the number of setups does not necessary equal to the number of modules needed in the task. Human may handle a few different contexts with the same control strategies. %Some data may seems to be dissimilar in the scale or frequency, but in fact are governed by the same dynamic.
-In order to find a proper number of modules, we need to differentiate different types of strategies. The differences can be reflected from the different pattern of the force-torque-displacement tuple. Hence we differentiate the patterns in a data driven manner: cluster force-torque-displacement tuple. Data in the same cluster is considered to be governed by the same strategy. The number of clusters is the number of modules and each module is encoded by one model.
+Different tasks may need different number of modules. In human demonstration the same task is demonstrated with a few different setups to explore how human adapt to them. However, the number of setups does not necessary equal to the number of modules needed in the task. Human may regard different setups as the same task context and handle them with the same control strategies. %Some data may seems to be dissimilar in the scale or frequency, but in fact are governed by the same dynamic.
+In order to find a proper number of modules, we need to differentiate different types of strategies. The differences can be reflected from the different pattern of the force-torque-displacement tuple. Ee differentiate the patterns in a data driven manner: cluster force-torque-displacement tuple. Data in the same cluster is considered to be governed by the same strategy. The number of clusters is the number of modules and each module is encoded by one model.
 
 
 % ----------- Distance Metric for clustering ------------
@@ -81,7 +91,7 @@ The goal of clustering is to separate a set of data to a few groups according to
 
 Dynamic time warping is suitable for measuring the similarity between two time series, which may have different speeds or durations. It warps the data in the time dimension and finds the optimal match between the time series. The similarity is computed as the average distance between the corresponding points in two series.
 
-The similarity (distance) between each pair of time series is computed by DTW and produce a distance matrix. In this distance matrix, each element contains a measurement of the similarity between two time series. We then cluster these time series into a few groups by a threshold of the similarity. This threshold is set by using the variance of the data from the same context as a reference. As mentioned above, under the same context a task is demonstrated a few times. These demonstrations are presumed to be handled with the same strategy and hence belong to the same cluster. The variance of these demonstrations give a reference of a proper variance of a cluster. The largest variance, across the variance of all contexts, is used as the threshold for the clustering.
+The similarity (distance) between each pair of time series is computed by DTW and produce a distance matrix. In this distance matrix, each element contains a measurement of the similarity between two time series. We then cluster these time series into a few groups by a threshold of the similarity. This threshold is set by using the variance of the data from the same setup as a reference. As mentioned above, under the same setup a task is demonstrated a few times. These demonstrations are presumed to be handled with the same strategy and hence belong to the same cluster. The variance of these demonstrations give a reference of a proper variance of a cluster. The largest variance, across the variance of all setups, is used as the threshold for the clustering.
 
 %% ------------ Hierarchical clustering -----------
 Most of the clustering methods require the specification of some variables, such as the number of clusters. Without knowing the number of clusters at the first place, we use an hierarchical agglomerative clustering method~\cite{willett1988recent}. Agglomerative clustering is a method that merges data iteratively until the stop criteria satisfied, which does not require a predefined number of clusters. Our clustering method is described as follow:
@@ -124,9 +134,9 @@ Pseudocode of the complete algorithm is shown in Algorithm~\ref{code:cluster}.
 
 
 % --------- Number of cluster -----------
-When the clusters can not be merged further, we discover the number of modules require in this task: it is the number of the remaining clusters. Each cluster is used as a module. The pattern of the data in a cluster represents a strategy of handling specific task contexts.
+When the clusters can not be merged further, we discover the number of modules require in this task: it is the number of the remaining clusters. Each cluster is used as a module. The pattern of the data in a cluster represents a strategy of handling a specific task context.
 
-\subsection{Learning Models}
+\subsubsection{Learning Models}
 \label{sec:model}
 After identifying the number of modules, we build models for each of the module. In this section, we explain the way we encode human manipulation strategy.
 
@@ -173,13 +183,13 @@ We aim to build a model closely simulates human motor strategy in order to make 
 
 \begin{figure}
   \centering
-      \subfloat[\scriptsize{}]{\includegraphics[width=8cm]{./fig/control_1.pdf}}
+      \subfloat[\scriptsize{}]{\includegraphics[width=8cm]{./fig/control_1_2.pdf}}
       \vspace{0.5cm}
-      \subfloat[\scriptsize{}]{\includegraphics[width=8cm]{./fig/control_4.pdf}}
+      \subfloat[\scriptsize{}]{\includegraphics[width=8cm]{./fig/control_3_2.pdf}}
 %  \includegraphics[width=8cm]{./fig/control_1.pdf}
 %
 %  \includegraphics[width=8cm]{./fig/control_4.pdf}
-  \caption{ \scriptsize{Control flow diagram of forward-inverse model in motor control.}
+  \caption{ \scriptsize{Control flow diagram of forward-inverse model in motor control. (a) System overview. Pairs of forward and inverse models work together to generate final motor command. The mechanism inside the red box is shown underneath. (b) A example of a 3 modules model. The forward models predict current task context (s1, s2, s3) and estimate the accuracy of their prediction (l1, l2, l3). These accuracy is called ``Responsibility Factors'' as they decide how much responsibility each inverse model should take in the final command. The Inverse models generate commands (a1, a2, a3) and the final command is the summation of them factorized by their responsibility factor (a1l1+a2l2+a3l3).  }
 }
 \label{fig:control}
 \end{figure}
@@ -188,7 +198,7 @@ We aim to build a model closely simulates human motor strategy in order to make 
 %The internal model ${\Omega})$ (forward model and inverse model) is encoded by the joint distributions of the variables, i.e. $p(s_t,s_{t+1},a_{t-1},a_t\mid{\Omega})$. This joint distribution encodes the forward model and the inverse model at the same time and both of their functionalities can be realized by the Gaussian Mixture Regression (GMR). For a given previous state and previous motor command, GMR provides a close-form solution to compute the anticipating state $s_t$, i.e. $p(s_{t+1}{\mid}s_{t},a_{t},{\Omega})$. For a given current state and desired state, we can compute the motor command using GMR, i.e. $p(a_t{\mid}s_t,s^{*}_{t+1},{\Omega_f})$. In some tasks, the initial status of the system remains unchanged for a certain time until the exert force or torque is big enough to change it. This will cause degeneracy in the inverse model. To solve this problem we include the previous motor command into the model, i.e. $p(a_t{\mid}s_t,s^{*}_{t+1},a_{t-1},{\Omega_f})$.
 
 % --------- one model for each ----------
-The forward model $\Omega_I$ is encoded by the joint distributions of the current system state, previous system state and the previous motor command, i.e. $p(s_t,s_{t-1},a_{t-1}\mid{\Omega_I})$. For a given object displacement and a motor command, the Gaussian Mixture Regression (GMR) provides a close-form solution to compute the anticipating object displacement $s_t$, i.e. $p(s_t{\mid}s_{t-1},a_{t-1},{\Omega_I})$. The inverse model $\Omega_f$ is encoded by the joint distributions of the current object displacement $s_t$ and the desired object displacement $s^{*}_{t+1}$. In some tasks, the initial status of the system remains unchanged for a certain time until the exert force or torque is big enough to change it. This will cause degeneracy in the inverse model. To solve this problem we include the previous motor command into the model, i.e. $p(s_t,s^{*}_{t+1},a_{t-1},a_t{\mid}{\Omega_F})$.
+The forward model $\Omega_I$ is encoded by the joint distributions of the current system state, previous system state and the previous motor command, i.e. $p(s_t,s_{t-1},a_{t-1}\mid{\Omega_I})$. For a given object displacement and a motor command, the Gaussian Mixture Regression (GMR) provides a close-form solution to compute the anticipating object displacement $s_t$, i.e. $E(s_t{\mid}s_{t-1},a_{t-1},{\Omega_I})$. The inverse model $\Omega_f$ is encoded by the joint distributions of the current object displacement $s_t$ and the desired object displacement $s^{*}_{t+1}$. In some tasks, the initial status of the system remains unchanged for a certain time until the exert force or torque is big enough to change it. This will cause degeneracy in the inverse model. To solve this problem we include the previous motor command into the model, i.e. $p(s_t,s^{*}_{t+1},a_{t-1},a_t{\mid}{\Omega_F})$.
 
 
 
@@ -313,7 +323,7 @@ where
 \label{sec:rf}
 
 In a multi-module approach, choosing the proper modules to compute the motor command is crucial. For this we rely on the computation of the responsibility factor. The responsibility factors act as the weight of the modules. Each module has its responsibility factor at every time step, the final motor command at that time step is the linear combination of the commands generated from each module multiplied by their responsibility factors.
-The responsibility factor is a measurement of the reliability of using one model to represent the current system contexts.
+The responsibility factor is a measurement of the reliability of using one model to represent the current system context.
 %The measurement is computed by the discrepancy between the anticipating current system state $s_t$ of the forward model and the actual current system state $s'_t$ from the sensory feedback:
 %
 %\begin{equation}
