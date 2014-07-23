@@ -9,10 +9,6 @@
 J.~R. Flanagan, M.~C. Bowman, R.~S. Johansson, Control strategies in object
   manipulation tasks, Current opinion in neurobiology 16~(6) (2006) 650--659.
 
-\bibitem{haruno2001mosaic}
-M.~Haruno, D.~M. Wolpert, M.~Kawato, Mosaic model for sensorimotor learning and
-  control, Neural computation 13~(10) (2001) 2201--2220.
-
 \bibitem{calinon2007learning}
 S.~Calinon, F.~Guenter, A.~Billard, On learning, representing, and generalizing
   a task in a humanoid robot, Systems, Man, and Cybernetics, Part B:
@@ -130,6 +126,14 @@ B.~Huang, S.~El-Khoury, M.~Li, J.~J. Bryson, A.~Billard, Learning a real time
   grasping strategy, in: Robotics and Automation (ICRA), 2013 IEEE
   International Conference on, IEEE, 2013, pp. 593--600.
 
+\bibitem{jacobs1991adaptive}
+R.~A. Jacobs, M.~I. Jordan, S.~J. Nowlan, G.~E. Hinton, Adaptive mixtures of
+  local experts, Neural computation 3~(1) (1991) 79--87.
+
+\bibitem{narendra1997adaptive}
+K.~S. Narendra, J.~Balakrishnan, Adaptive control using multiple models,
+  Automatic Control, IEEE Transactions on 42~(2) (1997) 171--187.
+
 \bibitem{khalil2004modeling}
 W.~Khalil, E.~Dombre, Modeling, identification and control of robots,
   Butterworth-Heinemann, 2004.
@@ -138,14 +142,6 @@ W.~Khalil, E.~Dombre, Modeling, identification and control of robots,
 K.~S. Narendra, J.~Balakrishnan, M.~K. Ciliz, Adaptation and learning using
   multiple models, switching, and tuning, Control Systems, IEEE 15~(3) (1995)
   37--51.
-
-\bibitem{jacobs1991adaptive}
-R.~A. Jacobs, M.~I. Jordan, S.~J. Nowlan, G.~E. Hinton, Adaptive mixtures of
-  local experts, Neural computation 3~(1) (1991) 79--87.
-
-\bibitem{narendra1997adaptive}
-K.~S. Narendra, J.~Balakrishnan, Adaptive control using multiple models,
-  Automatic Control, IEEE Transactions on 42~(2) (1997) 171--187.
 
 \bibitem{fekri2007robust}
 S.~Fekri, M.~Athans, A.~Pascoal, Robust multiple model adaptive control
@@ -170,6 +166,14 @@ J.~J. Bryson, Structuring intelligence: {T}he role of hierarchy, modularity and
 \bibitem{sugimoto2012emosaic}
 N.~Sugimoto, J.~Morimoto, S.-H. Hyon, M.~Kawato, The emosaic model for humanoid
   robot control, Neural Networks 29 (2012) 8--19.
+
+\bibitem{haruno2001mosaic}
+M.~Haruno, D.~M. Wolpert, M.~Kawato, Mosaic model for sensorimotor learning and
+  control, Neural computation 13~(10) (2001) 2201--2220.
+
+\bibitem{wolpert1998multiple}
+D.~M. Wolpert, M.~Kawato, Multiple paired forward and inverse models for motor
+  control, Neural Networks 11~(7) (1998) 1317--1329.
 
 \bibitem{petkos2006learning}
 G.~Petkos, M.~Toussaint, S.~Vijayakumar, Learning multiple models of non-linear
