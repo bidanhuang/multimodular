@@ -77,13 +77,13 @@ Giving the robots' kinematics and the desired exert force on the object, the joi
 \label{sec:cluster}
 
 % ----------- why clustering -----------
-Due to the involvement of object interaction, a manipulation task frequently encounter abrupt changes of the system dynamics, e.g. transfer between status of no contact to contact, of static friction and dynamic friction. Different strategies should be used to handle different dynamics. We achieve this goal by using a modular approach. Multiple modules are learned from the demonstrations under different task contexts. %During implementation, the system quickly estimate the context by the sensory inputs and choose the most appropriate module or weight and combine the modules to react.
+Due to object interaction, a manipulation task frequently encounter abrupt changes of the system dynamics, e.g. transfer between statuses with no contact and with contact, between statuses driven by static friction and by driven dynamic friction. Different strategies should be used to handle different dynamics and hence a multiple module model is desired. Our approach is to exact strategies from demonstration and build one module for each of the strategies. %During implementation, the system quickly estimate the context by the sensory inputs and choose the most appropriate module or weight and combine the modules to react.
 
 %In this multiple model approach, each model is trained for a particular dynamics context. During the control process the model can compute appropriate control commands for the corresponding dynamics according to the sensory inputs. If the model is chosen properly (see Section~\ref{rf} for mixing model), this approach will be able to adapt to changing environmental context.
 
 % ---------- Cluster to find number of modules -----------
 Different tasks may need different number of modules. In human demonstration the same task is demonstrated with a few different setups to explore how human adapt to them. However, the number of setups does not necessary equal to the number of modules needed in the task. Human may regard different setups as the same task context and handle them with the same control strategies. %Some data may seems to be dissimilar in the scale or frequency, but in fact are governed by the same dynamic.
-In order to find a proper number of modules, we need to differentiate different types of strategies. The differences can be reflected from the different pattern of the force-torque-displacement tuple. Ee differentiate the patterns in a data driven manner: cluster force-torque-displacement tuple. Data in the same cluster is considered to be governed by the same strategy. The number of clusters is the number of modules and each module is encoded by one model.
+In order to find a proper number of modules, we need to differentiate different types of strategies. The differences can be reflected from the different pattern of the force-torque-displacement tuple. We differentiate the patterns in a data driven manner: cluster force-torque-displacement tuple. Data in the same cluster is considered to be governed by the same strategy. The number of clusters is the number of modules and each module is encoded by one model.
 
 
 % ----------- Distance Metric for clustering ------------
@@ -94,7 +94,7 @@ Dynamic time warping is suitable for measuring the similarity between two time s
 The similarity (distance) between each pair of time series is computed by DTW and produce a distance matrix. In this distance matrix, each element contains a measurement of the similarity between two time series. We then cluster these time series into a few groups by a threshold of the similarity. This threshold is set by using the variance of the data from the same setup as a reference. As mentioned above, under the same setup a task is demonstrated a few times. These demonstrations are presumed to be handled with the same strategy and hence belong to the same cluster. The variance of these demonstrations give a reference of a proper variance of a cluster. The largest variance, across the variance of all setups, is used as the threshold for the clustering.
 
 %% ------------ Hierarchical clustering -----------
-Most of the clustering methods require the specification of some variables, such as the number of clusters. Without knowing the number of clusters at the first place, we use an hierarchical agglomerative clustering method~\cite{willett1988recent}. Agglomerative clustering is a method that merges data iteratively until the stop criteria satisfied, which does not require a predefined number of clusters. Our clustering method is described as follow:
+Many of the clustering methods require the specification of the number of clusters. In our case, however, the number of clusters is an unknown variable. Therefore we use the hierarchical agglomerative clustering method~\cite{willett1988recent} to group our data. Agglomerative clustering is a method that merges similar data iteratively until the stop criteria satisfied, which does not require a predefined number of clusters. Our clustering method is described as follow:
 
 \begin{enumerate}
 \item At the beginning, each single time series is considered to be one cluster.
@@ -134,7 +134,7 @@ Pseudocode of the complete algorithm is shown in Algorithm~\ref{code:cluster}.
 
 
 % --------- Number of cluster -----------
-When the clusters can not be merged further, we discover the number of modules require in this task: it is the number of the remaining clusters. Each cluster is used as a module. The pattern of the data in a cluster represents a strategy of handling a specific task context.
+When the clusters can not be merged further, we define the number of modules for this task: it is the number of the remaining clusters. Each cluster is used as a module. The pattern of the data in a cluster represents a strategy of handling a specific task context.
 
 \subsubsection{Learning Models}
 \label{sec:model}
@@ -143,7 +143,7 @@ After identifying the number of modules, we build models for each of the module.
 During demonstrations, we constantly acquire the object displacements and the force and torque applied by the teacher. The teacher is the only source of exert force and torque of the system. The relationship between the exert force and torque and their resulting object displacement shows the dynamic characteristic of the task.
 
 %GMM
-In our approach, we model the correlation of the force and the displacement with GMM. The task dynamics is hence encoded as a joint distribution of the object status displacement $s$ and the action $a$ taken by human $p(s,a,{\mid}{\Omega})$. In our task, $s$ is the one dimensional cap angular displacment and $a$ is the one dimensional exert torque and grip force (section~\ref{sec:exp}).
+In our approach, we model the correlation of the force and the displacement with GMM. The task dynamics is hence encoded as a joint distribution of the object status displacement $s$ and the action $a$ taken by human $p(s,a,{\mid}{\Omega})$. In our task, $s$ is the one dimensional cap angular displacement and $a$ is the one dimensional exert torque and grip force (section~\ref{sec:exp}).
 Modeling the distribution by GMM allows us to capture the nonlinearity in the data, as well as to compute the likelihood of a query data point in the model. This provides an good estimation of the reliability of the module in the current task context, which is crucial in choosing the correct modules for control (discussed in Section~\ref{sec:rf}). At the other hand, as a generative model GMM is able to generate new data from the model, i.e. generate motor commands.
 
 With a GMM, the joint distribution of the variables is expressed as a sum of $N$ Gaussian components,

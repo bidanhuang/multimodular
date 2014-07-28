@@ -1,196 +1,180 @@
 \begin{thebibliography}{10}
-\expandafter\ifx\csname url\endcsname\relax
-  \def\url#1{\texttt{#1}}\fi
-\expandafter\ifx\csname urlprefix\endcsname\relax\def\urlprefix{URL }\fi
-\expandafter\ifx\csname href\endcsname\relax
-  \def\href#1#2{#2} \def\path#1{#1}\fi
+\providecommand{\url}[1]{{#1}}
+\providecommand{\urlprefix}{URL }
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{DOI \discretionary{}{}{}#1}\else
+  \providecommand{\doi}{DOI \discretionary{}{}{}\begingroup
+  \urlstyle{rm}\Url}\fi
 
 \bibitem{flanagan2006control}
-J.~R. Flanagan, M.~C. Bowman, R.~S. Johansson, Control strategies in object
-  manipulation tasks, Current opinion in neurobiology 16~(6) (2006) 650--659.
+J.R. Flanagan, M.C. Bowman, R.S. Johansson, Current opinion in neurobiology
+  \textbf{16}(6), 650 (2006)
 
 \bibitem{calinon2007learning}
-S.~Calinon, F.~Guenter, A.~Billard, On learning, representing, and generalizing
-  a task in a humanoid robot, Systems, Man, and Cybernetics, Part B:
-  Cybernetics, IEEE Transactions on 37~(2) (2007) 286--298.
+S.~Calinon, F.~Guenter, A.~Billard, Systems, Man, and Cybernetics, Part B:
+  Cybernetics, IEEE Transactions on \textbf{37}(2), 286 (2007)
 
 \bibitem{dillmann2004teaching}
-R.~Dillmann, Teaching and learning of robot tasks via observation of human
-  performance, Robotics and Autonomous Systems 47~(2) (2004) 109--116.
+R.~Dillmann, Robotics and Autonomous Systems \textbf{47}(2), 109 (2004)
 
 \bibitem{kulic2012incremental}
-D.~Kuli{\'c}, C.~Ott, D.~Lee, J.~Ishikawa, Y.~Nakamura, Incremental learning of
-  full body motion primitives and their sequencing through human motion
-  observation, The International Journal of Robotics Research 31~(3) (2012)
-  330--345.
+D.~Kuli{\'c}, C.~Ott, D.~Lee, J.~Ishikawa, Y.~Nakamura, The International
+  Journal of Robotics Research \textbf{31}(3), 330 (2012)
 
 \bibitem{korkinof2013online}
-D.~Korkinof, Y.~Demiris, Online quantum mixture regression for trajectory
-  learning by demonstration, in: Intelligent Robots and Systems (IROS), 2013
-  IEEE/RSJ International Conference on, IEEE, 2013, pp. 3222--3229.
+D.~Korkinof, Y.~Demiris, in \emph{Intelligent Robots and Systems (IROS), 2013
+  IEEE/RSJ International Conference on} (IEEE, 2013), pp. 3222--3229
 
 \bibitem{pais2014encoding}
-A.~L. Pais, A.~Billard, Encoding bi-manual coordination patterns from human
-  demonstrations, in: Proceedings of the 2014 ACM/IEEE international conference
-  on Human-robot interaction, ACM, 2014, pp. 264--265.
+A.L. Pais, A.~Billard, in \emph{Proceedings of the 2014 ACM/IEEE international
+  conference on Human-robot interaction} (ACM, 2014), pp. 264--265
 
 \bibitem{pastor2011skill}
-P.~Pastor, M.~Kalakrishnan, S.~Chitta, E.~Theodorou, S.~Schaal, Skill learning
-  and task outcome prediction for manipulation, in: Robotics and Automation
-  (ICRA), 2011 IEEE International Conference on, IEEE, 2011, pp. 3828--3834.
+P.~Pastor, M.~Kalakrishnan, S.~Chitta, E.~Theodorou, S.~Schaal, in
+  \emph{Robotics and Automation (ICRA), 2011 IEEE International Conference on}
+  (IEEE, 2011), pp. 3828--3834
 
 \bibitem{Miao2014}
-M.~Li, H.~Yin, K.~Tahara, A.~Billard, Learning object-level impedance control
-  for robust grasping and dexterous manipulation, in: Proceedings of
-  International Conference on Robotics and Automation (ICRA), 2014.,
-  (accepted).
+M.~Li, H.~Yin, K.~Tahara, A.~Billard, in \emph{Proceedings of International
+  Conference on Robotics and Automation (ICRA), 2014.}
+\newblock (accepted)
 
 \bibitem{bernardino2013precision}
-A.~Bernardino, M.~Henriques, N.~Hendrich, J.~Zhang, Precision grasp synergies
-  for dexterous robotic hands, in: Robotics and Biomimetics (ROBIO), 2013 IEEE
-  International Conference on, IEEE, 2013, pp. 62--67.
+A.~Bernardino, M.~Henriques, N.~Hendrich, J.~Zhang, in \emph{Robotics and
+  Biomimetics (ROBIO), 2013 IEEE International Conference on} (IEEE, 2013), pp.
+  62--67
 
 \bibitem{kondo2008recognition}
-M.~Kondo, J.~Ueda, T.~Ogasawara, Recognition of in-hand manipulation using
-  contact state transition for multifingered robot hand control, Robotics and
-  Autonomous Systems 56~(1) (2008) 66--81.
+M.~Kondo, J.~Ueda, T.~Ogasawara, Robotics and Autonomous Systems
+  \textbf{56}(1), 66 (2008)
 
 \bibitem{Fischer98}
-M.~Fischer, P.~van~der Smagt, G.~Hirzinger, Learning techniques in a dataglove
-  based telemanipulation system for the dlr hand, in: Robotics and Automation,
-  1998. Proceedings. 1998 IEEE International Conference on, Vol.~2, IEEE, 1998,
-  pp. 1603--1608.
+M.~Fischer, P.~van~der Smagt, G.~Hirzinger, in \emph{Robotics and Automation,
+  1998. Proceedings. 1998 IEEE International Conference on}, vol.~2 (IEEE,
+  1998), vol.~2, pp. 1603--1608
 
 \bibitem{asfour2008imitation}
-T.~Asfour, P.~Azad, F.~Gyarfas, R.~Dillmann, Imitation learning of dual-arm
-  manipulation tasks in humanoid robots, International Journal of Humanoid
-  Robotics 5~(02) (2008) 183--202.
+T.~Asfour, P.~Azad, F.~Gyarfas, R.~Dillmann, International Journal of Humanoid
+  Robotics \textbf{5}(02), 183 (2008)
 
 \bibitem{do2011towards}
-M.~Do, T.~Asfour, R.~Dillmann, Towards a unifying grasp representation for
-  imitation learning on humanoid robots, in: Robotics and Automation (ICRA),
-  2011 IEEE International Conference on, IEEE, 2011, pp. 482--488.
+M.~Do, T.~Asfour, R.~Dillmann, in \emph{Robotics and Automation (ICRA), 2011
+  IEEE International Conference on} (IEEE, 2011), pp. 482--488
 
 \bibitem{hueser2006learning}
-M.~Hueser, T.~Baier, J.~Zhang, Learning of demonstrated grasping skills by
-  stereoscopic tracking of human head configuration, in: Robotics and
-  Automation, 2006. ICRA 2006. Proceedings 2006 IEEE International Conference
-  on, IEEE, 2006, pp. 2795--2800.
+M.~Hueser, T.~Baier, J.~Zhang, in \emph{Robotics and Automation, 2006. ICRA
+  2006. Proceedings 2006 IEEE International Conference on} (IEEE, 2006), pp.
+  2795--2800
 
 \bibitem{calinon2007incremental}
-S.~Calinon, A.~Billard, Incremental learning of gestures by imitation in a
-  humanoid robot, in: Proceedings of the ACM/IEEE international conference on
-  Human-robot interaction, ACM, 2007, pp. 255--262.
+S.~Calinon, A.~Billard, in \emph{Proceedings of the ACM/IEEE international
+  conference on Human-robot interaction} (ACM, 2007), pp. 255--262
 
 \bibitem{sauser2011iterative}
-E.~Sauser, B.~Argall, G.~Metta, A.~Billard, Iterative learning of grasp
-  adaptation through human corrections, Robotics and Autonomous Systems.
+E.~Sauser, B.~Argall, G.~Metta, A.~Billard, Robotics and Autonomous Systems
+  (2011)
 
 \bibitem{romano2011human}
-J.~M. Romano, K.~Hsiao, G.~Niemeyer, S.~Chitta, K.~J. Kuchenbecker,
-  Human-inspired robotic grasp control with tactile sensing, Robotics, IEEE
-  Transactions on 27~(6) (2011) 1067--1079.
+J.M. Romano, K.~Hsiao, G.~Niemeyer, S.~Chitta, K.J. Kuchenbecker, Robotics,
+  IEEE Transactions on \textbf{27}(6), 1067 (2011)
 
 \bibitem{bidan2013robio}
-B.~Huang, J.~Bryson, T.~Inamura, {Learning Motion Primitives of Object
-  Manipulation Using Mimesis Model}, in: Proceedings of 2013 IEEE International
-  Conference on Robotics and Biomimetics. ROBIO, 2013.
+B.~Huang, J.~Bryson, T.~Inamura, in \emph{Proceedings of 2013 IEEE
+  International Conference on Robotics and Biomimetics. ROBIO} (2013)
 
 \bibitem{okamura2000overview}
-A.~M. Okamura, N.~Smaby, M.~R. Cutkosky, An overview of dexterous manipulation,
-  in: Robotics and Automation, 2000. Proceedings. ICRA'00. IEEE International
-  Conference on, Vol.~1, IEEE, 2000, pp. 255--262.
+A.M. Okamura, N.~Smaby, M.R. Cutkosky, in \emph{Robotics and Automation, 2000.
+  Proceedings. ICRA'00. IEEE International Conference on}, vol.~1 (IEEE, 2000),
+  vol.~1, pp. 255--262
 
 \bibitem{howard2010transferring}
-M.~Howard, D.~Mitrovic, S.~Vijayakumar, Transferring impedance control
-  strategies between heterogeneous systems via apprenticeship learning, in:
-  Humanoid Robots (Humanoids), 2010 10th IEEE-RAS International Conference on,
-  IEEE, 2010, pp. 98--105.
+M.~Howard, D.~Mitrovic, S.~Vijayakumar, in \emph{Humanoid Robots (Humanoids),
+  2010 10th IEEE-RAS International Conference on} (IEEE, 2010), pp. 98--105
 
 \bibitem{wimbock2012comparison}
-T.~Wimb{\"o}ck, C.~Ott, A.~Albu-Sch{\"a}ffer, G.~Hirzinger, Comparison of
-  object-level grasp controllers for dynamic dexterous manipulation, The
-  International Journal of Robotics Research 31~(1) (2012) 3--23.
+T.~Wimb{\"o}ck, C.~Ott, A.~Albu-Sch{\"a}ffer, G.~Hirzinger, The International
+  Journal of Robotics Research \textbf{31}(1), 3 (2012)
+
+\bibitem{kronander2012online}
+K.~Kronander, A.~Billard, in \emph{Robotics and Automation (ICRA), 2012 IEEE
+  International Conference on} (Ieee, 2012), pp. 1842--1849
 
 \bibitem{buchli2011learning}
-J.~Buchli, F.~Stulp, E.~Theodorou, S.~Schaal, Learning variable impedance
-  control, The International Journal of Robotics Research 30~(7) (2011)
-  820--833.
+J.~Buchli, F.~Stulp, E.~Theodorou, S.~Schaal, The International Journal of
+  Robotics Research \textbf{30}(7), 820 (2011)
 
 \bibitem{cohn1996active}
-D.~A. Cohn, Z.~Ghahramani, M.~I. Jordan, Active learning with statistical
-  models, arXiv preprint cs/9603104.
+D.A. Cohn, Z.~Ghahramani, M.I. Jordan, arXiv preprint cs/9603104  (1996)
 
 \bibitem{huang2013learning}
-B.~Huang, S.~El-Khoury, M.~Li, J.~J. Bryson, A.~Billard, Learning a real time
-  grasping strategy, in: Robotics and Automation (ICRA), 2013 IEEE
-  International Conference on, IEEE, 2013, pp. 593--600.
+B.~Huang, S.~El-Khoury, M.~Li, J.J. Bryson, A.~Billard, in \emph{Robotics and
+  Automation (ICRA), 2013 IEEE International Conference on} (IEEE, 2013), pp.
+  593--600
 
 \bibitem{jacobs1991adaptive}
-R.~A. Jacobs, M.~I. Jordan, S.~J. Nowlan, G.~E. Hinton, Adaptive mixtures of
-  local experts, Neural computation 3~(1) (1991) 79--87.
+R.A. Jacobs, M.I. Jordan, S.J. Nowlan, G.E. Hinton, Neural computation
+  \textbf{3}(1), 79 (1991)
 
 \bibitem{narendra1997adaptive}
-K.~S. Narendra, J.~Balakrishnan, Adaptive control using multiple models,
-  Automatic Control, IEEE Transactions on 42~(2) (1997) 171--187.
+K.S. Narendra, J.~Balakrishnan, Automatic Control, IEEE Transactions on
+  \textbf{42}(2), 171 (1997)
 
 \bibitem{khalil2004modeling}
-W.~Khalil, E.~Dombre, Modeling, identification and control of robots,
-  Butterworth-Heinemann, 2004.
+W.~Khalil, E.~Dombre, \emph{Modeling, identification and control of robots}
+  (Butterworth-Heinemann, 2004)
 
 \bibitem{narendra1995adaptation}
-K.~S. Narendra, J.~Balakrishnan, M.~K. Ciliz, Adaptation and learning using
-  multiple models, switching, and tuning, Control Systems, IEEE 15~(3) (1995)
-  37--51.
+K.S. Narendra, J.~Balakrishnan, M.K. Ciliz, Control Systems, IEEE
+  \textbf{15}(3), 37 (1995)
 
 \bibitem{fekri2007robust}
-S.~Fekri, M.~Athans, A.~Pascoal, Robust multiple model adaptive control
-  (rmmac): a case study, International Journal of Adaptive Control and Signal
-  Processing 21~(1) (2007) 1--30.
+S.~Fekri, M.~Athans, A.~Pascoal, International Journal of Adaptive Control and
+  Signal Processing \textbf{21}(1), 1 (2007)
 
 \bibitem{kuipers2010multiple}
-M.~Kuipers, P.~Ioannou, Multiple model adaptive control with mixing, Automatic
-  Control, IEEE Transactions on 55~(8) (2010) 1822--1836.
+M.~Kuipers, P.~Ioannou, Automatic Control, IEEE Transactions on \textbf{55}(8),
+  1822 (2010)
 
 \bibitem{bryson2004modular}
-J.~J. Bryson, Modular representations of cognitive phenomena in ai, psychology
-  and neuroscience, in: IN AI, PSYCHOLOGY AND NEUROSCIENCE, VISIONS OF MIND,
-  Citeseer, 2004.
+J.J. Bryson, in \emph{IN AI, PSYCHOLOGY AND NEUROSCIENCE, VISIONS OF MIND}
+  (Citeseer, 2004)
 
 \bibitem{BrysonMcG12}
-J.~J. Bryson, Structuring intelligence: {T}he role of hierarchy, modularity and
-  learning in generating intelligent behaviour, in: D.~McFarland, K.~Stenning,
-  M.~McGonigle (Eds.), The Complex Mind: An Interdisciplinary Approach,
-  Palgrave-Macmillan, Basingstoke, 2012, pp. 126--143.
+J.J. Bryson, in \emph{The Complex Mind: An Interdisciplinary Approach}, ed. by
+  D.~McFarland, K.~Stenning, M.~McGonigle (Palgrave-Macmillan, Basingstoke,
+  2012), pp. 126--143
 
 \bibitem{sugimoto2012emosaic}
-N.~Sugimoto, J.~Morimoto, S.-H. Hyon, M.~Kawato, The emosaic model for humanoid
-  robot control, Neural Networks 29 (2012) 8--19.
+N.~Sugimoto, J.~Morimoto, S.H. Hyon, M.~Kawato, Neural Networks \textbf{29}, 8
+  (2012)
 
 \bibitem{haruno2001mosaic}
-M.~Haruno, D.~M. Wolpert, M.~Kawato, Mosaic model for sensorimotor learning and
-  control, Neural computation 13~(10) (2001) 2201--2220.
+M.~Haruno, D.M. Wolpert, M.~Kawato, Neural computation \textbf{13}(10), 2201
+  (2001)
 
 \bibitem{wolpert1998multiple}
-D.~M. Wolpert, M.~Kawato, Multiple paired forward and inverse models for motor
-  control, Neural Networks 11~(7) (1998) 1317--1329.
+D.M. Wolpert, M.~Kawato, Neural Networks \textbf{11}(7), 1317 (1998)
 
 \bibitem{petkos2006learning}
-G.~Petkos, M.~Toussaint, S.~Vijayakumar, Learning multiple models of non-linear
-  dynamics for control under varying contexts, in: Artificial Neural
-  Networks--ICANN 2006, Springer, 2006, pp. 898--907.
+G.~Petkos, M.~Toussaint, S.~Vijayakumar, in \emph{Artificial Neural
+  Networks--ICANN 2006} (Springer, 2006), pp. 898--907
+
+\bibitem{kulic2008incremental}
+D.~Kuli{\'c}, W.~Takano, Y.~Nakamura, The International Journal of Robotics
+  Research \textbf{27}(7), 761 (2008)
 
 \bibitem{berndt1994using}
-D.~J. Berndt, J.~Clifford, Using dynamic time warping to find patterns in time
-  series., in: KDD workshop, Vol.~10, Seattle, WA, 1994, pp. 359--370.
+D.J. Berndt, J.~Clifford, in \emph{KDD workshop}, vol.~10 (Seattle, WA, 1994),
+  vol.~10, pp. 359--370
 
 \bibitem{willett1988recent}
-P.~Willett, Recent trends in hierarchic document clustering: a critical review,
-  Information Processing \& Management 24~(5) (1988) 577--597.
+P.~Willett, Information Processing \& Management \textbf{24}(5), 577 (1988)
+
+\bibitem{gustafssoninvestigation}
+E.~GUSTAFSSON,
 
 \bibitem{deSouza2014}
-R.~de~Souza, S.~El~Khoury, J.~Santos-Victor, A.~Billard, Towards comprehensive
-  capture of human grasping and manipulation skills, in: 13th International
-  Symposium on 3D Analysis of Human Movement, 2014.
+R.~de~Souza, S.~El~Khoury, J.~Santos-Victor, A.~Billard, in \emph{13th
+  International Symposium on 3D Analysis of Human Movement} (2014)
 
 \end{thebibliography}
