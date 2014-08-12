@@ -56,15 +56,20 @@
 \usepackage{subfig}
 \usepackage{mathptmx} % assumes new font selection scheme installed
 \usepackage{amsmath} % assumes amsmath package installed
+\usepackage{amsmath}
 \usepackage{array}
 \usepackage{bm}
 \usepackage{multirow}
-\usepackage{color}
+\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
 \usepackage{pbox}
 \usepackage{hyperref}
 \usepackage{algorithm}
 \usepackage{algpseudocode}
-\begin{document}
+\usepackage{natbib}
+
+\definecolor{light-gray}{gray}{0.8}
+
+\begin{document}\sloppy
 
 \title{Learning Human Manipulation Strategy by A Modular Approach}%\thanks{Grants or other notes
 %about the article that should go on the front page should be
@@ -96,7 +101,7 @@
 \maketitle
 
 \begin{abstract}
-Object manipulation is a challenging task for robot as the complicated physics involves in object interaction is hard to be expressed analytically. In this work we introduce a modular approach to learn the human manipulation strategy. After human demonstrating a task in different contexts, we modularize the control strategies according to the contexts. Strategy in each module is encoded by a pair of forward and inverse model. All modules contribute to the final control policy, according to their estimation error of current task context. We validate our approach on a robot platform with a opening bottle cap task. We show that our approach can modularize the adaptive control strategy to generate appropriate motor commands for the robot to accomplish the task.
+Object manipulation is a challenging task for robot as the complicated physics involves in object interaction is hard to be expressed analytically. In this work we introduce a modular approach to learn the human manipulation strategy. After human demonstrating a task in different contexts, we modularize the control strategies according to the contexts. Strategy in each module is encoded by a pair of forward and inverse model. All modules contribute to the final control policy, weighted by their estimation error of current task context. We validate our approach on a robot platform with a opening bottle cap task. We show that our approach can modularize the adaptive control strategy to generate appropriate motor commands for the robot to accomplish the task.
 %\keywords{First keyword \and Second keyword \and More}
 % \PACS{PACS code1 \and PACS code2 \and more}
 % \subclass{MSC code1 \and MSC code2 \and more}
@@ -173,7 +178,7 @@ Object manipulation is a challenging task for robot as the complicated physics i
 \input{includes/experiments}
 \input{includes/conclusion}
 
-\bibliographystyle{spphys}
+\bibliographystyle{spbasic}
 \bibliography{multimodel}
 \end{document}
 % end of file template.tex

@@ -1,24 +1,23 @@
 \section{Methodology}
 \label{sec:method}
 % ========= object centric =========
-Our goal is to acquire a modular based control policy for an object manipulation task from human demonstration. To this end, we take a three-step approach:
+This section presents the method we used to modularize human demonstration of manipulation tasks. Our goal is to acquire a modular based control policy for an object manipulation task from human demonstration. To this end, we take a three-step approach:
 \begin{enumerate}
 \item Human demonstrating a task in different contexts (Section~\ref{sec:demo}).
 %\item Clustering the data to find number of modules needed in the task (subsection ~\ref{sec:cluster}).
-\item Extracting human control strategies for different contexts and build multiple internal models(Section~\ref{sec:learn}).
+\item Extracting human control strategies for different contexts and build multiple internal models (Section~\ref{sec:learn}).
 %\item Design a controller based on the learnt multiple model  (subsection ~\ref{controller}).
-\item Use the multiple models to compute motor commands for a robot(Section~\ref{sec:control}).
+\item Use the multiple modules to compute motor commands for a robot (Section~\ref{sec:control}).
 \end{enumerate}
 
 Figure~\ref{fig:overview} shows an overview of our framework.
 
 \begin{figure}
   \centering
-   \includegraphics[width=8cm]{./fig/overview3.pdf}
-  \caption{ \scriptsize{System overview.}
-  \label{fig:overview}
-}
-\label{fig:demo}
+   \includegraphics[width=8cm]{./fig/overview5.pdf}
+  \caption{ \scriptsize{System overview. Our system takes a three-step approach. 1) Human demonstrate a task in different contexts. In the opening bottle cap experiment, the demonstrations are done with different bottles and caps. The object level exert force and torque, the object movements are used for training. 2) Clustering human control strategies. Each cluster is modeled as one module. 3) Use the multiple modules to compute motor commands to control the robot.}
+  }
+\label{fig:overview}
 \end{figure}
 
 \subsection{Human demonstration}
@@ -41,35 +40,34 @@ Figure~\ref{fig:overview} shows an overview of our framework.
   \label{fig:devices}
 \end{figure}
 
-The first step is recording human demonstration of a task. Based on the object centric principle, we collect the object trajectory and its driven force. These data can be accessed by motion capture system, force-torque sensor and wearable haptic device. Fig.~\ref{fig:devices} shows a few sensors we used in the opening bottle caps task. Details will be explained in section~\ref{sec:exp_demo}.
+The first step is recording human demonstration of a task. Based on the object centric principle, we collect the object trajectory and its driven force. These data can be accessed by motion capture system, force-torque sensor and wearable haptic device. Figure.~\ref{fig:devices} shows a few sensors we used in the opening bottle caps task. Details will be explained in section~\ref{sec:exp_demo}.
 
 % ===== Why not kinematics approach? =====
-%For manipulation task, kinematics teaching on robot is difficult. While a manipulation task usually involves multifinger movement, a human can kinematically operate one finger with each hand and hence two fingers simultaneously for the most extend. Tele-operation of the robot hand solves this problem but it does not provide a direct force feedback. In our approach, human perform the task with direct interaction with the object. With direct interaction with the object the teacher is able to perform the task most naturally and perform a more delicate control strategy. %In an object centric manner there is no difference between collecting data from the teacher or from the learner -- they are expressed from the objects' perspective. Once the control policy is encoded, it can be directly applied to the robots.
+%For manipulation task, kinematics teaching on robot is difficult. While a manipulation task usually involves multifinger movement, a human can kinematically operate one finger with each hand and hence two fingers simultaneously for the most extend. Tele-operation of the robot hand solves this problem but it does not provide a direct force feedback. In our approach, human perform the task with direct interaction with the object. With direct interaction with the object the demonstrator is able to perform the task most naturally and perform a more delicate control strategy. %In an object centric manner there is no difference between collecting data from the demonstrator or from the learner -- they are expressed from the objects' perspective. Once the control policy is encoded, it can be directly applied to the robots.
 
-%Kinematics teaching of the learner is not necessary here for three reasons. Firstly in an object centric manner there is no difference between collecting data from the teacher or from the learner -- they are expressed from the object point of view. Secondly with direct interaction with the object the teacher is able to perform the task most naturally and hence provide a more naturally control policy. Thirdly manipulation with multifinger is difficult to demonstration kinematically, as a human can manipulate one finger of a robot with each hand and hence two fingers simultaneously for its most extend.
+%Kinematics teaching of the learner is not necessary here for three reasons. Firstly in an object centric manner there is no difference between collecting data from the demonstrator or from the learner -- they are expressed from the object point of view. Secondly with direct interaction with the object the demonstrator is able to perform the task most naturally and hence provide a more naturally control policy. Thirdly manipulation with multifinger is difficult to demonstration kinematically, as a human can manipulate one finger of a robot with each hand and hence two fingers simultaneously for its most extend.
 
 % ======= demonstrate in different context   =======
-In the demonstration, the teacher perform a task a number of times to generate enough data for capturing the key features of it. Further, the teacher perform the task under different system kinematics and dynamics configurations, e.g. friction conditions, in order to explore how human adaptive to different task contexts. These different configurations are chosen to cover a wide range of different contexts. For example, in a opening bottle cap task the demonstration of opening the tightest bottle, within the capability of the learner, is included. Details will be explained in Section~\ref{sec:exp_demo}.
-%How to cover ??????
-
+In the demonstrations, the demonstrator performs a task a number of times to generate enough data for capturing the key features of it. Further, the demonstrator performs the task under different conditions, e.g. friction conditions, in order to explore how humans adapt to different task contexts. These different configurations are chosen to cover a wide range of different contexts. For example, in a opening bottle cap task the demonstration of opening the tightest bottle, within the capability of the learner, is included. These wide range demonstrations are then used to learn a multiple module model. Details will be explained in Section~\ref{sec:exp_demo}.
 
 %The force and torque applied on the cap are measured by the Trkscan pressure sensor and a force torque sensor. The movement of the object is recorded by the OptTrack motion tracking system. Each demonstration is recorded as a temporal sequence.
 
-%~\cite{bidan2013robio}
-%~\cite{huang2013learning}
-%~\cite{huanghumanoid}
+%~\citep{bidan2013robio}
+%~\citep{huang2013learning}
+%~\citep{huanghumanoid}
+
 \subsection{Learning a Multiple-Module Model}
 \label{sec:learn}
 In this section we detail our modeling method, explaining how do we model human manipulation strategy and how to choose the number of modules of a task.
 
 \subsubsection{Object centric manipulation strategy}
 \label{sec:objectlevel}
-As mentioned in Section~\ref{sec:related}, one of the challenges in imitation learning is the correspondence problem, i.e. how to map the teacher's motions to the robot's motions so that they produce the same effects, e.g. reaching the same point. %This problem is particularly important in the motion planning tasks.
+As mentioned in Section~\ref{sec:related}, one of the challenges in imitation learning is the correspondence problem, i.e. how to map the demonstrator's motions to the robot's motions so that they produce the same effects, e.g. reaching the same point. %This problem is particularly important in the motion planning tasks.
 In a object manipulation task, however, the goal is to deliver the object from the current state to a desired state. During this process the movement of the manipulator is bounded by the movement of the object. It is more important to imitate how human apply forces to achieve object's desired movement, than to imitate the human limb movement.
-%Therefore we take an ``object centric approach"~\cite{okamura2000overview}, of which the control policy is taken from the object point of view.
+%Therefore we take an ``object centric approach"~\citep{okamura2000overview}, of which the control policy is taken from the object point of view.
 
 Therefore, our model encodes a force and torque profile rather than the end effector movement trajectory. The imitation learning objective here is not to find a policy for the end effector movement but to find a policy that maps the force and torque to the object movement. This policy allows the robot to efficiently acquire new behaviors to accomplish the task. %Different robots move differently to achieve the desired object movements.
-Giving the robots' kinematics and the desired exert force on the object, the joint torques can be deduced by the Jacobian matrix~\cite{okamura2000overview}. To this end, we focus on the force-torque-displacement tuple: $\{F,\tau,s\}$ demonstrated in the task. In later sections, we refer $\{F,\tau\}$ as the motor command with notation $\{a\}$. In each demonstration, a time series of the tuple is recorded.
+Giving the robots' kinematics and the desired exert force and torque on the object, the robot joint torques can be deduced by the Jacobian matrix~\citep{okamura2000overview}. To this end, we focus on the  force-torque-displacement tuple: $\{F,\tau,s\}$ demonstrated in the task, where $F$ is the exert force in all directions including the grip force, $\tau$ is the exert torque in all directions and $s$ is the object displacement. In later sections, we refer $\{F,\tau\}$ as the motor command (action) with notation $\{a\}$. In each demonstration, a time series of the tuple is recorded.
 
 
 
@@ -77,7 +75,7 @@ Giving the robots' kinematics and the desired exert force on the object, the joi
 \label{sec:cluster}
 
 % ----------- why clustering -----------
-Due to object interaction, a manipulation task frequently encounter abrupt changes of the system dynamics, e.g. transfer between statuses with no contact and with contact, between statuses driven by static friction and by driven dynamic friction. Different strategies should be used to handle different dynamics and hence a multiple module model is desired. Our approach is to exact strategies from demonstration and build one module for each of the strategies. %During implementation, the system quickly estimate the context by the sensory inputs and choose the most appropriate module or weight and combine the modules to react.
+Due to object interaction, a manipulation task frequently encounter abrupt changes of the system dynamics, e.g. transfer between statuses with no contact and with contact, between statuses driven by static friction and by driven dynamic friction. Different strategies should be used to handle different dynamics and hence a multiple module model is desired. Our approach is to extract strategies from demonstration and build one module for each of the strategies. %During implementation, the system quickly estimate the context by the sensory inputs and choose the most appropriate module or weight and combine the modules to react.
 
 %In this multiple model approach, each model is trained for a particular dynamics context. During the control process the model can compute appropriate control commands for the corresponding dynamics according to the sensory inputs. If the model is chosen properly (see Section~\ref{rf} for mixing model), this approach will be able to adapt to changing environmental context.
 
@@ -87,14 +85,14 @@ In order to find a proper number of modules, we need to differentiate different 
 
 
 % ----------- Distance Metric for clustering ------------
-The goal of clustering is to separate a set of data to a few groups according to their similarities. The first step of clustering is to measure the similarities, i.e. the distances, between different data points. Different from an usual clustering problem, the data we need to cluster are not a set of single data points but a set of time series. Here we use the Dynamic Time Warping technique (DTW) to measure the distance between each pair of time series~\cite{berndt1994using}.
+The goal of clustering is to separate a set of data to a few groups according to their similarities. The first step of clustering is to measure the similarities, i.e. the distances, between different data points. Different from an usual clustering problem, the data we need to cluster are not a set of single data points but a set of time series. Here we use the Dynamic Time Warping technique (DTW) to measure the distance between each pair of time series~\citep{berndt1994using}.
 
 Dynamic time warping is suitable for measuring the similarity between two time series, which may have different speeds or durations. It warps the data in the time dimension and finds the optimal match between the time series. The similarity is computed as the average distance between the corresponding points in two series.
 
 The similarity (distance) between each pair of time series is computed by DTW and produce a distance matrix. In this distance matrix, each element contains a measurement of the similarity between two time series. We then cluster these time series into a few groups by a threshold of the similarity. This threshold is set by using the variance of the data from the same setup as a reference. As mentioned above, under the same setup a task is demonstrated a few times. These demonstrations are presumed to be handled with the same strategy and hence belong to the same cluster. The variance of these demonstrations give a reference of a proper variance of a cluster. The largest variance, across the variance of all setups, is used as the threshold for the clustering.
 
 %% ------------ Hierarchical clustering -----------
-Many of the clustering methods require the specification of the number of clusters. In our case, however, the number of clusters is an unknown variable. Therefore we use the hierarchical agglomerative clustering method~\cite{willett1988recent} to group our data. Agglomerative clustering is a method that merges similar data iteratively until the stop criteria satisfied, which does not require a predefined number of clusters. Our clustering method is described as follow:
+Many of the clustering methods require the specification of the number of clusters. In our case, however, the number of clusters is an unknown variable. Therefore we use the hierarchical agglomerative clustering method~\citep{willett1988recent} to group our data. Agglomerative clustering is a method that merges similar data iteratively until the stop criteria satisfied, which does not require a predefined number of clusters. Our clustering method is described as follow:
 
 \begin{enumerate}
 \item At the beginning, each single time series is considered to be one cluster.
@@ -140,39 +138,94 @@ When the clusters can not be merged further, we define the number of modules for
 \label{sec:model}
 After identifying the number of modules, we build models for each of the module. In this section, we explain the way we encode human manipulation strategy.
 
-During demonstrations, we constantly acquire the object displacements and the force and torque applied by the teacher. The teacher is the only source of exert force and torque of the system. The relationship between the exert force and torque and their resulting object displacement shows the dynamic characteristic of the task.
+During demonstrations, we constantly acquire the object displacements and the force and torque applied by the demonstrator. The demonstrator is the only source of exert force and torque of the system. The relationship between the exert force and torque and their resulting object displacement shows the dynamic characteristic of the task.
 
 %GMM
-In our approach, we model the correlation of the force and the displacement with GMM. The task dynamics is hence encoded as a joint distribution of the object status displacement $s$ and the action $a$ taken by human $p(s,a,{\mid}{\Omega})$. In our task, $s$ is the one dimensional cap angular displacement and $a$ is the one dimensional exert torque and grip force (section~\ref{sec:exp}).
-Modeling the distribution by GMM allows us to capture the nonlinearity in the data, as well as to compute the likelihood of a query data point in the model. This provides an good estimation of the reliability of the module in the current task context, which is crucial in choosing the correct modules for control (discussed in Section~\ref{sec:rf}). At the other hand, as a generative model GMM is able to generate new data from the model, i.e. generate motor commands.
+We model the correlation of the force and the displacement with GMM. The task dynamics is hence encoded as a joint distribution of the object status displacement $s$ and the action $a$ taken by human $p(s,a,{\mid}{\Omega})$. In our experiment, $s$ is the one dimensional cap angular displacement and $a$ is the one dimensional exert torque and grip force (Section~\ref{sec:exp}).
+Modeling the distribution by GMM allows us to capture the nonlinearity in the data, as well as to compute the likelihood of a query data point in the model. This provides an good estimation of the reliability of the module in the current task context, which is crucial in choosing the correct modules for control (discussed in Section~\ref{sec:rf}). At the other hand, as a generative model GMM is able to generate new data from the model, i.e. generate motor commands. This is done by the $Gaussian$ $Mixture$ $Regression$ (GMR). Table~\ref{tab:GMM} explains the encoding process of GMM and the computation process of GMR.
 
-With a GMM, the joint distribution of the variables is expressed as a sum of $N$ Gaussian components,
-\begin{equation}
-{
-p(s,a\mid\Omega)
-= \sum_{n=1}^N {p_{n}p(s,a\mid{\mu}_n},{\Sigma}_n)
-}
-\end{equation}
-where $p_n$ is the prior of the $n$-th Gaussian component and the ${\mu}_n$, ${\Sigma}_n$ the corresponding mean and covariance as:
 
-\begin{equation}
-{
-{\mu}_n = \begin{pmatrix}    {\mu}_{s,n}     \\
-                             {\mu}_{a,n}          \\
-                    \end{pmatrix}
-\hspace{0.2in}
-{\Sigma}_n = \begin{pmatrix}     {\Sigma}_{ss,n}  &
-                                 {\Sigma}_{sa,n} \\
-                                 {\Sigma}_{as,n}  &
-                                 {\Sigma}_{aa,n}   \\
 
-                        \end{pmatrix}
-}
-\end{equation}
+
+\begin{table}
+    \colorbox{light-gray}{
+        \begin{minipage}[t]{0.45\textwidth}
+
+           With a GMM, the joint distribution $\Omega$ of a set of variables $\{\eta\}$ is expressed as a sum of $N$ Gaussian components:
+           \begin{equation}
+           \begin{split}
+            p\left(\eta\mid\Omega\right) = \sum_{n=1}^N \pi_n p\left(\eta\mid\mu_n,\Sigma_n\right) \\
+            = \sum_{n=1}^N \pi_n \frac{1}{\sqrt{\left(2\pi\right)^D \mid\Sigma_n\mid }} e^{-\frac{1}{2}\left(\eta-\mu_n\right)^{\top} \Sigma^{-1}_n \left(\eta-\mu_n\right)}
+           \end{split}
+           \end{equation}
+           where $\pi_n$ is the prior of the $n$-th Gaussian component and the ${\mu}_n$, ${\Sigma}_n$ the corresponding mean and covariance, $D$ the number of the variables.
+
+
+            %% GMR:
+            Gaussian Mixture Regression (GMR) allows us to estimate the conditional expectation value of a variable $\eta^e$ given a query point $\eta^q$ where $\{\eta\} = \{\eta^q, \eta^e\}$. To compute this expectation value, first we define:
+            \begin{equation}
+            {
+             {\mu}_{n} = \begin{pmatrix} {\mu}_{n}^q    \\
+                                         {\mu}_{n}^e
+                         \end{pmatrix}
+            }
+%            \end{equation}
+%            \begin{equation}
+            \hspace{1cm}
+            {
+            {\Sigma}_{n} =  \begin{pmatrix} {\Sigma}_{n}^{qq}  & {\Sigma}_{n}^{qe}  \\
+                                            {\Sigma}_{n}^{eq} & {\Sigma}_{n}^{ee}
+                            \end{pmatrix}
+            }
+            \end{equation}
+
+            Secondly we compute the expected distribution of $\eta^e$ from the $n-th$ component:
+
+            \begin{equation}
+            {
+            \hat{\mu}_{n} = {\mu}_{n}^e + \Sigma_{n}^{eq}({\Sigma}_{n}^{qq})^{-1}(\eta^q-{\mu}_{n}^e)
+            }
+            \end{equation}
+
+            \begin{equation}
+            {
+            \hat{\Sigma}_{n} = {\Sigma}_{n}^{ee} - {\Sigma}_{n}^eq({\Sigma}_{n}^{qq})^{-1}{\Sigma}_{n}^{qe}
+            }
+            \end{equation}
+
+
+            Finally, all the $N$ Gaussian components are taken into account, and the expectation value of variable $\eta^e$ is computed as the mean $\hat{\mu}^e$ with the covariance $\hat{\Sigma}^{ee}$:
+
+            \begin{equation}
+            {
+            \hat{\mu}^{e} = \sum_{n=1}^N{\beta_n}\hat{\mu}_{n}
+            }
+%            \end{equation}
+%            \begin{equation}
+            \hspace{1cm}
+            {
+            \hat{\Sigma}_{n}^{ee} = \sum_{n=1}^N{\beta_n}^2\hat{\Sigma}_{n}
+            }
+            \end{equation}
+            where
+            \begin{equation}
+            {
+            \beta_n = \frac{\pi_{n}p(q|{\mu}_{n}^q,{\Sigma}_{n}^{qq})}
+            {\sum_{n=1}^N{\pi_n}p(q|{\mu}_{n}^q,{\Sigma}_{n}^{qq})}
+            }
+            \end{equation}
+
+            Note that in a multiple module model, different module may have different number of Gaussian components.
+        \end{minipage}
+    }
+\caption{Encoding process of GMM and computation process of GMR}
+\label{tab:GMM}
+\end{table}
+
 
 %The choice of GMM give us three advantages. Firstly, it is good in modeling nonlinear behavior. Secondly, it tolerates noisy of the data in a good extend and give good estimation of the expected values. Thirdly, as a generative model, it allows the computation of the likelihood of a given input data in the model. This provides an easy measurement of the reliability of the module, which is crucial in choosing the correct modules for control (see Section~\ref{sec:rf}).
 
-%We use the Gaussian Mixture Model (GMM)~\cite{cohn1996active} to encode the task dynamics, and get a joint distribution of the object status $s=\{(x^t,v^t)\}^T_{t=1}$ (displacement $x$ and velocity $v$) and the action taken by human ($a=\{f^t,\tau^t\}^T_{t=1}$) $p(s, a, {\mid} {\Omega})$. The choice of GMM give us three advantages. Firstly, it is good in modeling nonlinear behaviour. Secondly, it tolerates noisy of the data in a good extend and give good estimation of the expected values. Thirdly, as a generative model it is flexible of the type of control: we can compute the force and torque from the given displacement and velocity or compute the displacement and velocity from the given force and torque. %According to different tasks, the variables encoded by GMM may be in different format, e.g. for multi-step prediction control we need to model $s$ in the form of $s=\{x^t,x^{t-1},x^{t-2},...,v^t,v^{t-1},v^{t-2},...\}$. See later section~ref{experiment} for details.
+%We use the Gaussian Mixture Model (GMM)~\citep{cohn1996active} to encode the task dynamics, and get a joint distribution of the object status $s=\{(x^t,v^t)\}^T_{t=1}$ (displacement $x$ and velocity $v$) and the action taken by human ($a=\{f^t,\tau^t\}^T_{t=1}$) $p(s, a, {\mid} {\Omega})$. The choice of GMM give us three advantages. Firstly, it is good in modeling nonlinear behaviour. Secondly, it tolerates noisy of the data in a good extend and give good estimation of the expected values. Thirdly, as a generative model it is flexible of the type of control: we can compute the force and torque from the given displacement and velocity or compute the displacement and velocity from the given force and torque. %According to different tasks, the variables encoded by GMM may be in different format, e.g. for multi-step prediction control we need to model $s$ in the form of $s=\{x^t,x^{t-1},x^{t-2},...,v^t,v^{t-1},v^{t-2},...\}$. See later section~ref{experiment} for details.
 
 
 %We aim to build a model closely simulates human motor strategy in order to make the best use of the human data. Evidences of neuroscience suggest that human develop internal model for motor control, so as to estimate the outcome of a motor command. The use of internal model speed up the human correction and reaction in motor control. One hypothesis of the internal model is MOSAIC, which is a multiple modular model composed by a couple of pairs of forward model and inverse model. We build our control strategy based on this hypothesis.
@@ -194,18 +247,18 @@ We aim to build a model closely simulates human motor strategy in order to make 
 \label{fig:control}
 \end{figure}
 
-% ----------- One model for both -------------
-%The internal model ${\Omega})$ (forward model and inverse model) is encoded by the joint distributions of the variables, i.e. $p(s_t,s_{t+1},a_{t-1},a_t\mid{\Omega})$. This joint distribution encodes the forward model and the inverse model at the same time and both of their functionalities can be realized by the Gaussian Mixture Regression (GMR). For a given previous state and previous motor command, GMR provides a close-form solution to compute the anticipating state $s_t$, i.e. $p(s_{t+1}{\mid}s_{t},a_{t},{\Omega})$. For a given current state and desired state, we can compute the motor command using GMR, i.e. $p(a_t{\mid}s_t,s^{*}_{t+1},{\Omega_f})$. In some tasks, the initial status of the system remains unchanged for a certain time until the exert force or torque is big enough to change it. This will cause degeneracy in the inverse model. To solve this problem we include the previous motor command into the model, i.e. $p(a_t{\mid}s_t,s^{*}_{t+1},a_{t-1},{\Omega_f})$.
 
 % --------- one model for each ----------
-The forward model $\Omega_I$ is encoded by the joint distributions of the current system state, previous system state and the previous motor command, i.e. $p(s_t,s_{t-1},a_{t-1}\mid{\Omega_I})$. For a given object displacement and a motor command, the Gaussian Mixture Regression (GMR) provides a close-form solution to compute the anticipating object displacement $s_t$, i.e. $E(s_t{\mid}s_{t-1},a_{t-1},{\Omega_I})$. The inverse model $\Omega_f$ is encoded by the joint distributions of the current object displacement $s_t$ and the desired object displacement $s^{*}_{t+1}$. In some tasks, the initial status of the system remains unchanged for a certain time until the exert force or torque is big enough to change it. This will cause degeneracy in the inverse model. To solve this problem we include the previous motor command into the model, i.e. $p(s_t,s^{*}_{t+1},a_{t-1},a_t{\mid}{\Omega_F})$.
+We encode the forward model $\Omega_F$ by the joint distributions of the current system state (object displacement), previous system state and the previous motor command, i.e. $p(s_t,s_{t-1},a_{t-1}\mid{\Omega_F})$, and similarly encode the inverse model $\Omega_I$ by the joint distributions of the current system state, the desired next system state, previous motor command and the current motor command, i.e. $p(s_t,s^{*}_{t+1},a_{t-1},a_t{\mid}{\Omega_I})$.
+%Given the previous system state and motor command, the GMR provides a close-form solution to compute the expected system state $s_t$, i.e. $E(s_t{\mid}s_{t-1},a_{t-1},{\Omega_F})$. 
+The previous motor command $a_{t-1}$ is necessary for the inverse model. In some tasks, the system status can remains unchanged for a certain period until the exert force reaches a threshold to change it. This will cause degeneracy in the inverse model and we hence include the previous motor command in the model to tackle it.
 
 
 
 % Non-linear, multi model. What to solve in multi model
 %As discussed above, one of the characteristics of manipulation task is the changing kinematics and dynamics configuration.
 %In different task contexts, the pattern of the correlation between the displacement and action may be different.
-By clustering the training data into different groups as discussed in Section~\ref{sec:cluster}, we are able to discover the number of different patterns, i.e. number of modules. We train one GMM on each of the modules to encode the different changing patterns of the task context.
+By clustering the training data into different groups (Section~\ref{sec:cluster}), we are able to discover the number of different patterns, i.e. number of modules. We train one GMM on each of the modules to encode the different changing patterns of the task context.
 
 
 % Learn system dynamics, impedance, admittance.
@@ -216,114 +269,49 @@ By clustering the training data into different groups as discussed in Section~\r
 
 
 
-\subsection{Multiple modular adaptive control}
+\subsection{Multiple module adaptive control}
 \label{sec:control}
 %% forward-inverse modeling
 %%After clustering the data into different groups, we train each cluster with the GMM $p(X_T, X_{t+1}, U_{t-1}, U_t {\mid} {\Omega})$.
 %We model each of the cluster to encode the human control policy under different dynamics.
 %Neuroscientists suggested that human use a mixture of forward model and inverse model for motor control. The forward model
-%With the learned multiple models, we adopt the MOSAIC~\cite{haruno2001mosaic} architecture to control the system. The basic concept of MOSAIC is that the human brain use multiple inverse models to control the system, which is augmented with a forward models. In human brain there exist multiple pairs of coupled forward and inverse models. The forward models estimate the reliability of the inverse model in the current context, and the final motor command is a linear combination of all the commands from the inverse models.
+%With the learned multiple models, we adopt the MOSAIC~\citep{haruno2001mosaic} architecture to control the system. The basic concept of MOSAIC is that the human brain use multiple inverse models to control the system, which is augmented with a forward models. In human brain there exist multiple pairs of coupled forward and inverse models. The forward models estimate the reliability of the inverse model in the current context, and the final motor command is a linear combination of all the commands from the inverse models.
 %In object manipulation, the system dynamics can be rapidly changing over time and we need more than one model to describe it. Our learnt multiple GMMs are used to describe the system in these different contents. First we need to infer the behavior of the system. Having deduced this information, we need to decide how to manipulate the system.
 
 Once the number of modules is found and the multiple pair of forward and inverse models are learnt, they are used to compute motor commands for task execution.
-We consider the human motor system acts upon by motor command $a_t$ at time $t$ with current system status $s_t$. The resulting system status at time $t+1$ then is
-
+We consider the human motor system acts upon by motor command $a_t$ at time $t$ with current system status $s_t$. A function $f$ maps $a_t$ and $s_t$ to the  system status at time $t+1$:
 \begin{equation}
 \label{e1}
 s_{t+1} = f\left(s_t,a_t\right)
 \end{equation}
-
-The goal of the controller is to generate a motor command that bring the current system status from $s_t$ a desired state $s^*_{t+1}$:
-
+The goal of the controller is to generate a motor command $a_t$ that bring the current system status from $s_t$ a desired state $s^*_{t+1}$:
 \begin{equation}
 \label{e2}
 a_t = g\left({s^*_{t+1},s_t}\right)
 \end{equation}
 
-According to the discussion in Section~\ref{sec:model}, equation~\ref{e1} represents the forward model and equation~\ref{e2} represents the inverse model. It takes three steps to compute the motor command $a_t$:
+Equation~\ref{e1} represents the forward model and Equation~\ref{e2} represents the inverse model. In the modular approach, it takes two steps to compute the motor command $a_t$:
 \begin{enumerate}
-\item Compute expected system state $\hat{s}_t$ by each forward model
-\item compute responsibility factor $\lambda$ for each module
+\item Anticipate the sensory output and compute the responsibility factor $\lambda_t$
 \item Compute motor command by each inverse model and compute the final motor command $a_t$
 \end{enumerate}
 
 
-\subsubsection{Anticipate sensory output by forward model}
-\label{sec:forward}
-With the $k$-th forward model we can estimate the current status $\hat{s}_t$ by
-\begin{equation}
-\label{e3}
-\hat{s}^k_{t} = E\left({s_{t-1}, a_{t-1} \mid \Omega^k_I}\right)
-\end{equation}
-
-%and
-%
+%\subsubsection{Anticipate sensory output by forward model}
+%\label{sec:forward}
+%With the $k$-th forward model we can estimate the current state ${\hat{s}} ^k_t$ by the $GMR$ (Table~\ref{tab:GMM}):
 %\begin{equation}
-%\label{e4}
-%u^i_t = E\left({x^*_{t+1},x_t, u^i_{t-1} \mid \Omega^i}\right)
+%\label{e3}
+%{\hat{s}} ^k_{t} = E\left({s_t {\mid} s_{t-1}, a_{t-1}, \Omega^k_I}\right)
 %\end{equation}
-
-%These two equations will be described later in details.
-This equation is to predict the environment status based on the observation and prediction on the controller's influence on the system. The expectation values of the current system status of the $k$-th module is computed by the $Gaussian$ $Mixture$ $Regression$ (GMR). The computation is as follow.
-
-With the sensory input $\{s_{t-1},a_{t-1}\}$ as a query point $q$ we define:
-
-\begin{equation}
-{
- {\mu}_{q,n}^k = \begin{pmatrix} {\mu}_{s_{t-1},n}^k    \\
-                                        {\mu}_{a_{t-1},n}^k
-                        \end{pmatrix}
-}
-\end{equation}
-\begin{equation}
-{
-{\Sigma}_{qq,n}^k =  \begin{pmatrix} {\Sigma}_{s_{t-1}s_{t-1},n}^k  & {\Sigma}_{s_{t-1}{a_{t-1},n}}^k  \\
-                                            {\Sigma}_{{a_{t-1}}{s_{t-1}},n}^k  & {\Sigma}_{{a_{t-1}}{a_{t-1}},n}^k
-                            \end{pmatrix}
-}
-\end{equation}
-and GMR then uses:
-
-\begin{equation}
-{
-\hat{\mu}_{s_t,n}^k = {\mu}_{s_t,n}^k + \Sigma_{{s_t}q,n}^k({\Sigma}_{qq,n}^k)^{-1}(q-{\mu}_{q,n}^k)
-}
-\end{equation}
-
-\begin{equation}
-{
-\hat{\Sigma}_{{s_t}{s_t},n}^k = {\Sigma}_{{s_t}{s_t},n}^k - {\Sigma}_{{s_t}q,n}^k({\Sigma}_{qq,n}^k)^{-1}{\Sigma}_{q{s_t},n}^k
-}
-\end{equation}
-
-
-Finally, all the $N$ Gaussian components of the $k$-th module\footnote{Different modules may have different number of Gaussian components.} are taken into account and the current sensory data $\hat{s}_t$ is predicted as the mean $\hat{\mu}_{s_t}$ with the covariance $\hat{\Sigma}_{s_t,s_t}$ according to:
-
-\begin{equation}
-{
-\hat{\mu}_{s_t} = \sum_{n=1}^N{\beta_n(q)}\hat{\mu}_{s_t,n}^k
-}
-\end{equation}
-\begin{equation}
-{
-\hat{\Sigma}_{{s_t}{s_t},n} = \sum_{n=1}^N{\beta_n(q)}^2\hat{\Sigma}_{{s_t}{s_t},n}^k
-}
-\end{equation}
-where
-\begin{equation}
-{
-\beta_n(q) = \frac{p_{n}p(q|{\mu}_{q,n}^k,{\Sigma}_{qq,n}^k)}
-{\sum_{n=1}^N{p_n}p(q|{\mu}_{q,n}^k,{\Sigma}_{qq,n}^k)}
-}
-\end{equation}
-
-
+%
+%This equation is to predict the environment status based on the observation and the knowledge of the $k$-th module. In the next step, the prediction will be compared to the actual sensory feedback. The accuracy of this prediction will decide the weight of each inverse model.
 
 \subsubsection{Responsibility factor}
 \label{sec:rf}
 
-In a multi-module approach, choosing the proper modules to compute the motor command is crucial. For this we rely on the computation of the responsibility factor. The responsibility factors act as the weight of the modules. Each module has its responsibility factor at every time step, the final motor command at that time step is the linear combination of the commands generated from each module multiplied by their responsibility factors.
-The responsibility factor is a measurement of the reliability of using one model to represent the current system context.
+In a modular approach, choosing the proper modules to control the system is a crucial step. For this we rely on the responsibility factors, which act as the weights of the inverse models. The responsibility factor is a measurement of the reliability of using one module to represent the current system context.
+
 %The measurement is computed by the discrepancy between the anticipating current system state $s_t$ of the forward model and the actual current system state $s'_t$ from the sensory feedback:
 %
 %\begin{equation}
@@ -332,12 +320,19 @@ The responsibility factor is a measurement of the reliability of using one model
 %
 %where $n$ is the number of models.
 
-As the models are built as GMMs, it is easy to estimate the likelihood of one data point belongs to a particular module. The actual current state from the sensory feedback, the previous state and the previous motor command forms a query point $\{s_t,s_{t-1},a_{t-1}\}$. The responsibility is computed by the likelihood of the current query data point in each module, normalized by the total sum:
+With the $k$-th forward model we can anticipate the current state ${\hat{s}} ^k_t$ by the $GMR$ (Table~\ref{tab:GMM}):
+\begin{equation}
+\label{e3}
+{\hat{s}} ^k_{t} = E\left({s_t {\mid} s_{t-1}, a_{t-1}, \Omega^k_I}\right)
+\end{equation}
+
+By comparing the anticipated current state ${\hat{s}} ^k_t$ with the actual current state $s_t$ detected by the sensors, we can evaluate how good the $k$-th module represents the current system. The actual current state, previous state and the previous motor command form a data point $\eta_t$ = $\{s_t,s_{t-1},a_{t-1}\}$. As the forward models are built as GMMs, it is easy to compute the likelihood of one data point belongs to a particular model: $p(\eta_t {\mid} \Omega_F^j)$. The discrepancy between $\hat{s}^k_t$ and $s_t$ is embedded in this likelihood and hence in practice we only compute the $p(\eta_t {\mid} \Omega_F^j)$ and skip ${\hat{s}} ^k_t$.
+The responsibility factor of the $k$-th inverse model is the likelihood of the data point $\eta_t$ belongs to the $k$-th module, normalized by the total sum:
 
 \begin{equation}
-\lambda^j_t = \frac{p(s_t,s_{t-1},a_{t-1}\mid \Omega_I^j)}{\sum_{k=1}^{K}{p(s_t,s_{t-1},a_{t-1}\mid \Omega_I^k)}}
+\lambda^j_t = \frac{p(\eta_t {\mid} \Omega_F^j)}{\sum_{k=1}^{K}{p(\eta_t {\mid} \Omega_F^k)}}
 \end{equation}
-where $K$ is the number of modules.
+where $K$ is the number of modules~\footnote{In the case that the dominator is very close to zero, the whole control process will be terminated as it indicates that the model is used on a different task.}.  At every time step, we compute the responsibility factor for each module. The final motor command at that time step is the linear combination of the commands generated from each inverse model multiplied by their responsibility factors.
 
 %Note the forward model is embedded in this computation of the responsibility factor. The likelihood of the query point $p(s_t,s_{t-1},a_{t-1}\mid \Omega^j$ in the $j-th$ module is equivalent to the discrepancy between the expected current system state $s_t$ of the forward model and the actual current system state $s'_t$ from the sensory feedback, factorized by the variance of the forward model.
 
@@ -347,14 +342,14 @@ where $K$ is the number of modules.
 %\subsubsection{Mix of Model}
 %\label{mix}
 
-The motor command $a^k_t$ for the $i$-th inverse model is computed by GMR with the same steps  described in Section~\ref{sec:forward}. The responsibility factors $\lambda^j$ act as the weights of each model in the control system. The higher the responsibility is, the more response the model takes in the control system. Therefore, the final motor command generated by this multiple model system is
+The motor command $a^k_t$ for the $k$-th inverse model is computed by GMR with the steps explained in Table~\ref{tab:GMM}. At each time step, the responsibility factors $\lambda^k_t$ weight its corresponding inverse model: the higher the responsibility is, the more response the inverse model takes in the control. The final motor command generated by this multiple model system is:
 
 \begin{equation}
 \label{e_mix}
-s_t = \sum_{k=1}^K{\lambda^k a_t^k} = \sum_{k=1}^K{\lambda^k E\left({s^*_{t+1},s_t, a^k_{t-1} \mid \Omega^k_I}\right)}
+a_t = \sum_{k=1}^K{\lambda_t^k a_t^k} = \sum_{k=1}^K{\lambda_t^k E\left({a_t \mid s^*_{t+1},s_t, a_{t-1}, \Omega^k_I}\right)}
 \end{equation}
 
-These three steps are computed with a close form solution. This ensures that this system can react quickly to the changes in the environment by adjusting the responsibility factor.
+These three steps are all computed with a close form solution. This ensures that this system can react quickly to the changes in the environment by adjusting the responsibility factor.
 
 
 
