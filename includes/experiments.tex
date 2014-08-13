@@ -441,7 +441,7 @@ Before apply the final output on the robot, a compensational torque is added to 
 %We implement this algorithm with two bottles (b1 and b4) in the training set and then two bottles (b5 and b6) had not been used for training.
 We validated the algorithm to control cap opening in our robot. We first tested the ability of the system to open 2 of the bottles seen during training (b1 and b4). We then tested the generalization capacity of the system by opening two bottles (b5 and b6) not seen during training.
 Bottle b1 and b4 are the easiest and most difficult bottle to open in the training set.
-Bottle b5 is a large bottle, which is hard for human to grab and open. Bottle b6 is a glass bottle with a plastic cap. The surface interaction between these two materials is not demonstrated. As the Barrett hand is significantly larger than a human hand, $b1, b4, b6$ are mounted with $c5$ (the cap of $b5$ with diameter $110 mm$) on the top to ensure a firm grasp. In total 4 different setups are used in the experiment: $b1c5, b4c5, b5c5$ and $b6c5$. As discuss above, the size of the cap has minor effect on the control strategy. Therefore we expect the setups $b1c5$ and $b4c5$ will result in a similar behavior as those of $b1c3$ and $b4c3$ in the training. The experimental results and demonstration snapshots are shown in figures~\ref{fig:demo_b1}-~\ref{fig:demo_b6}. Figure~\ref{fig:demo_b1b4b5b6} is a similar plot to figure~\ref{fig:bottlepatterns}, that aligns the exert torque of the 4 experiments.
+Bottle b5 is a large bottle, which is hard for human to grab and open. Bottle b6 is a glass bottle with a plastic cap. The surface interaction between these two materials is not demonstrated. As the Barrett hand is significantly larger than a human hand, $b1, b4, b6$ are mounted with $c5$ (the cap of $b5$ with diameter $110 mm$) on the top to ensure a firm grasp. In total 4 different setups are used in the experiment: $b1c5, b4c5, b5c5$ and $b6c5$. As discuss above, the size of the cap has minor effect on the control strategy. Therefore we expect the setups $b1c5$ and $b4c5$ will result in a similar behavior as those of $b1c3$ and $b4c3$ in the training. The experimental results and demonstration snapshots are shown in figures~\ref{fig:demo_b1}-~\ref{fig:demo_b6}~\footnote{Demonstration videos are available at http://www.cs.bath.ac.uk/~bh325/opencap.rar}. Figure~\ref{fig:demo_b1b4b5b6} is a similar plot to figure~\ref{fig:bottlepatterns}, that aligns the exert torque of the 4 experiments.
 
 In each experiment we record the cap displacement, exert torque, and the responsibility factors of all three modules. Bottle b1 is the easiest bottle to open in the training set, the control policies of both phase $I$ and phase $II$ are grouped into cluster 3. As a result, in the b1 experiment the cluster 3 takes most responsibility (Figure.~\ref{fig:demo_b1}).
 
@@ -464,12 +464,12 @@ With the above four different setups, the modular model adapts accordingly and s
   {\includegraphics[width=15cm]{./fig/demo_b1.jpg}}
 
   \vspace{0.3cm}
-  %\vspace{0.5cm}
+  %\hspace{0.2cm}
   \subfloat[\scriptsize{Cap displacement during the demonstration. }]
   {\includegraphics[width=15cm]{./fig/demo_b1_s.eps}}
 
   \vspace{0.3cm}
-  %\vspace{0.5cm}
+  \hspace{-0.3cm}
   \subfloat[\scriptsize{Exert torque against cap displacement during the demonstration.}]
   {\includegraphics[width=15cm]{./fig/demo_b1_T.eps}}
 
@@ -495,7 +495,7 @@ With the above four different setups, the modular model adapts accordingly and s
   {\includegraphics[width=15cm]{./fig/demo_b4_s.eps}}
 
   \vspace{0.3cm}
-  %\vspace{0.5cm}
+  \hspace{-0.2cm}
   \subfloat[\scriptsize{Exert torque against cap displacement during the demonstration.}]
   {\includegraphics[width=15cm]{./fig/demo_b4_T.eps}}
 
@@ -548,7 +548,7 @@ With the above four different setups, the modular model adapts accordingly and s
   {\includegraphics[width=15cm]{./fig/demo_b6_s.eps}}
 
   \vspace{0.3cm}
-  %\vspace{0.5cm}
+  \hspace{-0.5cm}
   \subfloat[\scriptsize{Exert torque against cap displacement during the demonstration.}]
   {\includegraphics[width=15cm]{./fig/demo_b6_T.eps}}
 
