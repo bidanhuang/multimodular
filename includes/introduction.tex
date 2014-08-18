@@ -1,21 +1,72 @@
 \section{Introduction}
 \label{intro}
 %The ultimate goal of robotics is to enable robots to be a part of human life, to provide assistance in a wide range of tasks including surgery operation, house keeping, education and personal care. Most of these tasks require the ability to do complex object manipulation, which remains a open challenge in the robotics community. %It is impractical to pre-program all such object manipulation tasks manually. Therefore, we use a more practical alternative: teaching the robots by human demonstrations of the tasks.
-With robots moving into human-centered environments, such as households and offices, the human-like motor skill becomes more and more desirable. In everyday life, object manipulation is one of the most commonly used skills, which includes a large category of activities ranging from the simple pick-and-place task to the complicated dexterous manipulation task. This work provides a framework to learn human object manipulation skill and to transfer it to robots.
 
+With robots moving into human-centered environments such as households
+and offices, human-like motor skills are becoming increasingly
+desirable. In everyday life, object manipulation is one of the most
+commonly used manual skills. Object manipulation includes a large
+category of activities ranging from the simple pick-and-place task to
+complicated dexterous manipulation.  
 
+Here we provide a framework for learning a human object-manipulation skill
+and transfering it to a robot.
 %Object manipulation is a large category of tasks in which the robots make physical contact with the environment. %Typical contact tasks include robot grasping and object manipulation.
 %% The complicated physics in the interactions between objects makes manipulation tasks difficult. The multi-body interaction and the effect of friction can cause abrupt changes in the environment. To handle these situations, robots have to be equipped with a nonlinear and non-stationary control strategy, which is hard to design by analytical approaches.
 %In manipulation tasks, the ability to predict and react to the uncertainty and unforeseen changes of the environment is vital.
-Generally, the manipulation tasks are very difficult, due to the complicated contact situations and the changing kinematic and dynamic contexts. Humans can perform these skilled tasks and adapt to the changes without difficulty. At the heart of this skill is prediction~\citep{flanagan2006control}. Studies from neuroscience suggest that human develop internal models for motor control, to predict the future state of the environment. By comparing the predictive state with the actual sensory state, the internal models monitor the progression of the tasks and launch the corresponding motor correction and motor reaction to adapt. %Building accurate analytical model for manipulation task is painstaking, small error in the model will cause fatal control problem. To solve this problem, we take the programming by human demonstration (PbD) approach.  %Modular approach has also been shown to be an effective way of building intelligent systems~\citep{bryson2004modular,BrysonMcG12}.
+Generally, manipulation tasks are very difficult, due to the
+complicated contact situations between the manipulator and the object,
+and the changing kinematic and dynamic contexts that result. Humans
+can perform these skilled tasks and adapt to changes in context
+without difficulty. At the heart of this skill is
+prediction~\citep{flanagan2006control}. Studies from neuroscience
+suggest that humans develop internal models for motor control, which
+allow us to predict the future state of the environment. By comparing
+the predictive state with the actual sensory state, the internal
+models monitor the progression of  tasks, and launch any
+corresponding motor correction and motor reaction required to
+adapt to anything unexpected. %Building accurate analytical model for manipulation task is painstaking, small error in the model will cause fatal control problem. To solve this problem, we take the programming by human demonstration (PbD) approach.  %Modular approach has also been shown to be an effective way of building intelligent systems~\citep{bryson2004modular,BrysonMcG12}.
 
-
-Inspired by this concept, we propose an approach to learn human adaptive control strategy. This adaptive control strategy is encoded with a modular model. Each module includes a forward model for context estimation and an inverse model for motor command generation. From multiple human demonstrations, we extract a set of strategies, each of which takes charge of one specific task context. By this method, we modularize human adaptive control strategy. Internal models (forward model and inverse model) are learnt within each modules with a representation that can be easily transfer to robot. When a robot executes a similar task, the forward models estimate the context of the task and ``contextized'' the inverse models to generate proper command that drives the object.
+Inspired by this concept, we propose an approach to learning human
+adaptive control strategies. This strategy is encoded with a modular
+model, where each module includes a forward model for context
+estimation, and an inverse model for motor command generation. From
+multiple human demonstrations, we extract a set of strategies, each of
+which takes charge of one specific task context. % JJB: Bidan, a lot of
+                                % this is redundant.  Be careful to
+                                % only say something once at least in
+                                % the same paragarph!  By this method, we
+%modularize human adaptive control strategy. 
+The internal forward and inverse models are learnt within each
+module with a representation that can be easily transfered to a
+robot. When the robot executes a similar task, the forward models
+estimate the context of the task and 
+%`contextized' ??? JJB
+`contectualize' the inverse models, allowing them to generate the proper commands.
+% JJB??? to drives the object.
 %Each learnt control strategy is weighted by the similarity of the current task context and its corresponding context. The optimal strategy is computed as the linear combination of the weighted commands of each strategy.
 
 %it carries out an automatic estimation of the task context based on the sensory data and calculates a best combination of the modules to provide a motor command of the current operating region.
 %The approach does not require any prior knowledge of the kinematics nor dynamics of the operation system, nor is it restricted to a specific robot platform. The control strategy is learnt on the object level and hence can be transfer from human to robot directly.
-This work contributes a framework to modularize human adaptive control strategy of manipulation tasks and to transfer the learnt internal models to robot. To verify our approach, we use a \emph{Opening Bottle Caps} as an experiment. An adaptive control strategy is required here, as the friction between the bottle and the cap surfaces has multiple phases. We modularize the human control strategy in this task and implementing it on a robot to open both familiar and novel bottles.
+
+Our work contributes a framework composed of both automated and
+bespoke components for creating the modular representation of 
+human adaptive control-strategies %JJB redundant! of manipulation
+                                %tasks 
+and to transfer these learnt internal models to a robot. To verify our
+approach, we use an \emph{Opening Bottle Caps} task as an
+experiment. An adaptive control strategy is required here, because the
+friction between the bottle's and the cap's surfaces has multiple
+phases. We demonstrate the modularized version of the human control
+strategy in this task on a robot, which is used to open both familiar
+and novel bottles.
 
 %This task is complex in the sense that 1) there are multiple different contacts occur at the same time, i.e., the contact between the fingertips and the cap, the contact between the cap and the bottle screw; 2) the latter contact usually consists of several abrupt switch during the task, from static friction to kinetic friction.
-The rest of the paper is organized as follows: Section~\ref{sec:related} provides an overview of related work; Section~\ref{sec:method} presents our approach of learning a multiple module model of a human manipulation strategy; an experiment of a opening bottle cap task and its result are shown in Section~\ref{sec:exp}, along with details of the hardware specifications and the experimental setup; Section~\ref{sec:diss} concludes this work with an outlook of future work. 
+The rest of this article is organized as follows:
+Section~\ref{sec:related} provides an overview of related work;
+Section~\ref{sec:method} presents our approach of learning a
+multiple-module model of a human manipulation strategy. The
+experiments on the opening-bottle-cap task and their result are shown
+in Section~\ref{sec:exp}, along with details of the hardware
+specifications and the experimental setup.  Section~\ref{sec:diss}
+concludes this work with a discussion and a look towards future work.
