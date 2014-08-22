@@ -62,9 +62,11 @@ robot~\citep{asfour2008imitation}. With direct interaction with the
 object the human demonstrator is able to perform the task most
 naturally and with a more delicate control strategy. However, the task
 information captured from these human demonstrations must then be
-transferred to robots. Various methods for mapping between human and
+transferred to robots. This involves the problem of creating a mapping
+between the motions of a human and those of a robot, a problem known
+as the correspondence problem \citep{Nehaniv02}.  Various methods for mapping between human and
 robot articulation have been
-proposed~\citep{hueser2006learning,asfour2008imitation,do2011towards,}. These
+proposed~\citep{hueser2006learning,asfour2008imitation,do2011towards}. These
 may be augmented with 
 correction by humans~\citep{calinon2007incremental,sauser2011iterative,romano2011human}
 and by self-correction via learning~\citep{bidan2013robio}.% are proposed
@@ -94,7 +96,7 @@ expressed from the object perspective can then be transferred to a
 robot platform by converting %FIXME?  Was "covering "
 the exerted force to robot joint torque.
 
-With the object centric viewpoint, we need to learn the correlation
+With the object-centric viewpoint, we need to learn the correlation
 between the exerted force of the object and the desired object
 motion. A classic model of this correlation is
 impedance~\citep{howard2010transferring,wimbock2012comparison}. Given

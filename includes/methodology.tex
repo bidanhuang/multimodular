@@ -1,22 +1,38 @@
 \section{Methodology}
 \label{sec:method}
 % ========= object centric =========
-This section presents the method we used to modularize human demonstration of manipulation tasks. Our goal is to acquire a modular based control policy for an object manipulation task from human demonstration. To this end, we take a three-step approach:
-\begin{enumerate}
-\item Human demonstrating a task in different contexts (Section~\ref{sec:demo}).
-%\item Clustering the data to find number of modules needed in the task (subsection ~\ref{sec:cluster}).
-\item Extracting human control strategies for different contexts and build multiple internal models (Section~\ref{sec:learn}).
-%\item Design a controller based on the learnt multiple model  (subsection ~\ref{controller}).
-\item Use the multiple modules to compute motor commands for a robot (Section~\ref{sec:control}).
-\end{enumerate}
 
+We have introduced our method somewhat in the previous section and
+justified our design decisions in the light of related literature.  In
+this section we present our method for modularizing human
+demonstrations of manipulation tasks. Our goal is to acquire a modular
+control policy for an object manipulation task from this human
+demonstration. To this end, we take a three-step approach:
+\begin{enumerate}
+\item Human demonstration of a task in several different contexts (Section~\ref{sec:demo}).
+%\item Clustering the data to find number of modules needed in the task (subsection ~\ref{sec:cluster}).
+\item Extraction and modular decomposition of human control strategies
+  for different contexts, abuilding multiple internal models
+  (Section~\ref{sec:learn}).
+%\item Design a controller based on the learnt multiple model  (subsection ~\ref{controller}).
+\item Robot control using the integrated modules to compute motor
+  commands (Section~\ref{sec:control}).
+\end{enumerate}
 Figure~\ref{fig:overview} shows an overview of our framework.
 
 \begin{figure}
   \centering
    \includegraphics[width=8cm]{./fig/overview5.pdf}
-  \caption{ \scriptsize{System overview. Our system takes a three-step approach. 1) Human demonstrate a task in different contexts. In the opening bottle cap experiment, the demonstrations are done with different bottles and caps. The object level exert force and torque, the object movements are used for training. 2) Clustering human control strategies. Each cluster is modeled as one module. 3) Use the multiple modules to compute motor commands to control the robot.}
-  }
+   \caption{ \scriptsize{System overview. Our system takes a
+       three-step approach. 1) A human demonstrates a task in a
+       variety of contexts. In the opening-bottle-cap experiment, the
+       demonstrations are done with different bottles and caps. The
+       object-level exertion forces and torque, and the the object's
+       movements are used for training. 2) Clustering via machine
+       learning is run over the data from the human control
+       strategies. Each cluster is then modeled as one module. 3) The
+       multiple modules are integrated to compute motor commands to
+       control a robot performing the same task in similar contexts.}  }
 \label{fig:overview}
 \end{figure}
 
@@ -35,12 +51,26 @@ Figure~\ref{fig:overview} shows an overview of our framework.
   \centering
     \subfloat[\scriptsize{Optitrack markers attaching to a cap}] {\includegraphics[height=2cm]{./fig/marker2.jpg}}
     \subfloat[\scriptsize{Force torque sensor}] {\includegraphics[height=2cm]{./fig/Nano25-E.jpg}}
-    \subfloat[\scriptsize{Texscan tactile sensors mounting to a glove}] {\includegraphics[height=2cm]{./fig/texscan2.jpg}}
-    \caption{\scriptsize{Sensors used in the human demonstration of opening a bottle cap task.}}
+    \subfloat[\scriptsize{Texscan tactile sensors mounted on a glove}] {\includegraphics[height=2cm]{./fig/texscan2.jpg}}
+    \caption{\scriptsize{Sensors used in the human demonstration of
+        opening a bottle cap task.} FIXME why are you using scriptsize
+      in the captions?  Is this the latex format from the journal?  Is
+      it just so you don't have to increase the size of the text in
+      the figures?  Also, should we provide full references for the
+      exact sensors we used?  E.g. like this
+      \citep{NetLogo2.1,unreal}.}
   \label{fig:devices}
 \end{figure}
 
-The first step is recording human demonstration of a task. Based on the object centric principle, we collect the object trajectory and its driven force. These data can be accessed by motion capture system, force-torque sensor and wearable haptic device. Figure.~\ref{fig:devices} shows a few sensors we used in the opening bottle caps task. Details will be explained in section~\ref{sec:exp_demo}.
+The first step is recording the human demonstrations of a task. Based on
+the object-centric principle, we collect the object's trajectory and its
+driven force. % FIXME driving force?  what is the correct term?  Look
+              % in articles you read!
+We collected this data by a vision-based motion-capture system,
+force-torque sensor and wearable haptic
+devices. Figure.~\ref{fig:devices} shows a few of the sensors we used
+in the opening-bottle-caps task. % JJB this is that section! Details will be explained in
+%section~\ref{sec:exp_demo}.
 
 % ===== Why not kinematics approach? =====
 %For manipulation task, kinematics teaching on robot is difficult. While a manipulation task usually involves multifinger movement, a human can kinematically operate one finger with each hand and hence two fingers simultaneously for the most extend. Tele-operation of the robot hand solves this problem but it does not provide a direct force feedback. In our approach, human perform the task with direct interaction with the object. With direct interaction with the object the demonstrator is able to perform the task most naturally and perform a more delicate control strategy. %In an object centric manner there is no difference between collecting data from the demonstrator or from the learner -- they are expressed from the objects' perspective. Once the control policy is encoded, it can be directly applied to the robots.
@@ -48,7 +78,20 @@ The first step is recording human demonstration of a task. Based on the object c
 %Kinematics teaching of the learner is not necessary here for three reasons. Firstly in an object centric manner there is no difference between collecting data from the demonstrator or from the learner -- they are expressed from the object point of view. Secondly with direct interaction with the object the demonstrator is able to perform the task most naturally and hence provide a more naturally control policy. Thirdly manipulation with multifinger is difficult to demonstration kinematically, as a human can manipulate one finger of a robot with each hand and hence two fingers simultaneously for its most extend.
 
 % ======= demonstrate in different context   =======
-In the demonstrations, the demonstrator performs a task a number of times to generate enough data for capturing the key features of it. Further, the demonstrator performs the task under different conditions, e.g. friction conditions, in order to explore how humans adapt to different task contexts. These different configurations are chosen to cover a wide range of different contexts. For example, in a opening bottle cap task the demonstration of opening the tightest bottle, within the capability of the learner, is included. These wide range demonstrations are then used to learn a multiple module model. Details will be explained in Section~\ref{sec:exp_demo}.
+In the demonstrations, the demonstrator performs a task a number of
+times to generate enough data to reliably capture its key features.
+We determined this level by trial-and-error, in the end using fairly
+few trials The demonstrator also performs the task under a variety of
+conditions, e.g. a range of friction conditions, in order to explore
+how humans adapt to different task contexts.   These different
+configurations must be chosen to cover a wide range.% of different
+%contexts.  JJB -- redundant.
+For example, in a opening-bottle-cap task, the demonstration of opening
+the tightest bottle within the capability of the learner is
+included. These wide range demonstrations are then used to learn a
+multiple module model. Details including the exact numbers and
+durations of our trials are described in
+Section~\ref{sec:exp_demo}. %FIXME check this is detailed there!
 
 %The force and torque applied on the cap are measured by the Trkscan pressure sensor and a force torque sensor. The movement of the object is recorded by the OptTrack motion tracking system. Each demonstration is recorded as a temporal sequence.
 
@@ -58,38 +101,107 @@ In the demonstrations, the demonstrator performs a task a number of times to gen
 
 \subsection{Learning a Multiple-Module Model}
 \label{sec:learn}
-In this section we detail our modeling method, explaining how do we model human manipulation strategy and how to choose the number of modules of a task.
+Here we detail our modeling method, explaining how we model the human
+manipulation strategy and how we determine the number of modules to
+represent a task strategy.
 
 \subsubsection{Object centric manipulation strategy}
 \label{sec:objectlevel}
-As mentioned in Section~\ref{sec:related}, one of the challenges in imitation learning is the correspondence problem, i.e. how to map the demonstrator's motions to the robot's motions so that they produce the same effects, e.g. reaching the same point. %This problem is particularly important in the motion planning tasks.
-In a object manipulation task, however, the goal is to deliver the object from the current state to a desired state. During this process the movement of the manipulator is bounded by the movement of the object. It is more important to imitate how human apply forces to achieve object's desired movement, than to imitate the human limb movement.
+As mentioned in Section~\ref{sec:related}, one of the challenges in
+imitation learning is the correspondence problem, i.e. how to map the
+demonstrator's motions to the robot's motions so that they produce the
+same effects, such as reaching the same
+point. %This problem is particularly important in the motion planning tasks.
+In an object manipulation task, the goal is to deliver the object from
+the current state to a desired state. During this process the movement
+of the manipulator is bounded by the movement of the object. Thus it is
+more important to imitate how the human applies force to achieve object's
+desired movement, than to imitate human limb movement.  This is part
+of what justifies our object-centric representational approach.
 %Therefore we take an ``object centric approach"~\citep{okamura2000overview}, of which the control policy is taken from the object point of view.
 
-Therefore, our model encodes a force and torque profile rather than the end effector movement trajectory. The imitation learning objective here is not to find a policy for the end effector movement but to find a policy that maps the force and torque to the object movement. This policy allows the robot to efficiently acquire new behaviors to accomplish the task. %Different robots move differently to achieve the desired object movements.
-Giving the robots' kinematics and the desired exert force and torque on the object, the robot joint torques can be deduced by the Jacobian matrix~\citep{okamura2000overview}. To this end, we focus on the  force-torque-displacement tuple: $\{F,\tau,s\}$ demonstrated in the task, where $F$ is the exert force in all directions including the grip force, $\tau$ is the exert torque in all directions and $s$ is the object displacement. In later sections, we refer $\{F,\tau\}$ as the motor command (action) with notation $\{a\}$. In each demonstration, a time series of the tuple is recorded.
+%JJB don't start paragraphs with things like "Therefore", that's
+%usually better within paragraphs for connections. The first sentence
+%of a paragraph should be strong, self-contained  topic sentence.
+The object-centric approach means that our model encodes a force and
+torque profile rather than the end effector movement trajectory.  The
+imitation-learning objective here is not to find a policy for the end
+effector movement but to find a policy that maps  force and torque
+to object movements. This policy allows the robot to efficiently
+acquire new behaviors to accomplish the
+task. %Different robots move differently to achieve the desired object movements.
+Giving the robots' kinematics and the desired exertion force and torque
+on the object, the robot joint torques can be deduced by their Jacobian
+matrix~\citep{okamura2000overview}. To this end, we focus on the
+force-torque-displacement tuple: $\{F,\tau,s\}$ demonstrated in the
+task, where $F$ is the exert force in all directions including the
+grip force, $\tau$ is the exert torque in all directions and $s$ is
+the object displacement. In later sections, we refer $\{F,\tau\}$ as
+the motor command (action) with notation $\{a\}$. In each
+demonstration, a time series of the tuple is recorded.
 
 
 
-\subsubsection{Decide number of modules}
+\subsubsection{Deciding the number of modules}
 \label{sec:cluster}
 
 % ----------- why clustering -----------
-Due to object interaction, a manipulation task frequently encounter abrupt changes of the system dynamics, e.g. transfer between statuses with no contact and with contact, between statuses driven by static friction and by driven dynamic friction. Different strategies should be used to handle different dynamics and hence a multiple module model is desired. Our approach is to extract strategies from demonstration and build one module for each of the strategies. %During implementation, the system quickly estimate the context by the sensory inputs and choose the most appropriate module or weight and combine the modules to react.
+Due to physical interactions with an object, a manipulation task
+frequently encounters abrupt changes of the system dynamics, for
+example transfer between statuses with no contact and with contact,
+between statuses driven by static friction and by driven dynamic
+friction. Different strategies should be used to handle different
+dynamics.  This motivates our multiple-module representation. Our
+approach is to extract strategies from a demonstration and build one
+module for each of the
+strategies. %During implementation, the system quickly estimate the context by the sensory inputs and choose the most appropriate module or weight and combine the modules to react.
 
 %In this multiple model approach, each model is trained for a particular dynamics context. During the control process the model can compute appropriate control commands for the corresponding dynamics according to the sensory inputs. If the model is chosen properly (see Section~\ref{rf} for mixing model), this approach will be able to adapt to changing environmental context.
 
 % ---------- Cluster to find number of modules -----------
-Different tasks may need different number of modules. In human demonstration the same task is demonstrated with a few different setups to explore how human adapt to them. However, the number of setups does not necessary equal to the number of modules needed in the task. Human may regard different setups as the same task context and handle them with the same control strategies. %Some data may seems to be dissimilar in the scale or frequency, but in fact are governed by the same dynamic.
-In order to find a proper number of modules, we need to differentiate different types of strategies. The differences can be reflected from the different pattern of the force-torque-displacement tuple. We differentiate the patterns in a data driven manner: cluster force-torque-displacement tuple. Data in the same cluster is considered to be governed by the same strategy. The number of clusters is the number of modules and each module is encoded by one model.
+Different tasks may need different number of modules. In the human
+demonstrations, the same task is demonstrated with a few different
+setups to explore how human adapt to them. However, the number of
+setups does not necessary equal to the number of modules needed in the
+task. Humans may regard different setups as the same task context and
+handle them with the same control
+strategies. %Some data may seems to be dissimilar in the scale or frequency, but in fact are governed by the same dynamic.
+In order to find a proper number of modules, we need to differentiate
+different types of strategies. The differences can be reflected in
+different patterns of the force-torque-displacement tuple. We
+differentiate the patterns in a data-driven manner: clustering across
+the force-torque-displacement tuple. Data in the same cluster is
+considered to be governed by the same strategy. The number of clusters
+is the number of modules and each module is encoded by one model.
 
 
 % ----------- Distance Metric for clustering ------------
-The goal of clustering is to separate a set of data to a few groups according to their similarities. The first step of clustering is to measure the similarities, i.e. the distances, between different data points. Different from an usual clustering problem, the data we need to cluster are not a set of single data points but a set of time series. Here we use the Dynamic Time Warping technique (DTW) to measure the distance between each pair of time series~\citep{berndt1994using}.
+The goal of clustering is to separate a set of data into a few groups
+according to their similarities. The first step of clustering is to
+measure the similarities, i.e. the distances, between different data
+points. Unlike most clustering problems, the data we need to cluster
+are not a set of single data points but a set of time series. Here we
+use the Dynamic Time Warping technique (DTW) to measure the distance
+between each pair of time series~\citep{berndt1994using}.
 
-Dynamic time warping is suitable for measuring the similarity between two time series, which may have different speeds or durations. It warps the data in the time dimension and finds the optimal match between the time series. The similarity is computed as the average distance between the corresponding points in two series.
+Dynamic time warping is suitable for measuring the similarity between
+two time series, which may have different speeds or durations. It
+warps the data in the time dimension and finds the optimal match
+between the time series. The similarity is computed as the average
+distance between the corresponding points in two series.
 
-The similarity (distance) between each pair of time series is computed by DTW and produce a distance matrix. In this distance matrix, each element contains a measurement of the similarity between two time series. We then cluster these time series into a few groups by a threshold of the similarity. This threshold is set by using the variance of the data from the same setup as a reference. As mentioned above, under the same setup a task is demonstrated a few times. These demonstrations are presumed to be handled with the same strategy and hence belong to the same cluster. The variance of these demonstrations give a reference of a proper variance of a cluster. The largest variance, across the variance of all setups, is used as the threshold for the clustering.
+The similarity (distance) between each pair of time series is computed
+by DTW and produces a distance matrix. In this distance matrix, each
+element contains a measurement of the similarity between two time
+series. We then cluster these time series into a few groups by a
+threshold of the similarity. This threshold is set by using the
+variance of the data from the same setup as a reference. As mentioned
+above, under the same setup a task is demonstrated a few times. These
+demonstrations are presumed to be handled with the same strategy and
+hence belong to the same cluster. The variance of these demonstrations
+give a reference of a proper variance of a cluster. The largest
+variance, across the variance of all setups, is used as the threshold
+for the clustering.
 
 %% ------------ Hierarchical clustering -----------
 Many of the clustering methods require the specification of the number of clusters. In our case, however, the number of clusters is an unknown variable. Therefore we use the hierarchical agglomerative clustering method~\citep{willett1988recent} to group our data. Agglomerative clustering is a method that merges similar data iteratively until the stop criteria satisfied, which does not require a predefined number of clusters. Our clustering method is described as follow:
