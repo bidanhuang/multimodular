@@ -1,6 +1,8 @@
 \section{Related Work}
 \label{sec:related}
-In this section, we give a overview of area of robot learning manipulation task and modular approaches.
+In this section, we give a overview of the area of the
+machine-learning of manipulation tasks for robots, and of modular
+approaches.
 
 
 %\subsection{Robot learning}
@@ -9,44 +11,163 @@ In this section, we give a overview of area of robot learning manipulation task 
 %The approach of PbD usually goes through three stages: perceive (demonstration), recognise (skill modeling) and reproduction (task implementation)~\citep{demiris2002f}. The advantages of PbD largely come from the demonstration and skill modeling steps. In the later part of this section, we provide an overview on these two stages.
 
 \subsection{Learning Manipulation Tasks}
-Demonstration based learning has been extensively studied~\citep{calinon2007learning,dillmann2004teaching,kulic2012incremental} as a promising approach to build robot intelligence. %It is essential for the tasks that analytical expression of the system is hard to derive.
-Learning manipulation tasks is one of the main application of this approach. The physical properties of a manipulation task is hard to express analytically, and as a result the control strategy is hard to derive. Modeling expert's demonstration of strategies has been used as an alternative to the analytical solution.
+Demonstration-based learning has been extensively
+studied~\citep{calinon2007learning,dillmann2004teaching,kulic2012incremental}
+as a promising approach for building robot
+intelligence. %It is essential for the tasks that analytical expression of the system is hard to derive.
+Learning manipulation tasks is one of the main application of this
+approach. The physical properties of a manipulation task is hard to
+express analytically, and as a result the control strategy is hard to
+derive formally without examples. Modeling an expert's demonstration
+of strategies has been used as an alternative to fully analytical
+solutions.
 
-Two major forms of demonstration are used in teaching manipulation tasks: kinematics teaching and tele-operation. In kinesthetic teaching, human directly contact with the robot and guide their movements to accomplish a task~\citep{korkinof2013online,pais2014encoding,pastor2011skill,Miao2014}. The trajectory of movements and contact force are recorded by the robot sensors.
+Two major forms of demonstration are used in teaching manipulation
+tasks: kinematics teaching and tele-operation. In kinesthetic FIXME
+kinematic or kinesthetic?  be consistent % FIXME
+teaching, a human directly contacts the robot and guides the robot's
+movements to accomplish a
+task~\citep{korkinof2013online,pais2014encoding,pastor2011skill,Miao2014}. The
+trajectory of movements and contact force are recorded by the robot's
+sensors.
 % ===== Why not kinematics approach? =====
-This method is simple and effective but limited in the number of controllable end effectors. While a manipulation task usually involves multifinger movement, a human can kinematically operate one finger with each hand and hence two fingers simultaneously at most. To control multi-finger hands, some researchers use tele-operation~\citep{bernardino2013precision,kondo2008recognition,Fischer98}. This usually relies on data gloves and motion capture system to sense human hand-arm motions. The human motion is mapped to robots to generate motions and interact with the environment. In fine manipulation tasks, the robot platforms are usually restricted to anthropomorphic hands for better mapping. All of these methods provide no direct force feedback to the human demonstrator during manipulation.
+This method is simple and effective, but it is limited in the number
+of controllable end effectors that can be
+trained. %FIXME is this right?
+While a manipulation task usually involves multifinger movement, a
+human can kinematically operate one finger with each hand and hence
+two fingers simultaneously at most. To control multi-finger hands,
+some researchers use
+tele-operation~\citep{bernardino2013precision,kondo2008recognition,Fischer98}. This
+usually relies on data gloves or other motion-capture systems, which
+sense the human hand and arm motions. The human motion is mapped to
+the robot's to generate motions in the robot in real time, allowing
+the robot to record its own interactions with the
+environment. %JBB I added a lot of clarification here
+In fine manipulation tasks, the robot platforms are usually restricted
+to anthropomorphic hands for better mapping. One drawback of
+teleoperation methods is that they typically provide no direct force
+feedback to the human demonstrator during manipulation.  This can make
+it difficult for the human to provide dexterous manipulation examples
+for recording.
+% FIXME right?  this is the problem? (I added a sentence for clarity,
+% if it's wrong, add a diffferent one.) Also, surely datagloves do
+% allow you to get force feedback -- record people making natural
+% motions on real objects?  So do many other motion capture systems --
+% it's only teleoperation that is unlikely to provide haptic feedback?
 
-In some studies, the human demonstrate manipulation tasks with their own bodies~\citep{asfour2008imitation}. With direct interaction with the object the human demonstrator is able to perform the task most naturally and with a more delicate control strategy. The task information captured from these human demonstrations needs to be transferred to robots. Various mapping methods have been proposed~\citep{hueser2006learning,asfour2008imitation,do2011towards,}, while human correction~\citep{calinon2007incremental,sauser2011iterative,romano2011human} and self-correction via learning~\citep{bidan2013robio} are proposed as alternative solutions. In general, how to effectively transfer human skills to robots skill remains a challenge.
+Another approach involves the human demonstrating manipulation tasks
+with their own bodies, rather than directing the
+robot~\citep{asfour2008imitation}. With direct interaction with the
+object the human demonstrator is able to perform the task most
+naturally and with a more delicate control strategy. However, the task
+information captured from these human demonstrations must then be
+transferred to robots. Various methods for mapping between human and
+robot articulation have been
+proposed~\citep{hueser2006learning,asfour2008imitation,do2011towards,}. These
+may be augmented with 
+correction by humans~\citep{calinon2007incremental,sauser2011iterative,romano2011human}
+and by self-correction via learning~\citep{bidan2013robio}.% are proposed
+%as alternative solutions. JJB: these aren't really alternatives, they
+%are complementary.
+In general, the effective transfer of human skills to robots skills
+remains a challenge.
 
-We propose a method to allows the subject to perform natural feedback control strategies in demonstration, while the strategy can then be easily transfer to any robot platform. In our task demonstration, a human wears tactile sensors and directly interacts with objects. The demonstration is expressed from an object centric viewpoint. The object centric viewpoint~\citep{okamura2000overview,jain2013improving,Miao2014} considers a manipulation task from the object's perspective. This suggests that the goal of a manipulation task is to produce a desire object movement rather than a robot end-effector movement. Our approach takes this principle and learns a control strategy for producing a desired object behavior.
-The demonstrated strategy expressed from the object perspective can then be transferred to a robot platform by covering the exert force to robot joint torque.
+%FIXME check this over, I changed a bunch. 
+Our proposed method derives from this last class of demonstrations.
+We allow the subject to perform a manipulation task directly on an
+object and experience natural feedback.  Our contribution is an
+ability to capture both the control and the expected feedback from the
+demonstration, and to encode the strategy in a way that can then be
+easily transferred to any robot platform. In our task demonstration, a
+human wears tactile sensors for example on a glove, and directly
+interacts with objects. The demonstration is recorded and expressed
+from an object-centric viewpoint. The object-centric
+viewpoint~\citep{okamura2000overview,jain2013improving,Miao2014}
+centers the representation of the manipulation task on the manipulated
+object (a form of allocentrism), rather than on the robot (egocentrism). This
+suggests that the goal of a manipulation task is to produce a desired
+object movement rather than a robot end-effector movement. Our
+approach takes this principle and learns a control strategy for
+producing a desired object behavior.  The demonstrated strategy
+expressed from the object perspective can then be transferred to a
+robot platform by converting %FIXME?  Was "covering "
+the exerted force to robot joint torque.
 
-With the object centric viewpoint, we need to learn the correlation between the exerted force of the object and the desired object motion. A classic model of this correlation is impedance~\citep{howard2010transferring,wimbock2012comparison}. Given the desired impedance of a task, we can compute proper motor commands for the robot to accomplish it. Fix impedance control is limited to simple tasks. In many manipulation tasks such as opening a bottle cap, variable impedance is required: at the beginning we need a large impedance to break the contact between the bottle and the cap, and later we need a small impedance to drive the cap smoothly. For such tasks fix impedance control will either lead to task failure or cause hardware damage.
-However, computing the impedance for a given task involving variable impedance is difficult.
-In many cases the impedance is roughly approximated by a linear model, but this is inadequate for nonlinear tasks.
+With the object centric viewpoint, we need to learn the correlation
+between the exerted force of the object and the desired object
+motion. A classic model of this correlation is
+impedance~\citep{howard2010transferring,wimbock2012comparison}. Given
+the desired impedance of a task, we can compute proper motor commands
+for the robot to accomplish it. Fix impedance control is limited to
+simple tasks. In many manipulation tasks such as opening a bottle cap,
+variable impedance is required: at the beginning we need a large
+impedance to break the contact between the bottle and the cap, and
+later we need a small impedance to drive the cap smoothly. For such
+tasks, fixed impedance control will either lead to task failure or cause
+hardware damage.  However, computing the impedance for a given task
+involving variable impedance is difficult.  In many cases the
+impedance is roughly approximated by a linear model, but this is
+inadequate for nonlinear tasks. %FIXME citations for this would be
+                                %nice, though not necessary.
 
 
-Variable impedance can be learnt by human physically correcting the robot impedance, i.e. wiggling the robot arm, in different stages of the task~\citep{kronander2012online}. For learning manipulation, however, wiggling the robot fingers will interrupt the task and may cause task failure.
+Variable impedance can be learnt by a human physically correcting the
+robot's impedance---for example, wiggling the robot's arm---in different stages of
+the task~\citep{kronander2012online}. For learning manipulation,
+however, wiggling the robot's fingers will interrupt the task and may
+cause task failure.
 %This is feasible for learning robot arm impedance but not for object impedance.
-Variable impedance can also be learnt by the reinforcement learning algorithm Policy Improvement with Path Integrals ($PI^2$) with a task specific cost function~\citep{buchli2011learning}. Designing this cost function requires insight into the task and usually is difficult. In our approach, we directly model the correlation of the exerted force and the object motion by a nonlinear statistical model.
+Variable impedance can also be learnt with the reinforcement learning
+algorithm Policy Improvement with Path Integrals ($PI^2$) with a task
+specific cost function~\citep{buchli2011learning}. Designing this cost
+function requires insight into the task and usually is
+difficult. Therefore, in our approach we directly model the
+correlation of the exerted force and the object motion by a nonlinear
+statistical model.
 
 
 % GMM
 %In our approach we directly model the correlation of the exerted force and the object motion using Gaussian Mixture Model (GMM)~\citep{cohn1996active}. GMM has been shown to be an efficient model in capturing the nonlinearity of data~\citep{huang2013learning,sauser2011iterative,calinon2007incremental}. Our choice of GMM has other merits which will be discussed in later sections.
 % benefit of using GMM will be discussed in later sections.
 
-Among the approaches mentioned above, single model is built for the entire task. For tasks involving of multiple phases of dynamics, e.g. friction, single control strategy may be inadequate. To handel varying task contexts, robots operating in human centric environment need to be equipped with multiple strategies. In the next section we give a brief overview of the multiple model approach (modular approach).
+% deleted "Among" -- that would indicate some, not all: JJB
+In the approaches mentioned above, a single model is built for the
+entire task. For tasks involving of multiple phases of dynamics, such
+as are generated by friction, a single control strategy may be inadequate. To handel
+varying task contexts, robots operating in human-centric environments
+need to be equipped with multiple strategies. In the next section we
+give a brief overview of  modular and multiple model approaches.
 
 
-\subsection{Modular Approach}
+\subsection{Modular Approaches to Learning Manipulation}
 % Some manipulation modelling method. drawback. You must survey other approaches to model multiple sensori-motor loops (also called motor program, motor primitives, behaviors, etc) and switching across these models, and then justify the use of Mosaic
 
 %% Internal model
 %In the study of human motor control, internal model is one of the most evidently supported hypothesis. It postulates a neuron process that simulates output of the motor system and the environment~\citep{kawato1999internal}. It's applications in robot control have been explored by many researchers. Various types of internal models are built for different tasks~\citep{sciavicco2000modelling,jordan1992forward}.
 
 % Adaptive
-Modular approach is used in adaptive control and its benefit has been long discussed~\citep{jacobs1991adaptive,narendra1997adaptive}.
-In manipulation tasks, context changing is a common phenomenon due to object interactions. These changes are often rapid or discontinuous. Classic adaptive control approaches such as model identification~\citep{khalil2004modeling} are inadequate for these tasks, as instability or error may occur during the optimization of the model variables. To fast adapt, the multiple model approach~\citep{narendra1995adaptation}, referred as modular approach here, is proposed. In this approach, multiple controllers are designed, each of which in charge of a certain task context. During control, the task context is estimated online and the corresponding controllers are activated. Some recent work~\citep{fekri2007robust,kuipers2010multiple} presents promising modular based approaches. It has also been shown to be an effective architecture of building intelligent systems~\citep{bryson2004modular}. In robotics, it is particular useful for tasks in non-stationary environments~\citep{sugimoto2012emosaic}.
+Modular approaches are widely used in adaptive control and their
+benefit has been long
+discussed~\citep{jacobs1991adaptive,narendra1997adaptive,BrysonIJCAI01}.
+Modular approaches have previously been shown to be an effective
+architecture of building intelligent
+systems~\citep{mobile98,BrysonJETAI00}.  In manipulation tasks,
+context changing is a common phenomenon due to object
+interactions. These changes are often rapid or discontinuous. Classic
+adaptive control approaches such as model
+identification~\citep{khalil2004modeling} are inadequate for these
+tasks, as instability or error may occur during the optimization of
+the model variables. To quickly adapt, the multiple model
+approach~\citep{narendra1995adaptation}, referred to here as the
+modular approach, is proposed. In this approach, multiple controllers
+are designed, each of which is in charge of a certain task
+context. During control, the task context is estimated online and the
+corresponding controllers are activated. Some authors have relatively
+recently presented promising module-based approaches for learning as
+well~\citep{fekri2007robust,kuipers2010multiple}.  In robotics,
+modularity is particularly useful for tasks in non-stationary
+environments~\citep{sugimoto2012emosaic}.
 
 % Modular - human MOSAIC
 
@@ -54,27 +175,100 @@ In manipulation tasks, context changing is a common phenomenon due to object int
 %Based on the concept of modularity, the Modular selection and identification for control (MOSAIC) architecture was proposed to explain the motor control strategy of the CNS~\citep{wolpert1998multiple}. According to this hypothesis, during the motor control process, the brain quickly select the most appropriate modules according to the current environment context and use them to generate an appropriate motor command to react to the environment~\citep{haruno2001mosaic}.
 
 % Our approach
-The modular approach we take is inspired from MOSAIC~\citep{haruno2001mosaic}. MOSAIC (Modular selection and identification for control) is a paradigm of multiple module control, where each module is composed of a forward model and an inverse model. The forward models are responsible for estimating the task context in real time, and the inverse models are used to generate appropriate motor command for the current context. The inverse models are weighted by the accuracy of the estimations of their corresponding forward models. The final motor command is the linear combination of the commands factored by their weights.
+The modular approach we describe here is inspired by
+MOSAIC~\citep{haruno2001mosaic}. MOSAIC (MOdular Selection And
+Identification for Control) is a paradigm of multiple-module control,
+where each module is composed of a forward model and an inverse
+model. The forward models are responsible for estimating the task
+context in real time, and the inverse models are used to generate
+appropriate motor commands for the current context. The inverse models
+are weighted by the accuracy of the estimations of their corresponding
+forward models. The final motor command is the linear combination of
+the commands factored by their weights.
 
-We take the paradigm of MOSAIC but implement the multiple modules model in our own manner. In the early work, \citet{wolpert1998multiple} use Artificial Neural Network (ANN) to encode the internal models, i.e. the forward models and the inverse models. The variance of a forward model, which decides how much the multiple modules collaborate, has to be manually tuned. The later work~\citep{haruno2001mosaic} fixes this hand tuning problem by modeling the transition between modules by a Hidden Markov Model (HMM) and optimizing the variance with the Expectation Maximization algorithm (EM). In this method the forward models are approximated by linear systems.
-To solve the hand tuning problem of the variance but do not restrict the complexity of the internal models, we encode our internal models with the Gaussian Mixture Model (GMM)~\citep{cohn1996active}.
-Training the GMM by the EM algorithm, we compute the optimal values of the models' parameters. GMM has been shown to be an efficient model in capturing the nonlinearity of data~\citep{calinon2007incremental,sauser2011iterative,huang2013learning}, this allows us to approximate more complex internal models.
+We take the paradigm of MOSAIC but implement the modular model in our
+own manner. In earlier work, \citet{wolpert1998multiple} used
+Artificial Neural Network (ANN) to encode the internal models,
+i.e. the forward models and the inverse models. The variance of a
+forward model, which decides how much the multiple modules
+collaborate, has to be manually tuned. MOSAIC addresses this
+hand-tuning problem by modeling the transition between modules using a
+Hidden Markov Model~(HMM) and optimizing the variance with the
+Expectation Maximization~(EM) algorithm~\citep{haruno2001mosaic}. In
+this method the forward models are approximated by linear systems. In
+order to
+solve the hand tuning problem of the variance but without restricting the
+complexity of the internal models, we encode our internal models with
+Gaussian Mixture Models (GMM)~\citep{cohn1996active}.  Training the
+GMM by the EM algorithm, we compute the optimal values of the models'
+parameters. GMM has been shown to be an efficient model in capturing
+the nonlinearity of
+data~\citep{calinon2007incremental,sauser2011iterative,huang2013learning}.
+This allows us to approximate more complex internal models.
 
 %We take this paradigm and model our internal models by GMM. Training GMM with the Expectation Maximization algorithm (EM), we estimate the optimal values of the model parameters. Compare to the early work~\citep{wolpert1998multiple} which use Neural Network and has to manually tune the variance of each forward model, GMM has the advantage of automatically computing the all the model parameters. Later work~\citep{haruno2001mosaic} fixes the hand tuning problem by modeling with Hidden Markov Model (HMM) and optimize the model with EM. With this method the forward models are assumed to be linear. In our approach, GMM allows non-linear system to be modeled. Figure.~\ref{fig:control} illustrates the workflow of our approach. Compare to the switching modular method~\citep{narendra1997adaptive}, i.e. only one module will be activated and used to generate motor command, the linear combination of the modules requires less number of modules to approximate the system dynamics.
 %The main reason is that neuron network can not directly estimate the likelihood of one query point. With NN, the the variance in each forward model, which is an essential variable to control how much the modules  cooperate, has to be hand tuned. .
 
 
-In another work the forward model and inverse model are united to a single model~\citep{petkos2006learning}. For that particular task the action ($a_t$) taking the current task state ($s_t$) to the desired task state ($s_{t+1}$) is always unique. However, in many cases this mapping is not unique and hence the inverse model has to include extra variables in order to resolve the non-uniqueness. To take a more general approach, we build the forward and inverse model separately.
+In another approach, \citet{petkos2006learning} have united the
+forward model and inverse model into
+a single model. For a particular task % FIXME you said "that" not "a", but you
+                                % haven't introduced a particular
+                                % task.  If you want to talk about one
+                                % particular task, you need to
+                                % introduce it in a sentence first,
+                                % not only cite the paper.  All we know
+                                % about that paper right now is that it
+                                % introduces a learning model, not
+                                % that it describes any tasks.
+the action~($a_t$) taking the current task state~($s_t$) to the
+desired task state~($s_{t+1}$) is always unique. However, in many
+cases this mapping is not unique and hence the inverse model has to
+include extra variables in order to resolve the non-uniqueness. To
+take a more general approach, we build the forward and inverse model
+separately. %JJB if there are multiple solutions, does it matter which
+            %one is chosen?  Why not just pick one?  Or is that
+            %impossible because of the representation, you just get a
+            %blend / chaos?
 %However this model does not provide a method to find out number of models needed in tasks. %and the inverse model represented by the joint distribution will potentially produce an invalid command that average all possible solutions.
 
-In our model the final motor command is the sum of the outputs of all modules. Compare to the switching modular method~\citep{narendra1997adaptive}, where only one module will be activated to generate motor command per time step, our approach requires less number of modules to approximate the system dynamics.
+In our model, the final motor command is the sum of the outputs of all
+modules. This stands in contrast to the switching modular
+method~\citep{narendra1997adaptive}, where only one module will be
+activated to generate motor commands per time step.  Our approach therefore
+requires fewer modules to approximate the system dynamics.  %FIXME:
+                                %JJB one of the known problems with
+                                %what you are calling the "switching
+                                %modular method" is blending as you
+                                %move from one module / phase to the
+                                %next.  I propose inserting therefore
+                                %this sentence, but check if it is
+                                %true in your system:
+Because these modules also handle multiple phases of the project, we
+also avoid the problem of blending and control-nonlinearities which
+can happen when passing control between switched modules~\citep{Brand00,Miura09}.
 
 
+Despite the many discussions of the modular approach, its application
+in robotics is not yet wide-spread. One main challenge is how to
+modularize a given task --- that is, how to decompose the task,
+determining the number of modules their responsibilities. This is a
+fundamental problem in the research of motion
+primitives. \citet{kulic2008incremental} use a hierarchical clustering
+method to extract primitives from human motion sequences. Different
+cut-off parameters are tested to evaluate the trade-off effects
+between facilitating quick group formation and introducing
+misclassification. Our modularize approach is similar to this, but
+goes one step further. We cluster the demonstration data with a
+hierarchical method and regard each cluster as one module. Instead of
+hand tuning the cut-off parameter, we determine its value by the
+variance of the data. This provides us with a proper grouping of the
+data, which can generate proper motor commands for control.
 
-
-Despite the many discussions of the modular approach, its application in robotics is not yet wide-spread. One main challenge is how to modularize a given task, i.e. determine the number of modules and decompose the task. Similar problem is studied in the research of motion primitives. \citet{kulic2008incremental} use a hierarchical clustering method to extract primitives from human motion sequence. Different cut off parameters are tested to evaluate the trade off effect between facilitating quick group formation and introducing misclassification. Our modularize approach is similar to this and one step further. We cluster the demonstration data with an hierarchical method and regard each cluster as one module. Instead of hand tuning the cut off parameter, we determine its value by the variance of the data. This provides us with a proper grouping of the data, which can generate proper motor command for control.
-
-Figure.~\ref{fig:control} illustrates the workflow of our approach. To the best of our knowledge, our work is the first realization of the modular approach in learning an object manipulation task with a real robot.
+Figure.~\ref{fig:control} illustrates the workflow of our approach. To
+the best of our knowledge, our work is the first realization of the
+modular approach in learning an object manipulation task with a real
+robot.
 
 
 %We tackle this problem by a data driven approach: This solution can be applied to modularize many manipulation tasks. A similar clustering method has been applied to
