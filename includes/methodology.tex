@@ -27,7 +27,7 @@ Figure~\ref{fig:overview} shows an overview of our framework.
        three-step approach. 1) A human demonstrates a task in a
        variety of contexts. In the opening-bottle-cap experiment, the
        demonstrations are done with different bottles and caps. The
-       object-level exertion forces and torque, and the the object's
+       object-level exerted forces and torque, and the the object's
        movements are used for training. 2) Clustering via machine
        learning is run over the data from the human control
        strategies. Each cluster is then modeled as one module. 3) The
@@ -64,7 +64,7 @@ Figure~\ref{fig:overview} shows an overview of our framework.
 
 The first step is recording the human demonstrations of a task. Based on
 the object-centric principle, we collect the object's trajectory and its
-driven force. % FIXME driving force?  what is the correct term?  Look
+driving force. % FIXME driving force?  what is the correct term?  Look
               % in articles you read!
 We collected this data by a vision-based motion-capture system,
 force-torque sensor and wearable haptic
@@ -102,8 +102,9 @@ Section~\ref{sec:exp_demo}. %FIXME check this is detailed there!
 \subsection{Learning a Multiple-Module Model}
 \label{sec:learn}
 Here we detail our modeling method, explaining how we model the human
-manipulation strategy and how we determine the number of modules to
-represent a task strategy.
+manipulation strategy.  This requires determining the number of modules to
+represent a task strategy, determining the models for driving each
+module, and determining how to integrate the output of the modules.
 
 \subsubsection{Object centric manipulation strategy}
 \label{sec:objectlevel}
@@ -130,12 +131,12 @@ effector movement but to find a policy that maps  force and torque
 to object movements. This policy allows the robot to efficiently
 acquire new behaviors to accomplish the
 task. %Different robots move differently to achieve the desired object movements.
-Giving the robots' kinematics and the desired exertion force and torque
+Giving the robots' kinematics and the desired exerted force and torque
 on the object, the robot joint torques can be deduced by their Jacobian
 matrix~\citep{okamura2000overview}. To this end, we focus on the
 force-torque-displacement tuple: $\{F,\tau,s\}$ demonstrated in the
-task, where $F$ is the exert force in all directions including the
-grip force, $\tau$ is the exert torque in all directions and $s$ is
+task, where $F$ is the exerted force in all directions including the
+grip force, $\tau$ is the exerted torque in all directions and $s$ is
 the object displacement. In later sections, we refer $\{F,\tau\}$ as
 the motor command (action) with notation $\{a\}$. In each
 demonstration, a time series of the tuple is recorded.
@@ -149,11 +150,11 @@ demonstration, a time series of the tuple is recorded.
 Due to physical interactions with an object, a manipulation task
 frequently encounters abrupt changes of the system dynamics, for
 example transfer between statuses with no contact and with contact,
-between statuses driven by static friction and by driven dynamic
-friction. Different strategies should be used to handle different
-dynamics.  This motivates our multiple-module representation. Our
-approach is to extract strategies from a demonstration and build one
-module for each of the
+between statuses driven by static friction and by driving %FIXME?
+dynamic friction. Different strategies should be used to handle
+different dynamics.  This motivates our multiple-module
+representation. Our approach is to extract strategies from a
+demonstration and build one module for each of the
 strategies. %During implementation, the system quickly estimate the context by the sensory inputs and choose the most appropriate module or weight and combine the modules to react.
 
 %In this multiple model approach, each model is trained for a particular dynamics context. During the control process the model can compute appropriate control commands for the corresponding dynamics according to the sensory inputs. If the model is chosen properly (see Section~\ref{rf} for mixing model), this approach will be able to adapt to changing environmental context.
@@ -172,7 +173,7 @@ different patterns of the force-torque-displacement tuple. We
 differentiate the patterns in a data-driven manner: clustering across
 the force-torque-displacement tuple. Data in the same cluster is
 considered to be governed by the same strategy. The number of clusters
-is the number of modules and each module is encoded by one model.
+determines the number of modules, and each module is encoded by one model.
 
 
 % ----------- Distance Metric for clustering ------------
@@ -201,20 +202,43 @@ demonstrations are presumed to be handled with the same strategy and
 hence belong to the same cluster. The variance of these demonstrations
 give a reference of a proper variance of a cluster. The largest
 variance, across the variance of all setups, is used as the threshold
-for the clustering.
+for the clustering.  %FIXME is this right?  Surely we had different
+                     %clusters for different phases of a task within
+                     %the same context, and spent some time fixing the segmentation.
 
 %% ------------ Hierarchical clustering -----------
-Many of the clustering methods require the specification of the number of clusters. In our case, however, the number of clusters is an unknown variable. Therefore we use the hierarchical agglomerative clustering method~\citep{willett1988recent} to group our data. Agglomerative clustering is a method that merges similar data iteratively until the stop criteria satisfied, which does not require a predefined number of clusters. Our clustering method is described as follow:
+Many of the clustering methods require the specification of the number
+of clusters. In our case, however, the number of clusters is an
+unknown variable. Therefore we use the hierarchical agglomerative
+clustering method~\citep{willett1988recent} to group our
+data. Agglomerative clustering is a method that merges similar data
+iteratively until the stop criteria is satisfied --- this does not
+require a predefined number of clusters. Our clustering method is
+described as follow:
 
 \begin{enumerate}
 \item At the beginning, each single time series is considered to be one cluster.
 \item Compute the distances between each pair of clusters.
-\item Starting from the first cluster, find its nearest cluster. We define the distance between two clusters to be the average distance across all the time series pairs in them. If the distance to the nearest cluster is smaller than the threshold, merge these two cluster.
+\item Starting from the first cluster, find its nearest cluster. We
+  define the distance between two clusters to be the average distance
+  across all the time series pairs in each cluster. If the distance to the
+  nearest cluster is smaller than the threshold, merge these two
+  cluster. FIXME  The first time, when there is only one item in each
+  cluster\ldots %FIXME explain what happens.  If a two clusters are
+                %arbitrarily paired that are far apart (say one is a
+                %severe outlier), they will set a very high average
+                %with this method.
 \item Move to the next cluster. Repeat the last step for the rest of the clusters.
-\item A new set of clusters are formed by the last few steps, move to the next hierarchy and repeat the step 2 to 4 until no new clusters can be formed.
+\item A new set of clusters will have been formed by the last few
+  steps.  Move to the next step of the hierarchy and repeat the step 2
+  to 4 until no new clusters can be formed.
 \end{enumerate}
 
-Pseudocode of the complete algorithm is shown in Algorithm~\ref{code:cluster}.
+Pseudocode of the complete algorithm is shown in
+Algorithm~\ref{code:cluster}.  FIXME this algorithm should include a
+line about how the clustering
+threshold is computed.  Normally algorithms are {\em more} detailed
+than the text description, not less. %FIXME 
 
 \begin{algorithm}
   \caption{Agglomerative Hierarchical Clustering}
@@ -244,33 +268,63 @@ Pseudocode of the complete algorithm is shown in Algorithm~\ref{code:cluster}.
 
 
 % --------- Number of cluster -----------
-When the clusters can not be merged further, we define the number of modules for this task: it is the number of the remaining clusters. Each cluster is used as a module. The pattern of the data in a cluster represents a strategy of handling a specific task context.
+When the clusters cannot be merged further, we define the number of
+modules for this task: it is the number of the remaining
+clusters. Each cluster is used as a module. The pattern of the data in
+a cluster represents a strategy for handling a specific task context.
 
-\subsubsection{Learning Models}
+\subsubsection{Learning Models for Modules}
 \label{sec:model}
-After identifying the number of modules, we build models for each of the module. In this section, we explain the way we encode human manipulation strategy.
+After identifying the number of modules and the data assigned to each,
+we build models for each module from its associated data. In this
+section, we explain the way we encode human manipulation strategy
+using machine learning to build the modules.
 
-During demonstrations, we constantly acquire the object displacements and the force and torque applied by the demonstrator. The demonstrator is the only source of exert force and torque of the system. The relationship between the exert force and torque and their resulting object displacement shows the dynamic characteristic of the task.
+During demonstrations, we constantly acquire the object displacements
+and the force and torque applied by the demonstrator. The demonstrator
+is the only source of exerted force and torque in the system. The
+relationship between the exerted force and torque and their resulting
+object displacement shows the dynamic characteristics of the task.
 
 %GMM
-We model the correlation of the force and the displacement with GMM. The task dynamics is hence encoded as a joint distribution of the object status displacement $s$ and the action $a$ taken by human $p(s,a,{\mid}{\Omega})$. In our experiment, $s$ is the one dimensional cap angular displacement and $a$ is the one dimensional exert torque and grip force (Section~\ref{sec:exp}).
-Modeling the distribution by GMM allows us to capture the nonlinearity in the data, as well as to compute the likelihood of a query data point in the model. This provides an good estimation of the reliability of the module in the current task context, which is crucial in choosing the correct modules for control (discussed in Section~\ref{sec:rf}). At the other hand, as a generative model GMM is able to generate new data from the model, i.e. generate motor commands. This is done by the $Gaussian$ $Mixture$ $Regression$ (GMR). Table~\ref{tab:GMM} explains the encoding process of GMM and the computation process of GMR.
-
-
+We model the correlation of the force and the displacement with
+GMM. The task dynamics is hence encoded as a joint distribution of the
+object status displacement $s$ and the action $a$ taken by the human,
+$p(s,a,{\mid}{\Omega})$. In our experiment, $s$ is the one-dimensional
+angular displacement of the cap, and $a$ is the one-dimensional
+exerted torque and grip force (Section~\ref{sec:exp}).  Modeling their
+distribution by GMM allows us to capture the nonlinearity in the data,
+and also to compute the likelihood of a query data point in the
+model. This provides a good estimation of the reliability of the
+module in the current task context, which is crucial in choosing the
+correct modules for control (discussed in
+Section~\ref{sec:rf}). Further, as a generative model GMM is able to
+generate new data from the model, that is it allows us to generate
+motor commands. This is done by the {\em Gaussian Mixture Regression}
+(GMR). Table~\ref{tab:GMM} explains the encoding process of GMM and
+the generative process of GMR.  %FIXME (but maybe not right now) this
+% isn't really a table at all, it's a box (but not the kind of box
+% latex calls a box).  You can make a new type of float with the float
+% package so it doesn't say "Table" on it, but that's probably not
+% critical right now -- the publisher will likely fix it.
 
 
 \begin{table}
     \colorbox{light-gray}{
         \begin{minipage}[t]{0.45\textwidth}
 
-           With a GMM, the joint distribution $\Omega$ of a set of variables $\{\eta\}$ is expressed as a sum of $N$ Gaussian components:
+          With a Gaussian Mixture Model (GMM), the joint distribution
+          $\Omega$ of a set of variables $\{\eta\}$ is expressed as a
+          sum of $N$ Gaussian components:
            \begin{equation}
            \begin{split}
             p\left(\eta\mid\Omega\right) = \sum_{n=1}^N \pi_n p\left(\eta\mid\mu_n,\Sigma_n\right) \\
             = \sum_{n=1}^N \pi_n \frac{1}{\sqrt{\left(2\pi\right)^D \mid\Sigma_n\mid }} e^{-\frac{1}{2}\left(\eta-\mu_n\right)^{\top} \Sigma^{-1}_n \left(\eta-\mu_n\right)}
            \end{split}
            \end{equation}
-           where $\pi_n$ is the prior of the $n$-th Gaussian component and the ${\mu}_n$, ${\Sigma}_n$ the corresponding mean and covariance, $D$ the number of the variables.
+           where $\pi_n$ is the prior of the $n^{th}$ Gaussian component
+           and the ${\mu}_n$, ${\Sigma}_n$ the corresponding mean and
+           covariance, and $D$ the number of variables.
 
 
             %% GMR:
@@ -306,7 +360,10 @@ Modeling the distribution by GMM allows us to capture the nonlinearity in the da
             \end{equation}
 
 
-            Finally, all the $N$ Gaussian components are taken into account, and the expectation value of variable $\eta^e$ is computed as the mean $\hat{\mu}^e$ with the covariance $\hat{\Sigma}^{ee}$:
+            Finally, all the $N$ Gaussian components are taken into
+            account, and the expectation value of variable $\eta^e$ is
+            computed as the mean $\hat{\mu}^e$ with the covariance
+            $\hat{\Sigma}^{ee}$: 
 
             \begin{equation}
             {
@@ -316,9 +373,15 @@ Modeling the distribution by GMM allows us to capture the nonlinearity in the da
 %            \begin{equation}
             \hspace{1cm}
             {
-            \hat{\Sigma}_{n}^{ee} = \sum_{n=1}^N{\beta_n}^2\hat{\Sigma}_{n}
+            \hat{\Sigma}^{ee} = \sum_{n=1}^N{\beta_n}^2\hat{\Sigma}_{n}
             }
             \end{equation}
+
+FIXME I'm not checking math
+            carefully, but I deleted a little n off this last LHS to
+            match the expression that introduced this equation, check
+            I'm right?  %FIXME
+
             where
             \begin{equation}
             {
@@ -344,8 +407,29 @@ Modeling the distribution by GMM allows us to capture the nonlinearity in the da
 
 %A forward model is held to anticipate the outcome of the motor command, while an inverse model is held to generate motor commands to take the current system state to the next state. The discrepancy between the anticipation of the forward model and the actual feedback is used to correct the motor command generated from the inverse model (Section~\ref{sec:rf}). Figure~\ref{fig:control} shows the basic control flow of a forward-inverse model pair.
 
-We aim to build a model closely simulates human motor strategy in order to make the best use of the human data. A forward model is held to anticipate the outcome of the motor command, while an inverse model is held to generate motor commands to take the current system state to the next state. The discrepancy between the anticipation of the forward model and the actual feedback is used to correct the motor command generated from the inverse model (Section~\ref{sec:rf}). Figure~\ref{fig:control} shows the basic control flow of a forward-inverse model pair.
+%JJB: note: emulates not simulates.  We're not trying to figure out
+%exactly how humans control their muscles, skin & bones.
+We aim to build a model that closely emulates the human motor strategy
+in order to make the best use of the human data. A forward model is
+held to anticipate the outcome of the motor command, while an inverse
+model is held to generate motor commands to take the system from the
+current state to the next state. The discrepancy between the
+anticipation of the forward model and the actual feedback is used to
+correct the motor commands generated from the inverse model
+(Section~\ref{sec:rf}). Figure~\ref{fig:control} shows the basic
+control flow of a forward-inverse model pair.
 
+FIXME Both figure should be labelled ``efferent copy'' not ``effective
+copy''.  Also, it's very hard to read ``a1l1'' as ``action 1  x
+responsibility 1'', the l looks like a pipe or a capital i. Please use
+$\lambda$ as you do in the main text. Finally, all the text
+in the figure should be the same size.  The integration is one of the
+most important bits of information, so that eqaution needs to be
+legible.
+Actually, to be clear you should have the efferent signal labeled
+(maybe in parentheses under ``Motor command'' in the first figure) as
+well as its copy.  And why do you say ``reafferance'' instead of ``afferent''?
+% FIXME
 \begin{figure}
   \centering
       \subfloat[\scriptsize{}]{\includegraphics[width=8cm]{./fig/control_1_2.pdf}}
@@ -353,9 +437,21 @@ We aim to build a model closely simulates human motor strategy in order to make 
       \subfloat[\scriptsize{}]{\includegraphics[width=8cm]{./fig/control_3_2.pdf}}
 %  \includegraphics[width=8cm]{./fig/control_1.pdf}
 %
-%  \includegraphics[width=8cm]{./fig/control_4.pdf}
-  \caption{ \scriptsize{Control flow diagram of forward-inverse model in motor control. (a) System overview. Pairs of forward and inverse models work together to generate final motor command. The mechanism inside the red box is shown underneath. (b) A example of a 3 modules model. The forward models predict current task context (s1, s2, s3) and estimate the accuracy of their prediction (l1, l2, l3). These accuracy is called ``Responsibility Factors'' as they decide how much responsibility each inverse model should take in the final command. The Inverse models generate commands (a1, a2, a3) and the final command is the summation of them factorized by their responsibility factor (a1l1+a2l2+a3l3).  }
-}
+%  \includegraphics[width=8cm]{./fig/control_4.pdf} %JJB note that
+%  there are no final commands in this kind of model, it's continuous.
+      \caption{ \scriptsize{Control flow diagram of forward-inverse
+          model in motor control. (a) System overview. Pairs of
+          forward and inverse models work together to generate motor
+          commands. The detailed mechanism inside the red box is shown
+          underneath. (b) An example of a 3-module model. The forward
+          models predict the current task context (s1, s2, s3) and
+          estimate the accuracy of their prediction ($\lambda$1, $\lambda$2,
+          $\lambda$3). These accuracy estimates are called ``Responsibility
+          Factors'' as they also determine how much responsibility
+          each inverse model should take in the final command. The
+          inverse models generate commands (a1, a2, a3) and the final
+          command is the summation of these, each weighted by its
+          individual responsibility factor (a1$\lambda$1+a2$\lambda$2+a3$\lambda$3).  } }
 \label{fig:control}
 \end{figure}
 
@@ -363,25 +459,31 @@ We aim to build a model closely simulates human motor strategy in order to make 
 % --------- one model for each ----------
 We encode the forward model $\Omega_F$ by the joint distributions of the current system state (object displacement), previous system state and the previous motor command, i.e. $p(s_t,s_{t-1},a_{t-1}\mid{\Omega_F})$, and similarly encode the inverse model $\Omega_I$ by the joint distributions of the current system state, the desired next system state, previous motor command and the current motor command, i.e. $p(s_t,s^{*}_{t+1},a_{t-1},a_t{\mid}{\Omega_I})$.
 %Given the previous system state and motor command, the GMR provides a close-form solution to compute the expected system state $s_t$, i.e. $E(s_t{\mid}s_{t-1},a_{t-1},{\Omega_F})$. 
-The previous motor command $a_{t-1}$ is necessary for the inverse model. In some tasks, the system status can remains unchanged for a certain period until the exert force reaches a threshold to change it. This will cause degeneracy in the inverse model and we hence include the previous motor command in the model to tackle it.
+The previous motor command $a_{t-1}$ is necessary for the inverse
+model. In some tasks, the system status can remains unchanged for a
+certain period until the exerted force reaches a threshold to change
+it. This will cause degeneracy in the inverse model; hence we 
+include the previous motor command in the model to tackle it.
 
 
 
 % Non-linear, multi model. What to solve in multi model
 %As discussed above, one of the characteristics of manipulation task is the changing kinematics and dynamics configuration.
 %In different task contexts, the pattern of the correlation between the displacement and action may be different.
-By clustering the training data into different groups (Section~\ref{sec:cluster}), we are able to discover the number of different patterns, i.e. number of modules. We train one GMM on each of the modules to encode the different changing patterns of the task context.
+%By clustering the training data into different groups (Section~\ref{sec:cluster}), we are able to discover the number of different patterns, i.e. number of modules. We train one GMM on each of the modules to encode the different changing patterns of the task context.
 
 
 % Learn system dynamics, impedance, admittance.
 
 %Phases
-%A single model is usually not enough to encode all these different configurations. Therefore we adopt a multiple modular approach to model the different environment. There are two key problems needed to be resolve in a multiple modular approach: how many models to build (Section~\ref{cluster}) and how to weight the models during the control process (Section~\ref{rf}).
+%A single model is usually not enough to encode all these different
+%configurations. Therefore we adopt a multiple modular approach to
+%model the different environment. 
 
 
 
 
-\subsection{Multiple module adaptive control}
+\subsection{Modular adaptive control and integration}
 \label{sec:control}
 %% forward-inverse modeling
 %%After clustering the data into different groups, we train each cluster with the GMM $p(X_T, X_{t+1}, U_{t-1}, U_t {\mid} {\Omega})$.
@@ -390,13 +492,20 @@ By clustering the training data into different groups (Section~\ref{sec:cluster}
 %With the learned multiple models, we adopt the MOSAIC~\citep{haruno2001mosaic} architecture to control the system. The basic concept of MOSAIC is that the human brain use multiple inverse models to control the system, which is augmented with a forward models. In human brain there exist multiple pairs of coupled forward and inverse models. The forward models estimate the reliability of the inverse model in the current context, and the final motor command is a linear combination of all the commands from the inverse models.
 %In object manipulation, the system dynamics can be rapidly changing over time and we need more than one model to describe it. Our learnt multiple GMMs are used to describe the system in these different contents. First we need to infer the behavior of the system. Having deduced this information, we need to decide how to manipulate the system.
 
-Once the number of modules is found and the multiple pair of forward and inverse models are learnt, they are used to compute motor commands for task execution.
-We consider the human motor system acts upon by motor command $a_t$ at time $t$ with current system status $s_t$. A function $f$ maps $a_t$ and $s_t$ to the  system status at time $t+1$:
+Once the number of modules is found and a pair of forward and inverse
+models has been learnt for each, the modules can be used to compute
+motor commands for task execution.  In our system of action selection,
+this process of computing the command also computes a weight which
+allows integration of the modules by simple summation.  We consider
+the human motor system acted upon by motor command $a_t$ at time $t$
+with current system status $s_t$. A function $f$ maps $a_t$ and $s_t$
+to the system status at time $t+1$:
 \begin{equation}
 \label{e1}
 s_{t+1} = f\left(s_t,a_t\right)
 \end{equation}
-The goal of the controller is to generate a motor command $a_t$ that bring the current system status from $s_t$ a desired state $s^*_{t+1}$:
+The goal of the controller is to generate a motor command $a_t$ that
+brings the current system status from $s_t$ to a desired state $s^*_{t+1}$:
 \begin{equation}
 \label{e2}
 a_t = g\left({s^*_{t+1},s_t}\right)
@@ -404,8 +513,8 @@ a_t = g\left({s^*_{t+1},s_t}\right)
 
 Equation~\ref{e1} represents the forward model and Equation~\ref{e2} represents the inverse model. In the modular approach, it takes two steps to compute the motor command $a_t$:
 \begin{enumerate}
-\item Anticipate the sensory output and compute the responsibility factor $\lambda_t$
-\item Compute motor command by each inverse model and compute the final motor command $a_t$
+\item Anticipate the sensory output and compute the responsibility factor $\lambda_t$.
+\item Compute motor command by each inverse model and compute the final motor command $a_t$.
 \end{enumerate}
 
 
@@ -422,7 +531,12 @@ Equation~\ref{e1} represents the forward model and Equation~\ref{e2} represents 
 \subsubsection{Responsibility factor}
 \label{sec:rf}
 
-In a modular approach, choosing the proper modules to control the system is a crucial step. For this we rely on the responsibility factors, which act as the weights of the inverse models. The responsibility factor is a measurement of the reliability of using one module to represent the current system context.
+In a modular approach, choosing the proper modules to control the
+system at every time increment is a crucial step. For this we rely on
+a system of {\em responsibility factors}, which act as the weights of
+the inverse models. The responsibility factor is a measurement of the
+reliability of using one module to represent the current system
+context.
 
 %The measurement is computed by the discrepancy between the anticipating current system state $s_t$ of the forward model and the actual current system state $s'_t$ from the sensory feedback:
 %
@@ -432,29 +546,51 @@ In a modular approach, choosing the proper modules to control the system is a cr
 %
 %where $n$ is the number of models.
 
-With the $k$-th forward model we can anticipate the current state ${\hat{s}} ^k_t$ by the $GMR$ (Table~\ref{tab:GMM}):
+With the $k^{th}$ forward model we can anticipate the current state ${\hat{s}} ^k_t$ by using $GMR$ (Table~\ref{tab:GMM}):
 \begin{equation}
 \label{e3}
 {\hat{s}} ^k_{t} = E\left({s_t {\mid} s_{t-1}, a_{t-1}, \Omega^k_I}\right)
 \end{equation}
 
-By comparing the anticipated current state ${\hat{s}} ^k_t$ with the actual current state $s_t$ detected by the sensors, we can evaluate how good the $k$-th module represents the current system. The actual current state, previous state and the previous motor command form a data point $\eta_t$ = $\{s_t,s_{t-1},a_{t-1}\}$. As the forward models are built as GMMs, it is easy to compute the likelihood of one data point belongs to a particular model: $p(\eta_t {\mid} \Omega_F^j)$. The discrepancy between $\hat{s}^k_t$ and $s_t$ is embedded in this likelihood and hence in practice we only compute the $p(\eta_t {\mid} \Omega_F^j)$ and skip ${\hat{s}} ^k_t$.
-The responsibility factor of the $k$-th inverse model is the likelihood of the data point $\eta_t$ belongs to the $k$-th module, normalized by the total sum:
+By comparing the anticipated current state ${\hat{s}} ^k_t$ with the
+actual current state $s_t$ detected by the sensors, we can evaluate
+how well the $k^{th}$ module represents the current system. The actual
+current state, previous state and the previous motor command form a
+data point $\eta_t$ = $\{s_t,s_{t-1},a_{t-1}\}$. As the forward models
+are built as GMM, it is easy to compute the likelihood of one data
+point belongs to a particular model: $p(\eta_t {\mid}
+\Omega_F^j)$. The discrepancy between $\hat{s}^k_t$ and $s_t$ is
+embedded in this likelihood and hence in practice we only compute the
+$p(\eta_t {\mid} \Omega_F^j)$ and skip ${\hat{s}} ^k_t$.  The
+responsibility factor of the $k^{th}$ inverse model is the likelihood of
+the data point $\eta_t$ belongs to the $k^{th}$ module, normalized by
+the total sum:
 
 \begin{equation}
 \lambda^j_t = \frac{p(\eta_t {\mid} \Omega_F^j)}{\sum_{k=1}^{K}{p(\eta_t {\mid} \Omega_F^k)}}
 \end{equation}
-where $K$ is the number of modules~\footnote{In the case that the dominator is very close to zero, the whole control process will be terminated as it indicates that the model is used on a different task.}.  At every time step, we compute the responsibility factor for each module. The final motor command at that time step is the linear combination of the commands generated from each inverse model multiplied by their responsibility factors.
+where $K$ is the number of modules~\footnote{In the case that the
+  dominator is very close to zero, the whole control process will be
+  terminated as it indicates that the model is used on a different
+  task.}.  At every time step, we compute the responsibility factor
+for each module. The final motor command at that time step is the
+linear combination of the commands generated from each inverse model
+multiplied by its respective responsibility factor.
 
 %Note the forward model is embedded in this computation of the responsibility factor. The likelihood of the query point $p(s_t,s_{t-1},a_{t-1}\mid \Omega^j$ in the $j-th$ module is equivalent to the discrepancy between the expected current system state $s_t$ of the forward model and the actual current system state $s'_t$ from the sensory feedback, factorized by the variance of the forward model.
 
-\subsubsection{Generate motor command by Inverse Model}
+\subsubsection{Generating motor commands by inverse models}
 \label{sec:inverse}
 %While the forward models predict the current status of the system by the previous status and motor commands, the inverse models generate the next motor command according to the current status and the next target status. In reality, given a current state and a desired state, the command bring the robot to the desired state is not unique. In addition, during object manipulation, it is often the case that the force applying on the object various but the object position does not change because of friction. Therefore we include the previous command into the query point in order to generate the next command without redundance. Hence the command generated by each model is computed by equation~\ref{e4}.
 %\subsubsection{Mix of Model}
 %\label{mix}
 
-The motor command $a^k_t$ for the $k$-th inverse model is computed by GMR with the steps explained in Table~\ref{tab:GMM}. At each time step, the responsibility factors $\lambda^k_t$ weight its corresponding inverse model: the higher the responsibility is, the more response the inverse model takes in the control. The final motor command generated by this multiple model system is:
+The motor command $a^k_t$ for the $k^{th}$ inverse model is computed
+by GMR with the steps explained in Table~\ref{tab:GMM}. At each time
+step, the responsibility factors $\lambda^k_t$ weight its
+corresponding inverse model: the higher the responsibility is, the
+more responsibility the inverse model takes in the control. The final
+motor command generated by this multiple model system is:
 
 \begin{equation}
 \label{e_mix}
