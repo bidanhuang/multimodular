@@ -566,8 +566,9 @@ responsibility factor of the $k^{th}$ inverse model is the likelihood of
 the data point $\eta_t$ belongs to the $k^{th}$ module, normalized by
 the total sum:
 
+%JJB note I changed j to k on the LHS here, I assume j was a mistake FIXME
 \begin{equation}
-\lambda^j_t = \frac{p(\eta_t {\mid} \Omega_F^j)}{\sum_{k=1}^{K}{p(\eta_t {\mid} \Omega_F^k)}}
+\lambda^k_t = \frac{p(\eta_t {\mid} \Omega_F^j)}{\sum_{k=1}^{K}{p(\eta_t {\mid} \Omega_F^k)}}
 \end{equation}
 where $K$ is the number of modules~\footnote{In the case that the
   dominator is very close to zero, the whole control process will be
