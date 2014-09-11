@@ -2,17 +2,17 @@
 \label{sec:method}
 % ========= object centric =========
 
-We have introduced our method somewhat in the previous section and
+We have briefly introduced our method in the previous section and
 justified our design decisions in the light of related literature.  In
 this section we present our method for modularizing human
 demonstrations of manipulation tasks. Our goal is to acquire a modular
-control policy for an object manipulation task from this human
+control policy for an object manipulation task from human
 demonstration. To this end, we take a three-step approach:
 \begin{enumerate}
 \item Human demonstration of a task in several different contexts (Section~\ref{sec:demo}).
 %\item Clustering the data to find number of modules needed in the task (subsection ~\ref{sec:cluster}).
 \item Extraction and modular decomposition of human control strategies
-  for different contexts, abuilding multiple internal models
+  for different contexts, building multiple internal models
   (Section~\ref{sec:learn}).
 %\item Design a controller based on the learnt multiple model  (subsection ~\ref{controller}).
 \item Robot control using the integrated modules to compute motor
@@ -22,14 +22,13 @@ Figure~\ref{fig:overview} shows an overview of our framework.
 
 \begin{figure}
   \centering
-   \includegraphics[width=8cm]{./fig/overview5.pdf}
+   \includegraphics[width=8cm]{./fig/overview3.pdf}
    \caption{ \scriptsize{System overview. Our system takes a
        three-step approach. 1) A human demonstrates a task in a
        variety of contexts. In the opening-bottle-cap experiment, the
        demonstrations are done with different bottles and caps. The
        object-level exerted forces and torque, and the the object's
-       movements are used for training. 2) Clustering via machine
-       learning is run over the data from the human control
+       movements are used for training. 2) Clustering is run over the data from the human control
        strategies. Each cluster is then modeled as one module. 3) The
        multiple modules are integrated to compute motor commands to
        control a robot performing the same task in similar contexts.}  }
@@ -53,19 +52,20 @@ Figure~\ref{fig:overview} shows an overview of our framework.
     \subfloat[\scriptsize{Force torque sensor}] {\includegraphics[height=2cm]{./fig/Nano25-E.jpg}}
     \subfloat[\scriptsize{Texscan tactile sensors mounted on a glove}] {\includegraphics[height=2cm]{./fig/texscan2.jpg}}
     \caption{\scriptsize{Sensors used in the human demonstration of
-        opening a bottle cap task.} FIXME why are you using scriptsize
-      in the captions?  Is this the latex format from the journal?  Is
-      it just so you don't have to increase the size of the text in
-      the figures?  Also, should we provide full references for the
-      exact sensors we used?  E.g. like this
-      \citep{NetLogo2.1,unreal}.}
+        opening a bottle cap task.}
+%        JJB why are you using scriptsize
+%      in the captions?  Is this the latex format from the journal?  Is
+%      it just so you don't have to increase the size of the text in
+%      the figures? --- to distinguish text and caption.
+%     Also, should we provide full references for the
+%      exact sensors we used?  E.g. like this
+%      \citep{NetLogo2.1,unreal}. --- Full reference comes later.
+      }
   \label{fig:devices}
 \end{figure}
 
-The first step is recording the human demonstrations of a task. Based on
-the object-centric principle, we collect the object's trajectory and its
-driving force. % FIXME driving force?  what is the correct term?  Look
-              % in articles you read!
+The first step is recording the human demonstrations of a task. Based on the object-centric principle, we collect the object's trajectory and the force driving it. % JJB driving force?  what is the correct term?  Look
+              % in articles you read! --- Miao used "manipulating force". Others used "applied force". I think driving is better.
 We collected this data by a vision-based motion-capture system,
 force-torque sensor and wearable haptic
 devices. Figure.~\ref{fig:devices} shows a few of the sensors we used
@@ -80,18 +80,18 @@ in the opening-bottle-caps task. % JJB this is that section! Details will be exp
 % ======= demonstrate in different context   =======
 In the demonstrations, the demonstrator performs a task a number of
 times to generate enough data to reliably capture its key features.
-We determined this level by trial-and-error, in the end using fairly
-few trials The demonstrator also performs the task under a variety of
+%We determined this level by trial-and-error, in the end using fairly few trials.
+The demonstrator also performs the task under a variety of
 conditions, e.g. a range of friction conditions, in order to explore
-how humans adapt to different task contexts.   These different
+how humans adapt to different task contexts. These different
 configurations must be chosen to cover a wide range.% of different
 %contexts.  JJB -- redundant.
 For example, in a opening-bottle-cap task, the demonstration of opening
 the tightest bottle within the capability of the learner is
 included. These wide range demonstrations are then used to learn a
 multiple module model. Details including the exact numbers and
-durations of our trials are described in
-Section~\ref{sec:exp_demo}. %FIXME check this is detailed there!
+durations of our trials are described in the next
+Section. %FIXME check this is detailed there!
 
 %The force and torque applied on the cap are measured by the Trkscan pressure sensor and a force torque sensor. The movement of the object is recorded by the OptTrack motion tracking system. Each demonstration is recorded as a temporal sequence.
 
@@ -99,11 +99,11 @@ Section~\ref{sec:exp_demo}. %FIXME check this is detailed there!
 %~\citep{huang2013learning}
 %~\citep{huanghumanoid}
 
-\subsection{Learning a Multiple-Module Model}
+\subsection{Learning a Multiple Module Model}
 \label{sec:learn}
 Here we detail our modeling method, explaining how we model the human
 manipulation strategy.  This requires determining the number of modules to
-represent a task strategy, determining the models for driving each
+represent a task strategy, learning the internal models for driving each
 module, and determining how to integrate the output of the modules.
 
 \subsubsection{Object centric manipulation strategy}
@@ -127,7 +127,7 @@ of what justifies our object-centric representational approach.
 The object-centric approach means that our model encodes a force and
 torque profile rather than the end effector movement trajectory.  The
 imitation-learning objective here is not to find a policy for the end
-effector movement but to find a policy that maps  force and torque
+effector movement but to find a policy that maps force and torque
 to object movements. This policy allows the robot to efficiently
 acquire new behaviors to accomplish the
 task. %Different robots move differently to achieve the desired object movements.
@@ -150,11 +150,11 @@ demonstration, a time series of the tuple is recorded.
 Due to physical interactions with an object, a manipulation task
 frequently encounters abrupt changes of the system dynamics, for
 example transfer between statuses with no contact and with contact,
-between statuses driven by static friction and by driving %FIXME?
+between statuses driven by static friction and by
 dynamic friction. Different strategies should be used to handle
-different dynamics.  This motivates our multiple-module
-representation. Our approach is to extract strategies from a
-demonstration and build one module for each of the
+different dynamics. This motivates our multiple module
+representation. Our approach is to extract strategies from multiple
+demonstrations and build one module for each of the
 strategies. %During implementation, the system quickly estimate the context by the sensory inputs and choose the most appropriate module or weight and combine the modules to react.
 
 %In this multiple model approach, each model is trained for a particular dynamics context. During the control process the model can compute appropriate control commands for the corresponding dynamics according to the sensory inputs. If the model is chosen properly (see Section~\ref{rf} for mixing model), this approach will be able to adapt to changing environmental context.
@@ -173,36 +173,34 @@ different patterns of the force-torque-displacement tuple. We
 differentiate the patterns in a data-driven manner: clustering across
 the force-torque-displacement tuple. Data in the same cluster is
 considered to be governed by the same strategy. The number of clusters
-determines the number of modules, and each module is encoded by one model.
+determines the number of modules.
 
 
 % ----------- Distance Metric for clustering ------------
 The goal of clustering is to separate a set of data into a few groups
 according to their similarities. The first step of clustering is to
 measure the similarities, i.e. the distances, between different data
-points. Unlike most clustering problems, the data we need to cluster
-are not a set of single data points but a set of time series. Here we
+points. The data we need to cluster are a set of time series: the demonstrations.
+Here we
 use the Dynamic Time Warping technique (DTW) to measure the distance
 between each pair of time series~\citep{berndt1994using}.
-
 Dynamic time warping is suitable for measuring the similarity between
 two time series, which may have different speeds or durations. It
 warps the data in the time dimension and finds the optimal match
 between the time series. The similarity is computed as the average
 distance between the corresponding points in two series.
 
-The similarity (distance) between each pair of time series is computed
-by DTW and produces a distance matrix. In this distance matrix, each
-element contains a measurement of the similarity between two time
+We compute the similarity (distance) between each pair of time series by DTW and get a distance matrix. In this distance matrix, each
+element contains a measurement of the distance between two time
 series. We then cluster these time series into a few groups by a
-threshold of the similarity. This threshold is set by using the
-variance of the data from the same setup as a reference. As mentioned
-above, under the same setup a task is demonstrated a few times. These
-demonstrations are presumed to be handled with the same strategy and
-hence belong to the same cluster. The variance of these demonstrations
+threshold of the distance. This threshold is set by using the
+variance of the data demonstrated under the same condition as a reference. As mentioned
+above, a task is demonstrated a few times.
+Demonstrations with the same condition, i.e. the same experimental setup and at the same stage of the task, are presumed to be handled with the same strategy and hence belong to the same cluster. For example, our opening bottle cap task is a cyclic task --- human need to do a few cycles of rotation of the cap in order to unscrew and lift it. In this task, demonstrations with the same bottle and cap, and at the same cycle of the rotation are considered to be in the same group (details in Section~\ref{dataanalysis}).
+The variance of these demonstrations
 give a reference of a proper variance of a cluster. The largest
 variance, across the variance of all setups, is used as the threshold
-for the clustering.  %FIXME is this right?  Surely we had different
+for the clustering.  %JJB is this right?  Surely we had different
                      %clusters for different phases of a task within
                      %the same context, and spent some time fixing the segmentation.
 
@@ -213,39 +211,37 @@ unknown variable. Therefore we use the hierarchical agglomerative
 clustering method~\citep{willett1988recent} to group our
 data. Agglomerative clustering is a method that merges similar data
 iteratively until the stop criteria is satisfied --- this does not
-require a predefined number of clusters. Our clustering method is
-described as follow:
+require a predefined number of clusters. Our clustering method only requires the distance threshold of merging and is described as follow:
 
 \begin{enumerate}
 \item At the beginning, each single time series is considered to be one cluster.
 \item Compute the distances between each pair of clusters.
-\item Starting from the first cluster, find its nearest cluster. We
-  define the distance between two clusters to be the average distance
-  across all the time series pairs in each cluster. If the distance to the
-  nearest cluster is smaller than the threshold, merge these two
-  cluster. FIXME  The first time, when there is only one item in each
-  cluster\ldots %FIXME explain what happens.  If a two clusters are
+\item Starting from the first cluster, find its nearest cluster.
+We define the distance between two clusters to be the average distance across all the time series pairs in each cluster.
+  If the distance to the nearest cluster is smaller than the threshold, merge these two
+  clusters. Otherwise leave these two separated.
+  %JJB  The first time, when there is only one item in each
+  %cluster\ldots %JJB explain what happens.  If a two clusters are
                 %arbitrarily paired that are far apart (say one is a
                 %severe outlier), they will set a very high average
                 %with this method.
 \item Move to the next cluster. Repeat the last step for the rest of the clusters.
 \item A new set of clusters will have been formed by the last few
-  steps.  Move to the next step of the hierarchy and repeat the step 2
-  to 4 until no new clusters can be formed.
+  steps. Move to the next level of the hierarchy and repeat the step 2
+  to 4 until no new clusters can be formed, i.e. no pairs of clusters have distance smaller than the threshold.
 \end{enumerate}
 
 Pseudocode of the complete algorithm is shown in
-Algorithm~\ref{code:cluster}.  FIXME this algorithm should include a
-line about how the clustering
-threshold is computed.  Normally algorithms are {\em more} detailed
-than the text description, not less. %FIXME 
+Algorithm~\ref{code:cluster}.
+%JJB this algorithm should include a line about how the clustering threshold is computed.  Normally algorithms are {\em more} detailed
+%than the text description, not less. %JJB
 
 \begin{algorithm}
   \caption{Agglomerative Hierarchical Clustering}
   \begin{algorithmic}[1]
 %    \Require{$x$ and $y$ are packed strings of equal length $n$}
 %    \Statex Init();
-    \State Init(): Make each time series a cluster\;
+    \State Init(): Make each time series a cluster; set the threshold\;
     \State $mergeable$ = true\;
     \Function{Merge}{all clusters, distance matrix} %      \Comment{$\oplus$: bit}
     \While{mergeable is true}
@@ -273,7 +269,7 @@ modules for this task: it is the number of the remaining
 clusters. Each cluster is used as a module. The pattern of the data in
 a cluster represents a strategy for handling a specific task context.
 
-\subsubsection{Learning Models for Modules}
+\subsubsection{Learning Internal Models for Each Module}
 \label{sec:model}
 After identifying the number of modules and the data assigned to each,
 we build models for each module from its associated data. In this
@@ -292,7 +288,7 @@ GMM. The task dynamics is hence encoded as a joint distribution of the
 object status displacement $s$ and the action $a$ taken by the human,
 $p(s,a,{\mid}{\Omega})$. In our experiment, $s$ is the one-dimensional
 angular displacement of the cap, and $a$ is the one-dimensional
-exerted torque and grip force (Section~\ref{sec:exp}).  Modeling their
+exerted torque and grip force (Section~\ref{sec:exp}). Modeling their
 distribution by GMM allows us to capture the nonlinearity in the data,
 and also to compute the likelihood of a query data point in the
 model. This provides a good estimation of the reliability of the
@@ -302,14 +298,15 @@ Section~\ref{sec:rf}). Further, as a generative model GMM is able to
 generate new data from the model, that is it allows us to generate
 motor commands. This is done by the {\em Gaussian Mixture Regression}
 (GMR). Table~\ref{tab:GMM} explains the encoding process of GMM and
-the generative process of GMR.  %FIXME (but maybe not right now) this
+the generative process of GMR.  %JJB (but maybe not right now) this
 % isn't really a table at all, it's a box (but not the kind of box
 % latex calls a box).  You can make a new type of float with the float
 % package so it doesn't say "Table" on it, but that's probably not
 % critical right now -- the publisher will likely fix it.
-
+% -- I just leave it for now
 
 \begin{table}
+\caption{Encoding process of GMM and computation process of GMR}
     \colorbox{light-gray}{
         \begin{minipage}[t]{0.45\textwidth}
 
@@ -355,7 +352,7 @@ the generative process of GMR.  %FIXME (but maybe not right now) this
 
             \begin{equation}
             {
-            \hat{\Sigma}_{n} = {\Sigma}_{n}^{ee} - {\Sigma}_{n}^eq({\Sigma}_{n}^{qq})^{-1}{\Sigma}_{n}^{qe}
+            \hat{\Sigma}_{n} = {\Sigma}_{n}^{ee} - {\Sigma}_{n}^{eq}({\Sigma}_{n}^{qq})^{-1}{\Sigma}_{n}^{qe}
             }
             \end{equation}
 
@@ -363,7 +360,7 @@ the generative process of GMR.  %FIXME (but maybe not right now) this
             Finally, all the $N$ Gaussian components are taken into
             account, and the expectation value of variable $\eta^e$ is
             computed as the mean $\hat{\mu}^e$ with the covariance
-            $\hat{\Sigma}^{ee}$: 
+            $\hat{\Sigma}^{ee}$:
 
             \begin{equation}
             {
@@ -377,10 +374,10 @@ the generative process of GMR.  %FIXME (but maybe not right now) this
             }
             \end{equation}
 
-FIXME I'm not checking math
-            carefully, but I deleted a little n off this last LHS to
-            match the expression that introduced this equation, check
-            I'm right?  %FIXME
+%            JJB I'm not checking math
+%            carefully, but I deleted a little n off this last LHS to
+%            match the expression that introduced this equation, check
+%            I'm right?  %JJB
 
             where
             \begin{equation}
@@ -393,7 +390,7 @@ FIXME I'm not checking math
             Note that in a multiple module model, different module may have different number of Gaussian components.
         \end{minipage}
     }
-\caption{Encoding process of GMM and computation process of GMR}
+
 \label{tab:GMM}
 \end{table}
 
@@ -419,17 +416,18 @@ correct the motor commands generated from the inverse model
 (Section~\ref{sec:rf}). Figure~\ref{fig:control} shows the basic
 control flow of a forward-inverse model pair.
 
-FIXME Both figure should be labelled ``efferent copy'' not ``effective
-copy''.  Also, it's very hard to read ``a1l1'' as ``action 1  x
-responsibility 1'', the l looks like a pipe or a capital i. Please use
-$\lambda$ as you do in the main text. Finally, all the text
-in the figure should be the same size.  The integration is one of the
-most important bits of information, so that eqaution needs to be
-legible.
-Actually, to be clear you should have the efferent signal labeled
-(maybe in parentheses under ``Motor command'' in the first figure) as
-well as its copy.  And why do you say ``reafferance'' instead of ``afferent''?
-% FIXME
+%JJB Both figure should be labelled ``efferent copy'' not ``effective
+%copy''.  Also, it's very hard to read ``a1l1'' as ``action 1  x
+%responsibility 1'', the l looks like a pipe or a capital i. Please use
+%$\lambda$ as you do in the main text. Finally, all the text
+%in the figure should be the same size.  The integration is one of the
+%most important bits of information, so that eqaution needs to be
+%legible.
+%Actually, to be clear you should have the efferent signal labeled
+%(maybe in parentheses under ``Motor command'' in the first figure) as
+%well as its copy.  And why do you say ``reafferance'' instead of ``afferent''?
+%% JJB
+
 \begin{figure}
   \centering
       \subfloat[\scriptsize{}]{\includegraphics[width=8cm]{./fig/control_1_2.pdf}}
@@ -458,11 +456,11 @@ well as its copy.  And why do you say ``reafferance'' instead of ``afferent''?
 
 % --------- one model for each ----------
 We encode the forward model $\Omega_F$ by the joint distributions of the current system state (object displacement), previous system state and the previous motor command, i.e. $p(s_t,s_{t-1},a_{t-1}\mid{\Omega_F})$, and similarly encode the inverse model $\Omega_I$ by the joint distributions of the current system state, the desired next system state, previous motor command and the current motor command, i.e. $p(s_t,s^{*}_{t+1},a_{t-1},a_t{\mid}{\Omega_I})$.
-%Given the previous system state and motor command, the GMR provides a close-form solution to compute the expected system state $s_t$, i.e. $E(s_t{\mid}s_{t-1},a_{t-1},{\Omega_F})$. 
+%Given the previous system state and motor command, the GMR provides a close-form solution to compute the expected system state $s_t$, i.e. $E(s_t{\mid}s_{t-1},a_{t-1},{\Omega_F})$.
 The previous motor command $a_{t-1}$ is necessary for the inverse
 model. In some tasks, the system status can remains unchanged for a
 certain period until the exerted force reaches a threshold to change
-it. This will cause degeneracy in the inverse model; hence we 
+it. This will cause degeneracy in the inverse model; hence we
 include the previous motor command in the model to tackle it.
 
 
@@ -478,7 +476,7 @@ include the previous motor command in the model to tackle it.
 %Phases
 %A single model is usually not enough to encode all these different
 %configurations. Therefore we adopt a multiple modular approach to
-%model the different environment. 
+%model the different environment.
 
 
 
@@ -546,31 +544,31 @@ context.
 %
 %where $n$ is the number of models.
 
-With the $k^{th}$ forward model we can anticipate the current state ${\hat{s}} ^k_t$ by using $GMR$ (Table~\ref{tab:GMM}):
+With the $k-{th}$ forward model we can anticipate the current state ${\hat{s}} ^k_t$ by using $GMR$ (Table~\ref{tab:GMM}):
 \begin{equation}
 \label{e3}
-{\hat{s}} ^k_{t} = E\left({s_t {\mid} s_{t-1}, a_{t-1}, \Omega^k_I}\right)
+{\hat{s}} ^k_{t} = E\left({s_t {\mid} s_{t-1}, a_{t-1}, \Omega^k_F}\right)
 \end{equation}
 
 By comparing the anticipated current state ${\hat{s}} ^k_t$ with the
 actual current state $s_t$ detected by the sensors, we can evaluate
-how well the $k^{th}$ module represents the current system. The actual
+how well the $k-{th}$ module represents the current system. The actual
 current state, previous state and the previous motor command form a
 data point $\eta_t$ = $\{s_t,s_{t-1},a_{t-1}\}$. As the forward models
 are built as GMM, it is easy to compute the likelihood of one data
-point belongs to a particular model: $p(\eta_t {\mid}
-\Omega_F^j)$. The discrepancy between $\hat{s}^k_t$ and $s_t$ is
+point belongs to a particular model (the $k-th$ forward model): $p(\eta_t {\mid}
+\Omega_F^k)$. The discrepancy between $\hat{s}^k_t$ and $s_t$ is
 embedded in this likelihood and hence in practice we only compute the
-$p(\eta_t {\mid} \Omega_F^j)$ and skip ${\hat{s}} ^k_t$.  The
-responsibility factor of the $k^{th}$ inverse model is the likelihood of
-the data point $\eta_t$ belongs to the $k^{th}$ module, normalized by
+$p(\eta_t {\mid} \Omega_F^k)$ and skip ${\hat{s}} ^k_t$.  The
+responsibility factor of the $k-{th}$ inverse model is the likelihood of
+the data point $\eta_t$ belongs to the $k-{th}$ module, normalized by
 the total sum:
 
-%JJB note I changed j to k on the LHS here, I assume j was a mistake FIXME
+%JJB note I changed j to k on the LHS here, I assume j was a mistake JBB
 \begin{equation}
-\lambda^k_t = \frac{p(\eta_t {\mid} \Omega_F^j)}{\sum_{k=1}^{K}{p(\eta_t {\mid} \Omega_F^k)}}
+\lambda^k_t = \frac{p(\eta_t {\mid} \Omega_F^k)}{\sum_{j=1}^{J}{p(\eta_t {\mid} \Omega_F^j)}}
 \end{equation}
-where $K$ is the number of modules~\footnote{In the case that the
+where $J$ is the number of modules~\footnote{In the case that the
   dominator is very close to zero, the whole control process will be
   terminated as it indicates that the model is used on a different
   task.}.  At every time step, we compute the responsibility factor
@@ -597,6 +595,8 @@ motor command generated by this multiple model system is:
 \label{e_mix}
 a_t = \sum_{k=1}^K{\lambda_t^k a_t^k} = \sum_{k=1}^K{\lambda_t^k E\left({a_t \mid s^*_{t+1},s_t, a_{t-1}, \Omega^k_I}\right)}
 \end{equation}
+
+where $K$ is the number of modules.
 
 These three steps are all computed with a close form solution. This ensures that this system can react quickly to the changes in the environment by adjusting the responsibility factor.
 

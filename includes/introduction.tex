@@ -7,7 +7,7 @@ and offices, human-like motor skills are becoming increasingly
 desirable. In everyday life, object manipulation is one of the most
 commonly used manual skills. Object manipulation includes a large
 category of activities ranging from the simple pick-and-place task to
-complicated dexterous manipulation.  
+complicated dexterous manipulation.
 
 Here we provide a framework for learning a human object-manipulation skill
 and transfering it to a robot.
@@ -27,22 +27,23 @@ models monitor the progression of  tasks, and launch any
 corresponding motor correction and motor reaction required to
 adapt to anything unexpected. %Building accurate analytical model for manipulation task is painstaking, small error in the model will cause fatal control problem. To solve this problem, we take the programming by human demonstration (PbD) approach.  %Modular approach has also been shown to be an effective way of building intelligent systems~\citep{bryson2004modular,BrysonMcG12}.
 
-Inspired by this concept, we propose an approach to learning human
-adaptive control strategies. This strategy is encoded with a modular
-model, where each module includes a forward model for context
-estimation, and an inverse model for motor command generation. From
-multiple human demonstrations, we extract a set of strategies, each of
-which takes charge of one specific task context. % JJB: Bidan, a lot of
+Inspired by this concept, we propose an approach to learn human
+adaptive control strategy. This adaptive control strategy is modeled by a modular
+approach.
+From multiple human demonstrations, we extract a set of strategies,
+each of which takes charge of one specific task context.
+Each strategy is encoded as a module, which includes a forward model for context
+estimation, and an inverse model for motor command generation.  % JJB: Bidan, a lot of
                                 % this is redundant.  Be careful to
                                 % only say something once at least in
                                 % the same paragarph!  By this method, we
-%modularize human adaptive control strategy. 
-The internal forward and inverse models are learnt within each
-module with a representation that can be easily transfered to a
+%modularize human adaptive control strategy.
+The forward and inverse models are learnt with a representation
+that can be easily transferred to a
 robot. When the robot executes a similar task, the forward models
-estimate the context of the task and 
+estimate the context of the task and
 %`contextized' ??? JJB
-`contectualize' the inverse models, allowing them to generate the proper commands.
+`contextualize' the inverse models, allowing them to generate the proper commands.
 % JJB??? to drives the object.
 %Each learnt control strategy is weighted by the similarity of the current task context and its corresponding context. The optimal strategy is computed as the linear combination of the weighted commands of each strategy.
 
@@ -50,9 +51,9 @@ estimate the context of the task and
 %The approach does not require any prior knowledge of the kinematics nor dynamics of the operation system, nor is it restricted to a specific robot platform. The control strategy is learnt on the object level and hence can be transfer from human to robot directly.
 
 Our work contributes a framework composed of both automated and
-bespoke components for creating the modular representation of 
+bespoke components for creating the modular representation of
 human adaptive control-strategies %JJB redundant! of manipulation
-                                %tasks 
+                                %tasks
 and to transfer these learnt internal models to a robot. To verify our
 approach, we use an \emph{Opening Bottle Caps} task as an
 experiment. An adaptive control strategy is required here, because the
@@ -68,5 +69,5 @@ Section~\ref{sec:method} presents our approach of learning a
 multiple-module model of a human manipulation strategy. The
 experiments on the opening-bottle-cap task and their result are shown
 in Section~\ref{sec:exp}, along with details of the hardware
-specifications and the experimental setup.  Section~\ref{sec:diss}
-concludes this work with a discussion and a look towards future work.
+specifications and the experimental setup. Section~\ref{sec:diss}
+discusses the proposed method and a look towards future work, followed by conclusion in Section~\ref{sec:conclusion}.
