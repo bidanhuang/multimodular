@@ -10,7 +10,7 @@ category of activities ranging from the simple pick-and-place task to
 complicated dexterous manipulation.
 
 Here we provide a framework for learning a human object-manipulation skill
-and transfering it to a robot.
+and transferring it to a robot.
 %Object manipulation is a large category of tasks in which the robots make physical contact with the environment. %Typical contact tasks include robot grasping and object manipulation.
 %% The complicated physics in the interactions between objects makes manipulation tasks difficult. The multi-body interaction and the effect of friction can cause abrupt changes in the environment. To handle these situations, robots have to be equipped with a nonlinear and non-stationary control strategy, which is hard to design by analytical approaches.
 %In manipulation tasks, the ability to predict and react to the uncertainty and unforeseen changes of the environment is vital.
@@ -28,10 +28,11 @@ corresponding motor correction and motor reaction required to
 adapt to anything unexpected. %Building accurate analytical model for manipulation task is painstaking, small error in the model will cause fatal control problem. To solve this problem, we take the programming by human demonstration (PbD) approach.  %Modular approach has also been shown to be an effective way of building intelligent systems~\citep{bryson2004modular,BrysonMcG12}.
 
 Inspired by this concept, we propose an approach to learn human
-adaptive control strategy. This adaptive control strategy is modeled by a modular
-approach.
-From multiple human demonstrations, we extract a set of strategies,
-each of which takes charge of one specific task context.
+adaptive control strategy, \textcolor{red}{i.e. how to apply force or torque to accomplish a task according to the task context. By task context we mean  the dominant factors that will effect the performance of the task, e.g. frictions, object sizes and masses.} The adaptive control strategy is modeled by a modular approach. 
+\textcolor{red}{The key concept of this modular approach is to decompose the adaptive control strategy into several modules and make them contribute accordingly to generate the final control command.}
+
+
+From multiple human demonstrations, we extract a set of strategies, each of which takes charge of one specific task context. \textcolor{red}{The number of task contexts is automatically identified in our approach. }
 Each strategy is encoded as a module, which includes a forward model for context
 estimation, and an inverse model for motor command generation.  % JJB: Bidan, a lot of
                                 % this is redundant.  Be careful to

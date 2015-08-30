@@ -66,31 +66,44 @@
 \usepackage{algorithm}
 \usepackage{algpseudocode}
 \usepackage{natbib}
+\usepackage[misc]{ifsym}
+\usepackage{xcolor}
 
 \definecolor{light-gray}{gray}{0.8}
 
 \begin{document}\sloppy
 
 \title{A Modular Approach to Learning Manipulation Strategies from
-  Human Demonstration}\thanks{Aude, do we need to acknowledge a funder?}
+  Human Demonstration}
 %}
 
 %\subtitle{Do you have a subtitle?\\ If so, write it here}
 %\titlerunning{Short form of title}        % if too long for running head
-\author{Authors        \and
-        Authors %etc.
+\author{Bidan Huang, Miao Li, Ravin Luis De Souza, Joanna J. Bryson,
+        Aude Billard
 }
 %\authorrunning{Short form of author list} % if too long for running head
-%\institute{F. Author \at
-%              first address \\
-%              Tel.: +123-45-678910\\
-%              Fax: +123-45-678910\\
-%              \email{fauthor@example.com}           %  \\
-%%             \emph{Present address:} of F. Author  %  if needed
-%           \and
-%           S. Author \at
-%              second address
-%}
+\institute{B. Huang (\Letter ) \and J.J. Bryson \at
+              Intelligent Systems Group (IS), Computer Science Department, University of Bath, United Kingdom \\
+              \email{b.huang@bath.ac.uk}           %  \\
+              \and
+              J.J. Bryson \\
+              \email{jjb@cs.bath.ac.uk}
+%             \emph{Present address:} of F. Author  %  if needed
+           \\
+           \\
+           M. Li \and R.L. de Souza \and A. Billard \at
+              Learning Algorithms and Systems Laboratory (LASA), Swiss Federal
+                Institute of Technology Lausanne (EPFL), Switzerland \\
+           \email{miao.li@epfl.ch}
+           \and
+           R.L. de Souza \\
+           \email{ravin.desouza@epfl.ch}
+           \\
+           \\
+           A. Billard \\
+           \email{aude.billard@epfl.ch}
+}
 
 %\date{Received: date / Accepted: date}
 % The correct dates will be entered by the editor
@@ -99,21 +112,12 @@
 \maketitle
 
 \begin{abstract}
-  Object manipulation is a challenging task for robotics as the
-  physics involved in object interaction is complex and hard to
-  express analytically. Here we introduce a modular approach for
-  learning a manipulation strategy from human demonstration. After
-  recording a human demonstrating the task in different contexts, we
-  perform modular decomposition of the control strategy, using phases
-  of the recorded actions to guide segmentation. Each module
-  represents a part of the strategy, encoded as a pair of forward and
-  inverse models. All modules contribute to the final control policy;
-  their recommendations are integrated via a system of weighting based
-  on their own estimated error in the current task context. We
-  validate our approach by demonstrating it on a robot platform.  The
-  task is opening a bottle cap. We show that our approach can
-  modularize an adaptive control strategy to generate appropriate
-  motor commands for the robot to accomplish the complete task. 
+Object manipulation is a challenging task for robotics, as the physics involved in object interaction is complex and hard to express analytically. Here we introduce a modular approach for learning a manipulation strategy from human demonstration. Firstly we record a human performing a task that requires an adaptive control strategy in different conditions, i.e. different task contexts. We then perform modular decomposition of the control strategy, using phases of the recorded actions to guide segmentation. Each module represents a part of the strategy, encoded as a pair of forward and inverse models. All modules contribute to the final control policy; their recommendations are integrated via a system of weighting based on their own estimated error in the current task context. We validate our approach by demonstrating it on a real robot platform. The task is opening a bottle cap. We show that our approach can modularize an adaptive control strategy and to generate appropriate motor commands for the robot to accomplish the complete task.
+
+
+%Object manipulation is a challenging task for robotics as the physics involved in object interaction is complex and hard to express analytically. Here we introduce a modular approach for learning a manipulation strategy from human demonstration. After recording a human demonstrating the task in different contexts, we perform modular decomposition of the control strategy, using phases of the recorded actions to guide segmentation. Each module represents a part of the strategy, encoded as a pair of forward and inverse models. All modules contribute to the final control policy; their recommendations are integrated via a system of weighting based on their own estimated error in the current task context. We validate our approach by demonstrating it on a robot platform. The task is opening a bottle cap. We show that our approach can modularize an adaptive control strategy to generate appropriate motor commands for the robot to accomplish the complete task.
+
+
 %\keywords{First keyword \and Second keyword \and More}
 % \PACS{PACS code1 \and PACS code2 \and more}
 % \subclass{MSC code1 \and MSC code2 \and more}
@@ -173,10 +177,7 @@
 %\end{table}
 
 
-%\begin{acknowledgements}
-%If you'd like to thank anyone, place your comments here
-%and remove the percent signs.
-%\end{acknowledgements}
+
 
 % BibTeX users please use one of
 %\bibliographystyle{spbasic}      % basic style, author-year citations
@@ -187,11 +188,20 @@
 \input{includes/introduction}
 \input{includes/relatedwork}
 \input{includes/methodology}
+\input{includes/simulation}
 \input{includes/experiments}
 \input{includes/conclusion}
 
+\begin{acknowledgements}
+This work was funded primarily by the Swiss National Foundation through the National Center of Competence in Research (NCCR) in Robotics. Ravin de Souza was also supported by a doctoral grant (SFRH / BD / 51071 / 2010) from the portuguese Fundacao para a Ciencia e a Tecnologia and Miao Li was supported by the European Union Seventh Framework ProgrammeP7 / 2007-2013 under grant agreement n\textsuperscript o 288533 ROBOHOW.COG.
+The authors would like to thank Sahar El-Khoury for her valuable comments.
+\end{acknowledgements}
+
 \bibliographystyle{spbasic}
 \bibliography{multimodel,jjb}
+
+
+
 \end{document}
 % end of file template.tex
 

@@ -68,7 +68,7 @@ The first step is recording the human demonstrations of a task. Based on the obj
               % in articles you read! --- Miao used "manipulating force". Others used "applied force". I think driving is better.
 We collected this data by a vision-based motion-capture system,
 force-torque sensor and wearable haptic
-devices. Figure.~\ref{fig:devices} shows a few of the sensors we used
+devices. Figure~\ref{fig:devices} shows a few of the sensors we used
 in the opening-bottle-caps task. % JJB this is that section! Details will be explained in
 %section~\ref{sec:exp_demo}.
 
@@ -139,7 +139,7 @@ task, where $F$ is the exerted force in all directions including the
 grip force, $\tau$ is the exerted torque in all directions and $s$ is
 the object displacement. In later sections, we refer $\{F,\tau\}$ as
 the motor command (action) with notation $\{a\}$. In each
-demonstration, a time series of the tuple is recorded.
+demonstration, a time series of the tuple is recorded. \textcolor{red}{For cyclic tasks, i.e. tasks that involve a few cycles of similar motions such as rotating an object, it is needed to segment the whole time series into a few segments. Each segment is one cycle. The problem of automatic segmentation is not in the scope of this work, possible solutions of it are reported in literature~\citep{demiris2006hierarchical,kulic2009online,pais2013learning}.}
 
 
 
@@ -286,9 +286,9 @@ object displacement shows the dynamic characteristics of the task.
 We model the correlation of the force and the displacement with
 GMM. The task dynamics is hence encoded as a joint distribution of the
 object status displacement $s$ and the action $a$ taken by the human,
-$p(s,a,{\mid}{\Omega})$. In our experiment, $s$ is the one-dimensional
-angular displacement of the cap, and $a$ is the one-dimensional
-exerted torque and grip force (Section~\ref{sec:exp}). Modeling their
+$p(s,a,{\mid}{\Omega})$. \textcolor{red}{In our experiment, $s$ is the one-dimensional
+angular displacement of the cap, and $a$ an vector containing the one-dimensional
+exerted torque and the one-dimensional grip force (Section~\ref{sec:exp}).} Modeling their
 distribution by GMM allows us to capture the nonlinearity in the data,
 and also to compute the likelihood of a query data point in the
 model. This provides a good estimation of the reliability of the
@@ -413,8 +413,8 @@ model is held to generate motor commands to take the system from the
 current state to the next state. The discrepancy between the
 anticipation of the forward model and the actual feedback is used to
 correct the motor commands generated from the inverse model
-(Section~\ref{sec:rf}). Figure~\ref{fig:control} shows the basic
-control flow of a forward-inverse model pair.
+(Section~\ref{sec:rf}). \textcolor{red}{Figure~\ref{fig:control}(a) shows the basic
+control flow of a forward-inverse model pair, while Figure~\ref{fig:control}(b) illustrates how do three pairs of forward-inverse models work together to generate control commands.} 
 
 %JJB Both figure should be labelled ``efferent copy'' not ``effective
 %copy''.  Also, it's very hard to read ``a1l1'' as ``action 1  x
@@ -509,6 +509,14 @@ brings the current system status from $s_t$ to a desired state $s^*_{t+1}$:
 a_t = g\left({s^*_{t+1},s_t}\right)
 \end{equation}
 
+\textcolor{red}{In some tasks, the previous action $a_{t-1}$ is included in the inverse model. This is because there may be more than one action ($a_t$) that can take the current task state ($s_t$) to the desired task state ($s^*_{t+1}$) and the previous action $a_{t-1}$ is needed to be taken as reference. Hence the controller needs to be:}
+
+\begin{equation}
+\label{e9}
+a_t = g\left({s^*_{t+1},s_t,a_{t-1}}\right)
+\end{equation}
+
+
 Equation~\ref{e1} represents the forward model and Equation~\ref{e2} represents the inverse model. In the modular approach, it takes two steps to compute the motor command $a_t$:
 \begin{enumerate}
 \item Anticipate the sensory output and compute the responsibility factor $\lambda_t$.
@@ -552,7 +560,7 @@ With the $k-{th}$ forward model we can anticipate the current state ${\hat{s}} ^
 
 By comparing the anticipated current state ${\hat{s}} ^k_t$ with the
 actual current state $s_t$ detected by the sensors, we can evaluate
-how well the $k-{th}$ module represents the current system. The actual
+how well the $k^{th}$ module represents the current system. The actual
 current state, previous state and the previous motor command form a
 data point $\eta_t$ = $\{s_t,s_{t-1},a_{t-1}\}$. As the forward models
 are built as GMM, it is easy to compute the likelihood of one data
@@ -566,6 +574,7 @@ the total sum:
 
 %JJB note I changed j to k on the LHS here, I assume j was a mistake JBB
 \begin{equation}
+\label{equ:lambda}
 \lambda^k_t = \frac{p(\eta_t {\mid} \Omega_F^k)}{\sum_{j=1}^{J}{p(\eta_t {\mid} \Omega_F^j)}}
 \end{equation}
 where $J$ is the number of modules~\footnote{In the case that the
@@ -595,7 +604,6 @@ motor command generated by this multiple model system is:
 \label{e_mix}
 a_t = \sum_{k=1}^K{\lambda_t^k a_t^k} = \sum_{k=1}^K{\lambda_t^k E\left({a_t \mid s^*_{t+1},s_t, a_{t-1}, \Omega^k_I}\right)}
 \end{equation}
-
 where $K$ is the number of modules.
 
 These three steps are all computed with a close form solution. This ensures that this system can react quickly to the changes in the environment by adjusting the responsibility factor.

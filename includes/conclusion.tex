@@ -30,7 +30,7 @@ Our approach is applicable to manipulation tasks that require adaptive
 control strategies. It has a number of benefits compared to existing,
 pervasive methods for adaptive control such as classic model
 identification adaptive control and reinforcement
-learning~\cite{narendra1995adaptation,khalil2004modeling,buchli2011learning}. % JJB cites
+learning~\citep{narendra1995adaptation,khalil2004modeling,buchli2011learning}. % JJB cites
 Because we imitate human behaviors, we do not need to derive the
 system dynamics nor the cost function of the tasks, which involve deep
 insight into the task and can be painstaking. The difficulty of
@@ -39,6 +39,9 @@ approach: dividing the large state space into several subspaces, where
 the local strategies can be approximated more accurately. With this
 approach, we divide a complex human strategy into a few modules, and
 combine them to generate contextualized motor commands.
+
+\textcolor{red}{An assumption we make during the learning is that the human always use one single control strategy to handle one task context. Based on this assumption, we cluster the training data and modularize the strategy to several individual modules. The linear combination of these modules can span a large neighbourhood and generate new adaptive strategies for novel task context. It is possible that the demonstrations are combinations of more fundamental human control strategies. Decomposing them to the fundamental strategies may allow us to span to larger space, or even generalize to different tasks. Finding these fundamental strategies will require more demonstrations for different tasks. This will be the next step of extending our approach. }
+%In our approach, the clustering method ensure that the strategies are sufficiently different to each others. The linear combination of these strategies can also span a large neighbourhood. Space outside the neighbourhood may requires new strategies.}
 
 Our object-centric approach is a practical approach for teaching a
 robot manipulation tasks that require proprioception. This allows
@@ -54,7 +57,7 @@ impedance of an object is more feasible. This approach focus on imitating object
 
 We compute the final motor command by summing the weighted output of
 each module. This makes an assumption that the state space is
-continuous. For tasks with discontinuous space, switching between different modules would be more applicable~\cite{narendra1995adaptation,nakanishi2013spatio}.
+continuous. For tasks with discontinuous space, switching between different modules would be more applicable~\citep{narendra1995adaptation,nakanishi2013spatio}.
 %JJB
 %give people credit!  It's always good
 %to say nice things about other people
@@ -84,7 +87,7 @@ To extend our approach to learn tasks involving multiple steps, one
 could also integrate this framework with task segmentation techniques,
 to break down the task into atomic steps and recognize the steps
 needed, still using an modular approach. However, we could expect this
-to complicate the pint of module integration and require
+to complicate the point of module integration and require
 better-informed action selection. %It would be interesting to examine
 %how the number of modules changes according to the tasks % JJB this
                                 % is too wishy-washy, you need to say

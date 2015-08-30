@@ -43,7 +43,7 @@ We use our multiple module approach to model the adaptive strategy.
 
 \subsection{Human demonstration and experimental setup}
 \label{sec:exp_demo}
-%Figure.~\ref{setup} shows the setup of the human demonstration. %In this task we record 2 variables: the displacement of the cap and the torque driving the cap to run. We used the Optitrack motion tracking system to morning the position and orientation of the cap, a force torque sensor mounted on the bottle to measure the driving torque.
+%Figure~\ref{setup} shows the setup of the human demonstration. %In this task we record 2 variables: the displacement of the cap and the torque driving the cap to run. We used the Optitrack motion tracking system to morning the position and orientation of the cap, a force torque sensor mounted on the bottle to measure the driving torque.
 
 %\begin{itemize}
 %\item Dry friction can induce several types of instabilities in mechanical systems which display a stable behavior in the absence of friction.
@@ -91,7 +91,7 @@ friction is overcome.
   \centering
   %\includegraphics[width=8cm]{./fig/b1b3b4_time_T_2.pdf}#
   \includegraphics[width=8cm]{./fig/b1b2b4_time_T.pdf}
-  \caption{ \scriptsize{Exerted torque for opening three different bottles}
+  \caption{ \scriptsize{Exerted torque for opening three different bottles. \textcolor{red}{These three demonstrations show different control patterns. Significant differences can be observed from the first cycles. For the most difficult bottle b4 (blue), the torque reaches its peak and drop slowly until the end of the cycle. This shows the friction between the bottle and cap keep decreasing as the cap starts moving. For the easier bottle b2 (green), the torque drop straightly from its peak to a (relatively) constant value, which suggests that the friction remains constant when the cap is moving. For the b1 (red), the torque slowly climb to a top and drop sharply for a short while and then drop slowly. These different patterns indicate the different types of friction governing in different contexts.}}
 }
 \label{fig:bottlepatterns}
 \end{figure}
@@ -103,7 +103,7 @@ In order to explore
 different task contexts, we demonstrated the task with different
 setups, which are the combination of four different plastic
 bottles~($b1-b4$) and four different plastic caps~($c1-c4$)
-(Figure.~\ref{fig:b_c}). According to the surfaces condition of the
+(Figure~\ref{fig:b_c}). \textcolor{red}{The caps are made by light materials such that their masses and inertias can be neglected in the computation of motor commands.  The relationship of driving force/torque and mass/inertais is well studied. In this study, we focus on learning the strategies for handling friction, which is not well understood and hard to predict.} According to the surfaces condition of the
 bottles and the caps, the difficulty of opening the bottles
 varies. $b1-b4$ are labeled by increasing difficulty. The bottle $b1$
 is the easiest one, which originally contained body lotion. We
@@ -133,7 +133,7 @@ are the main points of variation between the different bottles
 affecting the control strategy. The intention is to see how these two
 variables affect human behaviour. To this end, we combine the bottles
 and the caps by mounting the caps $c1-c4$ onto the `actual'
-(manufactured) caps of the bottles (Figure.~\ref{fig:setup}). To
+(manufactured) caps of the bottles (Figure~\ref{fig:setup}). To
 investigate the effects of different caps and different bottles
 separately, we conducted two groups of demonstrations: a fixed bottle with
 four different caps ($b3c1, b3c2, b3c3, b3c4$) and a fixed cap with four
@@ -142,7 +142,7 @@ first group allow us to explore human grasping strategies with
 different cap sizes. Demonstrations on the second group allow us to
 explore human control strategies in adapting to different bottle
 conditions. In total, we have seven different setups for the human
-demonstration (Table~\ref{bottlesandcaps}).
+demonstration (Table~\ref{tab:bottlesandcaps}).
 
 
 \begin{figure}
@@ -175,8 +175,8 @@ demonstration (Table~\ref{bottlesandcaps}).
   difficulty to open. Caps 1 to 4 are in increasing order of the cap
   sizes, with diameters are shown.  Note that where multiple caps were
 used with the same bottle, this was achieved by affixing the cap to
-the bottle's matching cap (see Figure.~\ref{fig:setup}).}
-\label{bottlesandcaps}
+the bottle's matching cap (see Figure~\ref{fig:setup}).}
+
 \begin{tabular}{p{1.5cm}|p{1cm} |p{1cm} |p{1cm} |p{1cm}}
 
 %\backslashbox{}{}
@@ -201,6 +201,7 @@ Bottle 3 & b3c1& b3c2& b3c3& b3c4\\
 Bottle 4 & & & b4c3&\\
 \hline
 \end{tabular}
+\label{tab:bottlesandcaps}
 \end{table}
 
 \begin{figure}
@@ -259,7 +260,7 @@ synchronized by aligning the synchronization signal.
 
 In this task, the turning torque is the essential variable. This is
 measured and recorded by an ATI force torque sensor. It is mounted
-between the bottle and the cap (Figure.~\ref{fig:setup}). During the
+between the bottle and the cap (Figure~\ref{fig:setup}). During the
 task, the demonstrator grasps the cap on the top of the force-torque
 sensor and applies torque to open the bottle mounted below the
 sensor. As the bottle is fixed to the table, the movement of the cap
@@ -274,7 +275,7 @@ OptiTrack. The OptiTrack system tracks movement by the infrared
 reflecting markers attached to the object. In order to avoid obstacle
 of the demonstration, we attach markers to a stick, which is fixed to
 the cap from one end and the other end coming out from the bottom of
-the bottle (Figure.~\ref{fig:setup}). We also recorded the human hand
+the bottle (Figure~\ref{fig:setup}). We also recorded the human hand
 movements, by tracking markers attached to the human's hand. The
 movement of the human hand is used later for synchronization
 (Section~\ref{dataanalysis}).
@@ -292,7 +293,7 @@ surface. For manipulation, humans use not only the front surface, but
 also the side surface of our fingers. In order to measure the force
 applied by those surfaces, we mount two sets of Tekscan Grip System
 sensors onto a glove to cover also the side surfaces
-(Figure.~\ref{ftsensor}). The method of mounting the sensors to the glove
+(Section.~\ref{ftsensor}). The method of mounting the sensors to the glove
 is detailed in~\citep{deSouza2014}. With different sizes of the caps
 or in different stages of the task, the way a human grasps the cap may
 vary.  For example, a human may use two fingers to grip the smallest
@@ -316,7 +317,7 @@ is handled differently.
 \label{ftsensor}
 As the movement of the cap is restricted to rotation around the
 z-axis, we are concerned only with the torque applied in this direction.
-% (Figure.~\ref{fig:ftsensor}).
+% (Figure~\ref{fig:ftsensor}).
 Another dimension of concern is the force applied in the z direction. The
 three taps on the cap before each demonstration will create three
 pulses in the z direction and hence is used for synchronization.
@@ -330,7 +331,7 @@ the position vector and the rotation matrix. The angular
 displacement of the cap is computed by the rotation matrix of the cap, and
 the hand movement by the position vector of the hand. The accumulated
 angular displacement is used to learn the model and the hand movement
-is used to synchronize the data. % (Figure.~\ref{fig:optitrack}).
+is used to synchronize the data. % (Figure~\ref{fig:optitrack}).
 %
 %\begin{figure}
 %  \centering
@@ -364,7 +365,7 @@ demonstrator to use any grasp they like for the task --- the human was
 not restricted to using just two or three fingers as is the case in
 most other grasping experiments. For each type of grasp, the reading
 from the patches contacting with the cap are summed and multiplied by
-their surface area to compute the total grip force. % (Figure.~\ref{fig:ftsensor}).
+their surface area to compute the total grip force. % (Figure~\ref{fig:ftsensor}).
 
 %\begin{figure}
 %  \centering
@@ -378,10 +379,10 @@ their surface area to compute the total grip force. % (Figure.~\ref{fig:ftsensor
 
 Data from these three channels is synchronized by aligning the
 synchronization pulses. The time of the last detected pulse is set as
-the zero-reference point. After synchronization we re-sample all the
-temporal sequences to 100Hz. Thus each single data point is
+the zero-reference point. \textcolor{red}{After synchronization we re-sample all the
+temporal sequences to 1000Hz. Thus each single data point is
 synchronized. Finally, we filter the noise by a low pass
-filter. Figure~\ref{fig:3channels} shows an example of the data from
+filter (200Hz).} Figure~\ref{fig:3channels} shows an example of the data from
 three different channels.
 
 
@@ -418,7 +419,7 @@ sequences are labeled by their associated equipment setup and the
 order in which they occur, e.g. the first cycle of the bottle~1 with
 cap~3 is labeled by $b1c3\_1$.
 
-As can be seem from Figure.~\ref{fig:3channels}, there are dramatic
+As can be seem from Figure~\ref{fig:3channels}, there are dramatic
 difference between cycle one (the first cycle) and the rest of the
 cycles: the exerted force and torque are much higher in the first
 cycle. This is caused by the difference between the static friction
@@ -439,11 +440,8 @@ as ``phase II''.
 %the full story of the decomposition and then launch another level in
 %another section. %JJB
 
-In different demonstrations, the number of cycles used to open the cap
-is different, varying from four to six. The pattern of the later
-cycles are similar as the demonstrator just repeats the same strategy
-for rotating the cap. For training, we take the first four cycles from
-each of the demonstrations. As mentioned above, human demonstrate the task in seven different setups, each for three times. This results in 84~time series in total for the learning.
+In different demonstrations, the number of cycles used to open the cap is different, varying from four to six. The pattern of the later
+cycles are similar as the demonstrator just repeats the same strategy for rotating the cap. For training, we take the first four cycles from each of the demonstrations. As mentioned above, human demonstrate the task in seven different setups, each for three times. This results in 84~time series in total for the learning.
 
 %% what was recorded
 %In each demonstration, data from first time the hand grab the cap to the cap is finally open and lifted, was record. Opening bottle cap is a cyclic task, each cycle of which includes reaching, turning and releasing stages. Depending on the tightness of the cap, a few cycles need to be done before the bottle is open. In this task we focus on the turning stage of each cycle, which start from the time that the fingers contact the cap and end at the moment that the turning is finished and the cap is released. During the turning cycles, force and torque are applied to the cap in order to break it's contact with the the bottle and the dynamics of the system changes diametrically. Our goal is to learn a model to encode human's strategy to cope with the abruptly changing environment during the turning cycle. The reaching and releasing cycles do not involve contact with the environment and hence we omit them.
@@ -474,16 +472,16 @@ series by the DTW technique. As this task is time independent,
 ``warping'' of the data in the dimension of time does not affect the
 control policy encoded in the time series. The distances between each
 pair of the time series is shown in the heatmap
-(Figure.~\ref{fig:heatmap}). As can be observed from the heatmap, the
+(Figure~\ref{fig:heatmap}). As can be observed from the heatmap, the
 trials with the same setup and in the same cycle are very similar to
 each other. Hence we regard these trials representing the same control
 strategy and use their variance as the threshold of the
-clustering. From this heatmap we can also see that within the same
+clustering. \textcolor{red}{Trails with distance less than this threshold are considered to be in the same cluster. This is to say, our clustering is based on the assumption that trials with the same setup and in the same cycle are governed by the same control strategy. This assumption help us further cluster the large amount of data to a small number of groups.} From this heatmap we can also see that within the same
 cycle, the trials with the same bottle but with different caps,
 e.g. $b3c1, b3c3$ and $b3c4$, are similar to each other. In the first
 cycle, the trials with the same cap but with different bottles,
 e.g. $b1c3, b2c3, b3c3$ and $b4c3$, are significantly different from
-each other. In the the later cycles, this difference decreases
+each other. In the later cycles, this difference decreases
 gradually. This result shows that in the opening-bottle-cap task, the
 surface condition between the bottle and the cap plays an important
 role in the control strategy, while the role of cap size is relatively
@@ -615,7 +613,7 @@ $p\{s_t,s{t+1},a_t,a_{t-1}\mid\Omega_I\}$. For each model, the number
 of Gaussians is determined by the Bayesian information criterion
 (BIC). We use 25 Gaussian for cluster 1, 40 for cluster 2 and 15 for
 cluster 3. The BIC tests for each module / cluster are shown in
-Figure.~\ref{fig:bic}.
+Figure~\ref{fig:bic}.
 
 \begin{figure}
   \centering
@@ -709,7 +707,7 @@ the bottle cap is touched. This position is recorded as the initial
 position, where the cap displacement is marked as zero. In the
 experiment we focus on the turning cycle. The releasing and reaching
 cycles are programmed by opening the fingers and restoring to the
-initial position.
+initial position. \textcolor{red}{ The information gathered from the Tekscan during the demonstrations is transferred to the Syntouch and used to guide the grip force. During the process, the tactile sensors are used to ensure the fingers are touching the cap and providing enough grip force to avoid slide between the hand and the cap.}
 
 % JJB check:  I added the lambdas in here to reference back to
 % equation 10.   Check that this makes sense?
@@ -731,10 +729,10 @@ In the process of implementation on a real robot, we found that
 without putting any restriction of the responsibility factor, it can
 change very rapidly. This is caused by the environmental noise in the
 sensory input and results in instability of the control system. We
-therefore apply a low-pass filter on the responsibility factor
-$\lambda_t^k$ to reduce the fluctuation. This filtering implies that
-the real dynamics do not switch with high frequency, which is consistent
-with the character of our task. %(Figure.~\ref{fig:rf}).
+therefore apply a low-pass filter \textcolor{red}{(100 Hz)} on the responsibility factor
+$\lambda_t^k$ to reduce the fluctuation. \textcolor{red}{This filtering implies that
+the real dynamics do not switch back and forth with high frequency, which is consistent
+with the character of our task.} %(Figure~\ref{fig:rf}).
 
 %\begin{figure}
 %  \centering
@@ -745,10 +743,7 @@ with the character of our task. %(Figure.~\ref{fig:rf}).
 %\end{figure}
 
 % "lag" is not "slag"
-Before applying the final output on the robot, a compensational torque is
-added to it in order to compensate the lag causing by the distortion
-of the robot hand during turning. The control algorithm described
-above is shown in algorithm~\ref{code:control}.
+Before applying the final output on the robot, a compensational torque is added to it in order to compensate the lag causing by the distortion of the robot hand during turning. The control algorithm described above is shown in algorithm~\ref{code:control}.
 
 
 \subsection{Experiment results}
@@ -791,12 +786,12 @@ the responsibility factors of all three modules. Bottle $b1$ is the
 easiest bottle to open in the training set, the control policies of
 both phase~I and phase~II are grouped into cluster~3. As a result,
 in the $b1$ experiment, module~3 takes most of the responsibility
-(Figure.~\ref{fig:demo_b1}).
+(Figure~\ref{fig:demo_b1}).
 
 %its != it's.  It's is also informal and never occurs in academic papers.
 Bottle $b4$ is the most difficult bottle to open in the training set
 and its phase~I requires more than $3Nm$
-(Figure.~\ref{fig:bottlepatterns}). Due to the smooth contact surfaces
+(Figure~\ref{fig:bottlepatterns}). Due to the smooth contact surfaces
 between the Barrett hand and the cap, it is difficult to apply $3Nm$
 torque to the cap without slipping. To avoid damaging the robot, we
 tested $b4$ phase~II only: the cap is loosely screwed on the
@@ -811,8 +806,8 @@ Bottle $b5$ is a novel one but is made of a similar material (plastic) to
 the training bottles. A very similar torque profile to $b2$ and $b3$ is
 generated for $b5$: phase~I is sharp, while phase~II is flatter and
 significantly smaller than phase~I ($b2$:
-Figure.~\ref{fig:bottlepatterns}, $b3$: Figure.~\ref{fig:cappatterns},
-$b5$: Figure.~\ref{fig:demo_b5}). This is because $b5$ has a dry contact
+Figure~\ref{fig:bottlepatterns}, $b3$: Figure~\ref{fig:cappatterns},
+$b5$: Figure~\ref{fig:demo_b5}). This is because $b5$ has a dry contact
 surface as $b2$ and $b3$, and $b1$ is lubricated and $b4$ is attached with
 a sticky material, honey.
 
@@ -826,7 +821,9 @@ Bottle $b6$ is also a novel one but with novel surface materials
 what we observed in training set. Despite this, $b6$ is opened with this
 torque profile generated by the three learnt modules.
 
-% TODO: In all actions, cluster 2 is always firstly selected as the dominate module.
+\textcolor{red}{In these experiments, the robot always choose to use the combination of modules. At one hand, this is because of the variance of the forward models. The variance of a GMM represents the variance of the training data, i.e. human demonstrations, and a GMM can have locally large variance.
+In our approach, each GMM is learned independently, without knowing the boundaries of other modules. This can result in a GMM having non-zero probability at the borders of other modules. At the other hand, more importantly, the way we compute the responsibility factor is one that encourages more cooperation between modules. In this way, we can generalise better to novel task contexts, as more modules will contribute to generate new motor commands. As can be seen from the results, our method can generate commands properly to accomplish the task in both trained and novel task contexts. Other ways of computing the responsibility factor that bring less cooperation may cause instability when generalise to new task contexts. }
+
 
 With the above four different setups, the modular model adapts
 accordingly and successfully generates torque commands to open the
@@ -835,7 +832,8 @@ far enough that it can be lifted up. Though no prior information is
 provided about the bottles, the task contexts are properly estimated
 and ``contextualized'' motor commands are generated to unscrew the
 caps. These experiments show that our multiple modular approach is
-indeed effective in manipulation tasks. %JJB: "contextualized" is
+indeed effective in manipulation tasks.
+%JJB: "contextualized" is
                                 %spelled right (US spelling as you've
                                 %been using that.)  Emacs / ispell
                                 %doesn't recognise it though.
@@ -852,23 +850,23 @@ indeed effective in manipulation tasks. %JJB: "contextualized" is
   \centering
   \vspace{0.8cm}
   \subfloat[\scriptsize{Snapshots from the robot opening bottle~ $b1$}]
-  {\includegraphics[width=15cm]{./fig/demo_b1.jpg}}
+  {\includegraphics[width=13cm]{./fig/demo_b1.jpg}}
 
   \vspace{0.3cm}
   %\hspace{0.2cm}
   \subfloat[\scriptsize{Cap displacement during the robot's opening}]
-  {\includegraphics[width=15cm]{./fig/demo_b1_s.eps}}
+  {\includegraphics[width=13cm]{./fig/demo_b1_s.eps}}
 
   \vspace{0.3cm}
   \hspace{-0.3cm}
   \subfloat[\scriptsize{Torque exerted by the robot against cap displacement}]
-  {\includegraphics[width=15cm]{./fig/demo_b1_T.eps}}
+  {\includegraphics[width=13cm]{./fig/demo_b1_T.eps}}
 
   \vspace{0.3cm}
   %\vspace{0.5cm}
   \subfloat[\scriptsize{Responsibility factor against cap
     displacement, for each module}]
-  {\includegraphics[width=15cm]{./fig/demo_b1_rf.eps}}
+  {\includegraphics[width=13cm]{./fig/demo_b1_rf.eps}}
   \caption{ \scriptsize{The robot opens bottle~$b1$.}
 }
 
@@ -879,22 +877,22 @@ indeed effective in manipulation tasks. %JJB: "contextualized" is
   \centering
   \vspace{0.8cm}
   \subfloat[\scriptsize{Snapshots from the robot opening bottle~$b4$}]
-  {\includegraphics[width=15cm]{./fig/demo_b4.jpg}}
+  {\includegraphics[width=13cm]{./fig/demo_b4.jpg}}
 
   \vspace{0.3cm}
   %\vspace{0.5cm}
   \subfloat[\scriptsize{Cap displacement during the robot's opening}]
-  {\includegraphics[width=15cm]{./fig/demo_b4_s.eps}}
+  {\includegraphics[width=13cm]{./fig/demo_b4_s.eps}}
 
   \vspace{0.3cm}
   \hspace{-0.2cm}
   \subfloat[\scriptsize{Torque exerted by the robot against cap displacement}]
-  {\includegraphics[width=15cm]{./fig/demo_b4_T.eps}}
+  {\includegraphics[width=13cm]{./fig/demo_b4_T.eps}}
 
   \vspace{0.3cm}
   %\vspace{0.5cm}
   \subfloat[\scriptsize{Responsibility factor against cap displacement, for each module}]
-  {\includegraphics[width=15cm]{./fig/demo_b4_rf.eps}}
+  {\includegraphics[width=13cm]{./fig/demo_b4_rf.eps}}
 
   \caption{ \scriptsize{The robot opens bottle~$b4$}
 }
@@ -907,22 +905,22 @@ indeed effective in manipulation tasks. %JJB: "contextualized" is
   \centering
   \vspace{0.8cm}
   \subfloat[\scriptsize{Snapshots for robot opening bottle~b5 demonstration}]
-  {\includegraphics[width=15cm]{./fig/demo_b5.jpg}}
+  {\includegraphics[width=13cm]{./fig/demo_b5.jpg}}
 
   \vspace{0.3cm}
   %\vspace{0.5cm}
   \subfloat[\scriptsize{Cap displacement during the robot's opening}]
-  {\includegraphics[width=15cm]{./fig/demo_b5_s.eps}}
+  {\includegraphics[width=13cm]{./fig/demo_b5_s.eps}}
 
   \vspace{0.3cm}
   %\vspace{0.5cm}
   \subfloat[\scriptsize{Torque exerted by the robot against cap displacement}]
-  {\includegraphics[width=15cm]{./fig/demo_b5_T.eps}}
+  {\includegraphics[width=13cm]{./fig/demo_b5_T.eps}}
 
   \vspace{0.3cm}
   %\vspace{0.5cm}
   \subfloat[\scriptsize{Responsibility factor against cap     displacement, for each module}]
-  {\includegraphics[width=15cm]{./fig/demo_b5_rf.eps}}
+  {\includegraphics[width=13cm]{./fig/demo_b5_rf.eps}}
 
   \caption{ \scriptsize{The robot opens bottle~$b5$}
 }
@@ -934,22 +932,22 @@ indeed effective in manipulation tasks. %JJB: "contextualized" is
   \centering
   \vspace{0.8cm}
   \subfloat[\scriptsize{Snapshots for robot opening bottle~b6 demonstration}]
-  {\includegraphics[width=15cm]{./fig/demo_b6.jpg}}
+  {\includegraphics[width=13cm]{./fig/demo_b6.jpg}}
 
   \vspace{0.3cm}
   %\vspace{0.5cm}
   \subfloat[\scriptsize{Cap displacement during the robot's opening}]
-  {\includegraphics[width=15cm]{./fig/demo_b6_s.eps}}
+  {\includegraphics[width=13cm]{./fig/demo_b6_s.eps}}
 
   \vspace{0.3cm}
   \hspace{-0.5cm}
   \subfloat[\scriptsize{Torque exerted by the robot against cap displacement}]
-  {\includegraphics[width=15cm]{./fig/demo_b6_T.eps}}
+  {\includegraphics[width=13cm]{./fig/demo_b6_T.eps}}
 
   \vspace{0.3cm}
   %\vspace{0.5cm}
   \subfloat[\scriptsize{Responsibility factor against cap     displacement, for each module}]
-  {\includegraphics[width=15cm]{./fig/demo_b6_rf.eps}}
+  {\includegraphics[width=13cm]{./fig/demo_b6_rf.eps}}
 
   \caption{ \scriptsize{The robot opens bottle~$b6$}
 }
@@ -966,7 +964,7 @@ indeed effective in manipulation tasks. %JJB: "contextualized" is
 \end{figure}
 
 
-%A set of snapshots of the implementations are shown in Figure.~\ref{fig:demo_train} and~\ref{fig:demo_new}. Figure.~\ref{fig:demo_result} shows the sensory data from these demonstrations.
+%A set of snapshots of the implementations are shown in Figure~\ref{fig:demo_train} and~\ref{fig:demo_new}. Figure~\ref{fig:demo_result} shows the sensory data from these demonstrations.
 
 %\begin{itemize}
 %  \item Demonstration on the learnt bottles \ldots
@@ -977,7 +975,7 @@ indeed effective in manipulation tasks. %JJB: "contextualized" is
 
 %\begin{figure}
 %  \centering
-%  \includegraphics[width=15cm]{./fig/demo_train.jpg}
+%  \includegraphics[width=13cm]{./fig/demo_train.jpg}
 %  \caption{ \scriptsize{Robot demonstration on opening a trained bottle cap. (TODO)}
 %}
 %\label{fig:demo_train}
@@ -985,7 +983,7 @@ indeed effective in manipulation tasks. %JJB: "contextualized" is
 %
 %\begin{figure}
 %  \centering
-%  \includegraphics[width=15cm]{./fig/demo_new.jpg}
+%  \includegraphics[width=13cm]{./fig/demo_new.jpg}
 %  \caption{ \scriptsize{Robot demonstration on opening a new bottle cap. (TODO)}
 %}
 %\label{fig:demo_new}

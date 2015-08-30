@@ -171,7 +171,7 @@ context in real time, and the inverse models are used to generate
 appropriate motor commands for the current context. The inverse models
 are weighted by the accuracy of the estimations of their corresponding
 forward models. The final motor command is the linear combination of
-the commands factored by their weights.
+the commands factored by their weights. \textcolor{red}{This paradigm is extended to a hierarchical architecture HAMMER (Hierarchical Attentive Multiple Models for Execution and Recognition) to plan high level behaviours \citet{johnson2005hierarchies,demiris2006hierarchical}. In HAMMER, the lowest level of the hierarchy represents the primitive motions, while the higher-level models represent complex behaviours composed by the primitive motions. }
 
 We take the paradigm of MOSAIC but implement the modular model in our own manner. In earlier work, \citet{wolpert1998multiple} used
 Artificial Neural Network (ANN) to encode the internal models,
@@ -187,8 +187,9 @@ parameters. GMM has been shown to be an efficient model in capturing
 the nonlinearity of
 data~\citep{calinon2007incremental,sauser2011iterative,huang2013learning}.
 This allows us to approximate more complex internal models.
+\textcolor{red}{We call each pair of forward-inverse pair a module and hence our system is a multiple module system. This system focuses on building adaptive control policy for primitive tasks such as opening a bottle cap and opening a drawer. Each module specialises in handling one task context. The combination of these modules aim to implement a single task in varying task contexts. This is different from the HAMMER architecture mentioned above, which is for learning high level tasks, combining the primitive tasks hierarchically and form complex behaviour   ~\citep{johnson2005hierarchies}. It assumes to have a library of primitive tasks. In HAMMER, an attention mechanism is used to pre-select the high level inverse models, i.e. to only select the inverse models that are required for the task.  }
 
-%We take this paradigm and model our internal models by GMM. Training GMM with the Expectation Maximization algorithm (EM), we estimate the optimal values of the model parameters. Compare to the early work~\citep{wolpert1998multiple} which use Neural Network and has to manually tune the variance of each forward model, GMM has the advantage of automatically computing the all the model parameters. Later work~\citep{haruno2001mosaic} fixes the hand tuning problem by modeling with Hidden Markov Model (HMM) and optimize the model with EM. With this method the forward models are assumed to be linear. In our approach, GMM allows non-linear system to be modeled. Figure.~\ref{fig:control} illustrates the workflow of our approach. Compare to the switching modular method~\citep{narendra1997adaptive}, i.e. only one module will be activated and used to generate motor command, the linear combination of the modules requires less number of modules to approximate the system dynamics.
+%We take this paradigm and model our internal models by GMM. Training GMM with the Expectation Maximization algorithm (EM), we estimate the optimal values of the model parameters. Compare to the early work~\citep{wolpert1998multiple} which use Neural Network and has to manually tune the variance of each forward model, GMM has the advantage of automatically computing the all the model parameters. Later work~\citep{haruno2001mosaic} fixes the hand tuning problem by modeling with Hidden Markov Model (HMM) and optimize the model with EM. With this method the forward models are assumed to be linear. In our approach, GMM allows non-linear system to be modeled. Figure~\ref{fig:control} illustrates the workflow of our approach. Compare to the switching modular method~\citep{narendra1997adaptive}, i.e. only one module will be activated and used to generate motor command, the linear combination of the modules requires less number of modules to approximate the system dynamics.
 %The main reason is that neuron network can not directly estimate the likelihood of one query point. With NN, the the variance in each forward model, which is an essential variable to control how much the modules  cooperate, has to be hand tuned. .
 
 
@@ -240,14 +241,14 @@ primitives. \citet{kulic2008incremental} use a hierarchical clustering
 method to extract primitives from human motion sequences. Different
 cut-off parameters are tested to evaluate the trade-off effects
 between facilitating quick group formation and introducing
-misclassification. Our modularize approach is similar to this, but
+misclassification. Our modularized approach is similar to this, but
 goes one step further. We cluster the demonstration data with a
 hierarchical method. Instead of
 hand tuning the cut-off parameter, we determine its value by the
 variance of the data. This provides us with a proper grouping of the
 data, which can generate proper motor commands for control.
 
-Figure.~\ref{fig:control} illustrates the workflow of our approach. To
+Figure~\ref{fig:control} illustrates the workflow of our approach. To
 the best of our knowledge, our work is the first realization of the
 modular approach in learning an object manipulation task with a real
 robot.
