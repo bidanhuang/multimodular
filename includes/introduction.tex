@@ -28,13 +28,27 @@ corresponding motor correction and motor reaction required to
 adapt to anything unexpected. %Building accurate analytical model for manipulation task is painstaking, small error in the model will cause fatal control problem. To solve this problem, we take the programming by human demonstration (PbD) approach.  %Modular approach has also been shown to be an effective way of building intelligent systems~\citep{bryson2004modular,BrysonMcG12}.
 
 Inspired by this concept, we propose an approach to learn human
-adaptive control strategy, \textcolor{red}{i.e. how to apply force or torque to accomplish a task according to the task context. By task context we mean  the dominant factors that will effect the performance of the task, e.g. frictions, object sizes and masses.} The adaptive control strategy is modeled by a modular approach. 
-\textcolor{red}{The key concept of this modular approach is to decompose the adaptive control strategy into several modules and make them contribute accordingly to generate the final control command.}
+adaptive control strategy, \textcolor{red}{i.e. how to apply force or
+  torque to accomplish a task according to the task context. By {\em
+    task context} we mean the dominant factors that will affect the
+  performance of the task, e.g. frictions, object sizes and masses.
+  Because the context is represented directly by the control modules
+  produced by the learning algorithm, the model can generalise to
+  novel contexts within the appropriate task domain.}  The adaptive
+control strategy is modeled by a modular approach.
+\textcolor{red}{The key concept of this modular approach is to
+  decompose the adaptive control strategy into several modules often
+  active simultaneously, allowing each to contribute according to its
+  own perceived applicability to the final control command.}
 
 
-From multiple human demonstrations, we extract a set of strategies, each of which takes charge of one specific task context. \textcolor{red}{The number of task contexts is automatically identified in our approach. }
-Each strategy is encoded as a module, which includes a forward model for context
-estimation, and an inverse model for motor command generation.  % JJB: Bidan, a lot of
+From multiple human demonstrations, we extract a set of strategies,
+each of which takes charge of one specific task
+context. \textcolor{red}{These strategies include the number of task
+  contexts, which is automatically
+  identified in our approach and also represented by the modules. } Each strategy is encoded as a module,
+which includes a forward model for context estimation, and an inverse
+model for motor command generation.  % JJB: Bidan, a lot of
                                 % this is redundant.  Be careful to
                                 % only say something once at least in
                                 % the same paragarph!  By this method, we
@@ -55,20 +69,26 @@ Our work contributes a framework composed of both automated and
 bespoke components for creating the modular representation of
 human adaptive control-strategies %JJB redundant! of manipulation
                                 %tasks
-and to transfer these learnt internal models to a robot. To verify our
-approach, we use an \emph{Opening Bottle Caps} task as an
-experiment. An adaptive control strategy is required here, because the
+and to transfer these learnt internal models to a robot. To both
+communicate and verify our approach, we present two demonstrations:
+the first a simulation controlling the motion of an object moving
+through a viscous environment of varying fluid properties, and the
+second a robot task, \emph{Opening Bottle Caps}. An adaptive control
+strategy is required for both.  For example, for the robot, the
 friction between the bottle's and the cap's surfaces has multiple
-phases. We demonstrate the modularized version of the human control
-strategy in this task on a robot, which is used to open both familiar
-and novel bottles.
+phases.  In the full robot demonstration, we show how the algorithm
+modularizes a human-demonstrated control strategy, and how this can be
+transferred to an arbitrary robot without consideration of the
+correspondance problem, and demonstrate that the transferred strategy
+can be used to open both familiar and novel bottles.
 
 %This task is complex in the sense that 1) there are multiple different contacts occur at the same time, i.e., the contact between the fingertips and the cap, the contact between the cap and the bottle screw; 2) the latter contact usually consists of several abrupt switch during the task, from static friction to kinetic friction.
 The rest of this article is organized as follows:
 Section~\ref{sec:related} provides an overview of related work;
 Section~\ref{sec:method} presents our approach of learning a
 multiple-module model of a human manipulation strategy. The
-experiments on the opening-bottle-cap task and their result are shown
+experiments on the opening-bottle-cap task and their results are shown
 in Section~\ref{sec:exp}, along with details of the hardware
 specifications and the experimental setup. Section~\ref{sec:diss}
-discusses the proposed method and a look towards future work, followed by conclusion in Section~\ref{sec:conclusion}.
+discusses the proposed method and a look towards future work, followed
+by the conclusion in Section~\ref{sec:conclusion}.

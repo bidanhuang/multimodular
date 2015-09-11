@@ -88,7 +88,7 @@
               \email{b.huang@bath.ac.uk}           %  \\
               \and
               J.J. Bryson \\
-              \email{jjb@cs.bath.ac.uk}
+              \email{jjb@alum.mit.edu}
 %             \emph{Present address:} of F. Author  %  if needed
            \\
            \\
@@ -112,7 +112,24 @@
 \maketitle
 
 \begin{abstract}
-Object manipulation is a challenging task for robotics, as the physics involved in object interaction is complex and hard to express analytically. Here we introduce a modular approach for learning a manipulation strategy from human demonstration. Firstly we record a human performing a task that requires an adaptive control strategy in different conditions, i.e. different task contexts. We then perform modular decomposition of the control strategy, using phases of the recorded actions to guide segmentation. Each module represents a part of the strategy, encoded as a pair of forward and inverse models. All modules contribute to the final control policy; their recommendations are integrated via a system of weighting based on their own estimated error in the current task context. We validate our approach by demonstrating it on a real robot platform. The task is opening a bottle cap. We show that our approach can modularize an adaptive control strategy and to generate appropriate motor commands for the robot to accomplish the complete task.
+Object manipulation is a challenging task for robotics, as the physics
+involved in object interaction is complex and hard to express
+analytically. Here we introduce a modular approach for learning a
+manipulation strategy from human demonstration. Firstly we record a
+human performing a task that requires an adaptive control strategy in
+different conditions, i.e. different task contexts. We then perform
+modular decomposition of the control strategy, using phases of the
+recorded actions to guide segmentation. Each module represents a part
+of the strategy, encoded as a pair of forward and inverse models. All
+modules contribute to the final control policy; their recommendations
+are integrated via a system of weighting based on their own estimated
+error in the current task context. We validate our approach by
+demonstrating it, both in a simulation for clarity, and  on a real
+robot platform to demonstrate robustness and capacity to
+generalise. The robot task is opening bottle caps. We show that our
+approach can modularize an adaptive control strategy and generate
+appropriate motor commands for the robot to accomplish the complete
+task, even for novel bottles.
 
 
 %Object manipulation is a challenging task for robotics as the physics involved in object interaction is complex and hard to express analytically. Here we introduce a modular approach for learning a manipulation strategy from human demonstration. After recording a human demonstrating the task in different contexts, we perform modular decomposition of the control strategy, using phases of the recorded actions to guide segmentation. Each module represents a part of the strategy, encoded as a pair of forward and inverse models. All modules contribute to the final control policy; their recommendations are integrated via a system of weighting based on their own estimated error in the current task context. We validate our approach by demonstrating it on a robot platform. The task is opening a bottle cap. We show that our approach can modularize an adaptive control strategy to generate appropriate motor commands for the robot to accomplish the complete task.
@@ -193,7 +210,14 @@ Object manipulation is a challenging task for robotics, as the physics involved 
 \input{includes/conclusion}
 
 \begin{acknowledgements}
-This work was funded primarily by the Swiss National Foundation through the National Center of Competence in Research (NCCR) in Robotics. Ravin de Souza was also supported by a doctoral grant (SFRH / BD / 51071 / 2010) from the portuguese Fundacao para a Ciencia e a Tecnologia and Miao Li was supported by the European Union Seventh Framework ProgrammeP7 / 2007-2013 under grant agreement n\textsuperscript o 288533 ROBOHOW.COG.
+This work was funded primarily by the Swiss National Foundation
+through the National Center of Competence in Research (NCCR) in
+Robotics. Ravin de Souza was also supported by a doctoral grant (SFRH
+/ BD / 51071 / 2010) from the Portuguese Fundacao para a Ciencia e a
+Tecnologia and Miao Li was supported by the European Union Seventh
+Framework ProgrammeP7 / 2007-2013 under grant agreement
+n\textsuperscript o 288533 ROBOHOW.COG. Bidan Huang was also supported
+by a studentship from the University of Bath.
 The authors would like to thank Sahar El-Khoury for her valuable comments.
 \end{acknowledgements}
 

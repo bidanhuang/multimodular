@@ -84,11 +84,11 @@ times to generate enough data to reliably capture its key features.
 The demonstrator also performs the task under a variety of
 conditions, e.g. a range of friction conditions, in order to explore
 how humans adapt to different task contexts. These different
-configurations must be chosen to cover a wide range.% of different
+configurations must be chosen to cover a wide range.  % of different
 %contexts.  JJB -- redundant.
-For example, in a opening-bottle-cap task, the demonstration of opening
+For example, in an opening-bottle-cap task, the demonstration of opening
 the tightest bottle within the capability of the learner is
-included. These wide range demonstrations are then used to learn a
+included. This wide range of demonstrations is then used to learn a
 multiple module model. Details including the exact numbers and
 durations of our trials are described in the next
 Section. %FIXME check this is detailed there!
@@ -116,8 +116,8 @@ point. %This problem is particularly important in the motion planning tasks.
 In an object manipulation task, the goal is to deliver the object from
 the current state to a desired state. During this process the movement
 of the manipulator is bounded by the movement of the object. Thus it is
-more important to imitate how the human applies force to achieve object's
-desired movement, than to imitate human limb movement.  This is part
+more important to imitate how the human applies force to achieve the object's
+desired movement than to imitate human limb movement.  This is part
 of what justifies our object-centric representational approach.
 %Therefore we take an ``object centric approach"~\citep{okamura2000overview}, of which the control policy is taken from the object point of view.
 
@@ -131,7 +131,7 @@ effector movement but to find a policy that maps force and torque
 to object movements. This policy allows the robot to efficiently
 acquire new behaviors to accomplish the
 task. %Different robots move differently to achieve the desired object movements.
-Giving the robots' kinematics and the desired exerted force and torque
+Given the robots' kinematics and the desired exerted force and torque
 on the object, the robot joint torques can be deduced by their Jacobian
 matrix~\citep{okamura2000overview}. To this end, we focus on the
 force-torque-displacement tuple: $\{F,\tau,s\}$ demonstrated in the
@@ -139,7 +139,17 @@ task, where $F$ is the exerted force in all directions including the
 grip force, $\tau$ is the exerted torque in all directions and $s$ is
 the object displacement. In later sections, we refer $\{F,\tau\}$ as
 the motor command (action) with notation $\{a\}$. In each
-demonstration, a time series of the tuple is recorded. \textcolor{red}{For cyclic tasks, i.e. tasks that involve a few cycles of similar motions such as rotating an object, it is needed to segment the whole time series into a few segments. Each segment is one cycle. The problem of automatic segmentation is not in the scope of this work, possible solutions of it are reported in literature~\citep{demiris2006hierarchical,kulic2009online,pais2013learning}.}
+demonstration, a time series of the tuple is
+recorded. 
+
+\textcolor{red}{We found that cyclic tasks, i.e. tasks that involve a
+  few iterations of similar motions such as rotating an object,
+  further require segmenting the time series.  This allows the
+  clustering algorithm to more easily detect repeated or discriminated
+  primitives in the sequence. The problem of automatic segmentation is
+  not in the scope of this work, however possible solutions of it are
+  available in the
+  literature~\citep{demiris2006hierarchical,kulic2009online,pais2013learning}.}
 
 
 
@@ -160,10 +170,10 @@ strategies. %During implementation, the system quickly estimate the context by t
 %In this multiple model approach, each model is trained for a particular dynamics context. During the control process the model can compute appropriate control commands for the corresponding dynamics according to the sensory inputs. If the model is chosen properly (see Section~\ref{rf} for mixing model), this approach will be able to adapt to changing environmental context.
 
 % ---------- Cluster to find number of modules -----------
-Different tasks may need different number of modules. In the human
+Different tasks will require different numbers of modules. In the human
 demonstrations, the same task is demonstrated with a few different
-setups to explore how human adapt to them. However, the number of
-setups does not necessary equal to the number of modules needed in the
+setups to explore how humans adapt to them. The number of
+setups also does not necessarily equal to the number of modules needed in the
 task. Humans may regard different setups as the same task context and
 handle them with the same control
 strategies. %Some data may seems to be dissimilar in the scale or frequency, but in fact are governed by the same dynamic.
@@ -196,7 +206,7 @@ series. We then cluster these time series into a few groups by a
 threshold of the distance. This threshold is set by using the
 variance of the data demonstrated under the same condition as a reference. As mentioned
 above, a task is demonstrated a few times.
-Demonstrations with the same condition, i.e. the same experimental setup and at the same stage of the task, are presumed to be handled with the same strategy and hence belong to the same cluster. For example, our opening bottle cap task is a cyclic task --- human need to do a few cycles of rotation of the cap in order to unscrew and lift it. In this task, demonstrations with the same bottle and cap, and at the same cycle of the rotation are considered to be in the same group (details in Section~\ref{dataanalysis}).
+Demonstrations with the same condition, i.e. the same experimental setup and at the same stage of the task, are presumed to be handled with the same strategy and hence belong to the same cluster. For example, our opening bottle cap task is a cyclic task --- humans need to do a few cycles of rotation of the cap in order to unscrew and lift it. In this task, demonstrations with the same bottle and cap, and at the same cycle of the rotation are considered to be in the same group (details in Section~\ref{dataanalysis}).
 The variance of these demonstrations
 give a reference of a proper variance of a cluster. The largest
 variance, across the variance of all setups, is used as the threshold
@@ -205,13 +215,13 @@ for the clustering.  %JJB is this right?  Surely we had different
                      %the same context, and spent some time fixing the segmentation.
 
 %% ------------ Hierarchical clustering -----------
-Many of the clustering methods require the specification of the number
+Many clustering methods require the specification of the number
 of clusters. In our case, however, the number of clusters is an
 unknown variable. Therefore we use the hierarchical agglomerative
 clustering method~\citep{willett1988recent} to group our
 data. Agglomerative clustering is a method that merges similar data
 iteratively until the stop criteria is satisfied --- this does not
-require a predefined number of clusters. Our clustering method only requires the distance threshold of merging and is described as follow:
+require a predefined number of clusters. Our clustering method only requires the distance threshold of merging and is described as follows:
 
 \begin{enumerate}
 \item At the beginning, each single time series is considered to be one cluster.
@@ -273,7 +283,7 @@ a cluster represents a strategy for handling a specific task context.
 \label{sec:model}
 After identifying the number of modules and the data assigned to each,
 we build models for each module from its associated data. In this
-section, we explain the way we encode human manipulation strategy
+section, we explain the way we encode human manipulation strategies
 using machine learning to build the modules.
 
 During demonstrations, we constantly acquire the object displacements
@@ -287,16 +297,16 @@ We model the correlation of the force and the displacement with
 GMM. The task dynamics is hence encoded as a joint distribution of the
 object status displacement $s$ and the action $a$ taken by the human,
 $p(s,a,{\mid}{\Omega})$. \textcolor{red}{In our experiment, $s$ is the one-dimensional
-angular displacement of the cap, and $a$ an vector containing the one-dimensional
+angular displacement of the cap, and $a$ a vector containing the one-dimensional
 exerted torque and the one-dimensional grip force (Section~\ref{sec:exp}).} Modeling their
 distribution by GMM allows us to capture the nonlinearity in the data,
 and also to compute the likelihood of a query data point in the
 model. This provides a good estimation of the reliability of the
 module in the current task context, which is crucial in choosing the
 correct modules for control (discussed in
-Section~\ref{sec:rf}). Further, as a generative model GMM is able to
-generate new data from the model, that is it allows us to generate
-motor commands. This is done by the {\em Gaussian Mixture Regression}
+Section~\ref{sec:rf}). Further, as a generative model, a GMM is able to
+generate new data---that is, it allows us to generate
+motor commands. This is done by {\em Gaussian Mixture Regression}
 (GMR). Table~\ref{tab:GMM} explains the encoding process of GMM and
 the generative process of GMR.  %JJB (but maybe not right now) this
 % isn't really a table at all, it's a box (but not the kind of box
@@ -387,7 +397,7 @@ the generative process of GMR.  %JJB (but maybe not right now) this
             }
             \end{equation}
 
-            Note that in a multiple module model, different module may have different number of Gaussian components.
+            Note that in a multiple module model, different modules may have different numbers of Gaussian components.
         \end{minipage}
     }
 
@@ -411,10 +421,10 @@ in order to make the best use of the human data. A forward model is
 held to anticipate the outcome of the motor command, while an inverse
 model is held to generate motor commands to take the system from the
 current state to the next state. The discrepancy between the
-anticipation of the forward model and the actual feedback is used to
+anticipations of the forward model and the actual feedback is used to
 correct the motor commands generated from the inverse model
 (Section~\ref{sec:rf}). \textcolor{red}{Figure~\ref{fig:control}(a) shows the basic
-control flow of a forward-inverse model pair, while Figure~\ref{fig:control}(b) illustrates how do three pairs of forward-inverse models work together to generate control commands.} 
+control flow of a forward-inverse model pair, while Figure~\ref{fig:control}(b) illustrates how three pairs of forward-inverse models work together to generate control commands.} 
 
 %JJB Both figure should be labelled ``efferent copy'' not ``effective
 %copy''.  Also, it's very hard to read ``a1l1'' as ``action 1  x
@@ -458,7 +468,7 @@ control flow of a forward-inverse model pair, while Figure~\ref{fig:control}(b) 
 We encode the forward model $\Omega_F$ by the joint distributions of the current system state (object displacement), previous system state and the previous motor command, i.e. $p(s_t,s_{t-1},a_{t-1}\mid{\Omega_F})$, and similarly encode the inverse model $\Omega_I$ by the joint distributions of the current system state, the desired next system state, previous motor command and the current motor command, i.e. $p(s_t,s^{*}_{t+1},a_{t-1},a_t{\mid}{\Omega_I})$.
 %Given the previous system state and motor command, the GMR provides a close-form solution to compute the expected system state $s_t$, i.e. $E(s_t{\mid}s_{t-1},a_{t-1},{\Omega_F})$.
 The previous motor command $a_{t-1}$ is necessary for the inverse
-model. In some tasks, the system status can remains unchanged for a
+model. In some tasks, the system status can remain unchanged for a
 certain period until the exerted force reaches a threshold to change
 it. This will cause degeneracy in the inverse model; hence we
 include the previous motor command in the model to tackle it.
@@ -493,9 +503,9 @@ include the previous motor command in the model to tackle it.
 Once the number of modules is found and a pair of forward and inverse
 models has been learnt for each, the modules can be used to compute
 motor commands for task execution.  In our system of action selection,
-this process of computing the command also computes a weight which
+this process of computing the commands also computes a weight which
 allows integration of the modules by simple summation.  We consider
-the human motor system acted upon by motor command $a_t$ at time $t$
+the human motor system acted upon at time $t$ by motor command $a_t$ 
 with current system status $s_t$. A function $f$ maps $a_t$ and $s_t$
 to the system status at time $t+1$:
 \begin{equation}
@@ -520,7 +530,8 @@ a_t = g\left({s^*_{t+1},s_t,a_{t-1}}\right)
 Equation~\ref{e1} represents the forward model and Equation~\ref{e2} represents the inverse model. In the modular approach, it takes two steps to compute the motor command $a_t$:
 \begin{enumerate}
 \item Anticipate the sensory output and compute the responsibility factor $\lambda_t$.
-\item Compute motor command by each inverse model and compute the final motor command $a_t$.
+\item Compute the motor command of each inverse model and compute the
+  final composite motor command $a_t$.
 \end{enumerate}
 
 
@@ -552,7 +563,7 @@ context.
 %
 %where $n$ is the number of models.
 
-With the $k-{th}$ forward model we can anticipate the current state ${\hat{s}} ^k_t$ by using $GMR$ (Table~\ref{tab:GMM}):
+With the $k^{th}$ forward model we can anticipate the current state ${\hat{s}} ^k_t$ by using $GMR$ (Table~\ref{tab:GMM}):
 \begin{equation}
 \label{e3}
 {\hat{s}} ^k_{t} = E\left({s_t {\mid} s_{t-1}, a_{t-1}, \Omega^k_F}\right)
@@ -564,12 +575,12 @@ how well the $k^{th}$ module represents the current system. The actual
 current state, previous state and the previous motor command form a
 data point $\eta_t$ = $\{s_t,s_{t-1},a_{t-1}\}$. As the forward models
 are built as GMM, it is easy to compute the likelihood of one data
-point belongs to a particular model (the $k-th$ forward model): $p(\eta_t {\mid}
+point belongs to a particular model (the $k^{th}$ forward model): $p(\eta_t {\mid}
 \Omega_F^k)$. The discrepancy between $\hat{s}^k_t$ and $s_t$ is
 embedded in this likelihood and hence in practice we only compute the
 $p(\eta_t {\mid} \Omega_F^k)$ and skip ${\hat{s}} ^k_t$.  The
-responsibility factor of the $k-{th}$ inverse model is the likelihood of
-the data point $\eta_t$ belongs to the $k-{th}$ module, normalized by
+responsibility factor of the $k^{th}$ inverse model is the likelihood of
+the data point $\eta_t$ belongs to the $k^{th}$ module, normalized by
 the total sum:
 
 %JJB note I changed j to k on the LHS here, I assume j was a mistake JBB
@@ -577,10 +588,12 @@ the total sum:
 \label{equ:lambda}
 \lambda^k_t = \frac{p(\eta_t {\mid} \Omega_F^k)}{\sum_{j=1}^{J}{p(\eta_t {\mid} \Omega_F^j)}}
 \end{equation}
-where $J$ is the number of modules~\footnote{In the case that the
-  dominator is very close to zero, the whole control process will be
+where $J$ is the number of modules.%~\footnote{  too important for a
+                                %footnote JJB
+In the case that the
+  denominator is very close to zero, the whole control process will be
   terminated as it indicates that the model is used on a different
-  task.}.  At every time step, we compute the responsibility factor
+  task.  At every time step, we compute the responsibility factor
 for each module. The final motor command at that time step is the
 linear combination of the commands generated from each inverse model
 multiplied by its respective responsibility factor.
@@ -606,7 +619,7 @@ a_t = \sum_{k=1}^K{\lambda_t^k a_t^k} = \sum_{k=1}^K{\lambda_t^k E\left({a_t \mi
 \end{equation}
 where $K$ is the number of modules.
 
-These three steps are all computed with a close form solution. This ensures that this system can react quickly to the changes in the environment by adjusting the responsibility factor.
+These three steps are all computed with a closed form solution. This ensures that this system can react quickly to the changes in the environment by adjusting the responsibility factor.
 
 
 
